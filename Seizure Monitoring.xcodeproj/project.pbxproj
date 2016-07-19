@@ -1,0 +1,858 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0E42BBC11D3D541F004783EE /* UpdateLastEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E42BBC01D3D541F004783EE /* UpdateLastEvent.swift */; };
+		0E4AE83D1D3D84AC00E4580E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E4AE83B1D3D84AC00E4580E /* LaunchScreen.storyboard */; };
+		0E622CDD1D2D88170001B8DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E622CDC1D2D88170001B8DE /* AppDelegate.swift */; };
+		0E622CDF1D2D88170001B8DE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E622CDE1D2D88170001B8DE /* ViewController.swift */; };
+		0E622CE21D2D88170001B8DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E622CE01D2D88170001B8DE /* Main.storyboard */; };
+		0E622CE41D2D88170001B8DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E622CE31D2D88170001B8DE /* Assets.xcassets */; };
+		0E622CF21D2D88170001B8DE /* Seizure_MonitoringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E622CF11D2D88170001B8DE /* Seizure_MonitoringTests.swift */; };
+		0E622CFD1D2D88170001B8DE /* Seizure_MonitoringUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E622CFC1D2D88170001B8DE /* Seizure_MonitoringUITests.swift */; };
+		0E622D021D2D88170001B8DE /* Seizure Monitoring WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 0E622D011D2D88170001B8DE /* Seizure Monitoring WatchKit App.app */; };
+		0E622D081D2D88170001B8DE /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E622D061D2D88170001B8DE /* Interface.storyboard */; };
+		0E622D0A1D2D88170001B8DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E622D091D2D88170001B8DE /* Assets.xcassets */; };
+		0E622D111D2D88170001B8DE /* Seizure Monitoring WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0E622D101D2D88170001B8DE /* Seizure Monitoring WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0E622D181D2D88170001B8DE /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E622D171D2D88170001B8DE /* InterfaceController.swift */; };
+		0E622D1A1D2D88170001B8DE /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E622D191D2D88170001B8DE /* ExtensionDelegate.swift */; };
+		0E622D1C1D2D88170001B8DE /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E622D1B1D2D88170001B8DE /* NotificationController.swift */; };
+		0E622D1E1D2D88170001B8DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E622D1D1D2D88170001B8DE /* Assets.xcassets */; };
+		0E622D351D2D89310001B8DE /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E622D341D2D89310001B8DE /* HealthKit.framework */; };
+		0ED7D3B41D2F28C100D86AE3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED7D3B31D2F28C100D86AE3 /* MapKit.framework */; };
+		0EF10D0B1D2DB53F00C6441C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF10D0A1D2DB53F00C6441C /* Settings.swift */; };
+		0EF10D0D1D2DB57200C6441C /* CareGiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF10D0C1D2DB57200C6441C /* CareGiver.swift */; };
+		0EF10D0F1D2DB60C00C6441C /* Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF10D0E1D2DB60C00C6441C /* Methods.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0E622CEE1D2D88170001B8DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E622CD11D2D88160001B8DE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0E622CD81D2D88160001B8DE;
+			remoteInfo = "Seizure Monitoring";
+		};
+		0E622CF91D2D88170001B8DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E622CD11D2D88160001B8DE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0E622CD81D2D88160001B8DE;
+			remoteInfo = "Seizure Monitoring";
+		};
+		0E622D031D2D88170001B8DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E622CD11D2D88160001B8DE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0E622D001D2D88170001B8DE;
+			remoteInfo = "Seizure Monitoring WatchKit App";
+		};
+		0E622D121D2D88170001B8DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E622CD11D2D88160001B8DE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0E622D0F1D2D88170001B8DE;
+			remoteInfo = "Seizure Monitoring WatchKit Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0E622D251D2D88170001B8DE /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				0E622D111D2D88170001B8DE /* Seizure Monitoring WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E622D291D2D88170001B8DE /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				0E622D021D2D88170001B8DE /* Seizure Monitoring WatchKit App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0E42BBC01D3D541F004783EE /* UpdateLastEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateLastEvent.swift; sourceTree = "<group>"; };
+		0E4AE83C1D3D84AC00E4580E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "../Seizure Alert/Seizure Alert/Base.lproj/LaunchScreen.storyboard"; sourceTree = "<group>"; };
+		0E622CD91D2D88160001B8DE /* Seizure Monitoring.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Seizure Monitoring.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E622CDC1D2D88170001B8DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0E622CDE1D2D88170001B8DE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0E622CE11D2D88170001B8DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		0E622CE31D2D88170001B8DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0E622CE81D2D88170001B8DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E622CED1D2D88170001B8DE /* Seizure MonitoringTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Seizure MonitoringTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E622CF11D2D88170001B8DE /* Seizure_MonitoringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seizure_MonitoringTests.swift; sourceTree = "<group>"; };
+		0E622CF31D2D88170001B8DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E622CF81D2D88170001B8DE /* Seizure MonitoringUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Seizure MonitoringUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E622CFC1D2D88170001B8DE /* Seizure_MonitoringUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seizure_MonitoringUITests.swift; sourceTree = "<group>"; };
+		0E622CFE1D2D88170001B8DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E622D011D2D88170001B8DE /* Seizure Monitoring WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Seizure Monitoring WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E622D071D2D88170001B8DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		0E622D091D2D88170001B8DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0E622D0B1D2D88170001B8DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E622D101D2D88170001B8DE /* Seizure Monitoring WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Seizure Monitoring WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E622D161D2D88170001B8DE /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		0E622D171D2D88170001B8DE /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		0E622D191D2D88170001B8DE /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		0E622D1B1D2D88170001B8DE /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		0E622D1D1D2D88170001B8DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0E622D1F1D2D88170001B8DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E622D341D2D89310001B8DE /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		0E622D361D2D89310001B8DE /* Seizure Monitoring.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Seizure Monitoring.entitlements"; sourceTree = "<group>"; };
+		0ED7D3B31D2F28C100D86AE3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		0EF10D0A1D2DB53F00C6441C /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		0EF10D0C1D2DB57200C6441C /* CareGiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareGiver.swift; sourceTree = "<group>"; };
+		0EF10D0E1D2DB60C00C6441C /* Methods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Methods.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0E622CD61D2D88160001B8DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0ED7D3B41D2F28C100D86AE3 /* MapKit.framework in Frameworks */,
+				0E622D351D2D89310001B8DE /* HealthKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E622CEA1D2D88170001B8DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E622CF51D2D88170001B8DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E622D0D1D2D88170001B8DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0E622CD01D2D88160001B8DE = {
+			isa = PBXGroup;
+			children = (
+				0E622CDB1D2D88170001B8DE /* Seizure Monitoring */,
+				0E622CF01D2D88170001B8DE /* Seizure MonitoringTests */,
+				0E622CFB1D2D88170001B8DE /* Seizure MonitoringUITests */,
+				0E622D051D2D88170001B8DE /* Seizure Monitoring WatchKit App */,
+				0E622D141D2D88170001B8DE /* Seizure Monitoring WatchKit Extension */,
+				0E622CDA1D2D88170001B8DE /* Products */,
+				0E622D331D2D89310001B8DE /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		0E622CDA1D2D88170001B8DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0E622CD91D2D88160001B8DE /* Seizure Monitoring.app */,
+				0E622CED1D2D88170001B8DE /* Seizure MonitoringTests.xctest */,
+				0E622CF81D2D88170001B8DE /* Seizure MonitoringUITests.xctest */,
+				0E622D011D2D88170001B8DE /* Seizure Monitoring WatchKit App.app */,
+				0E622D101D2D88170001B8DE /* Seizure Monitoring WatchKit Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0E622CDB1D2D88170001B8DE /* Seizure Monitoring */ = {
+			isa = PBXGroup;
+			children = (
+				0E622D361D2D89310001B8DE /* Seizure Monitoring.entitlements */,
+				0E622CDC1D2D88170001B8DE /* AppDelegate.swift */,
+				0E622CDE1D2D88170001B8DE /* ViewController.swift */,
+				0E42BBC01D3D541F004783EE /* UpdateLastEvent.swift */,
+				0EF10D0A1D2DB53F00C6441C /* Settings.swift */,
+				0EF10D0E1D2DB60C00C6441C /* Methods.swift */,
+				0EF10D0C1D2DB57200C6441C /* CareGiver.swift */,
+				0E622CE01D2D88170001B8DE /* Main.storyboard */,
+				0E622CE31D2D88170001B8DE /* Assets.xcassets */,
+				0E4AE83B1D3D84AC00E4580E /* LaunchScreen.storyboard */,
+				0E622CE81D2D88170001B8DE /* Info.plist */,
+			);
+			path = "Seizure Monitoring";
+			sourceTree = "<group>";
+		};
+		0E622CF01D2D88170001B8DE /* Seizure MonitoringTests */ = {
+			isa = PBXGroup;
+			children = (
+				0E622CF11D2D88170001B8DE /* Seizure_MonitoringTests.swift */,
+				0E622CF31D2D88170001B8DE /* Info.plist */,
+			);
+			path = "Seizure MonitoringTests";
+			sourceTree = "<group>";
+		};
+		0E622CFB1D2D88170001B8DE /* Seizure MonitoringUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0E622CFC1D2D88170001B8DE /* Seizure_MonitoringUITests.swift */,
+				0E622CFE1D2D88170001B8DE /* Info.plist */,
+			);
+			path = "Seizure MonitoringUITests";
+			sourceTree = "<group>";
+		};
+		0E622D051D2D88170001B8DE /* Seizure Monitoring WatchKit App */ = {
+			isa = PBXGroup;
+			children = (
+				0E622D061D2D88170001B8DE /* Interface.storyboard */,
+				0E622D091D2D88170001B8DE /* Assets.xcassets */,
+				0E622D0B1D2D88170001B8DE /* Info.plist */,
+			);
+			path = "Seizure Monitoring WatchKit App";
+			sourceTree = "<group>";
+		};
+		0E622D141D2D88170001B8DE /* Seizure Monitoring WatchKit Extension */ = {
+			isa = PBXGroup;
+			children = (
+				0E622D171D2D88170001B8DE /* InterfaceController.swift */,
+				0E622D191D2D88170001B8DE /* ExtensionDelegate.swift */,
+				0E622D1B1D2D88170001B8DE /* NotificationController.swift */,
+				0E622D1D1D2D88170001B8DE /* Assets.xcassets */,
+				0E622D1F1D2D88170001B8DE /* Info.plist */,
+				0E622D151D2D88170001B8DE /* Supporting Files */,
+			);
+			path = "Seizure Monitoring WatchKit Extension";
+			sourceTree = "<group>";
+		};
+		0E622D151D2D88170001B8DE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0E622D161D2D88170001B8DE /* PushNotificationPayload.apns */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0E622D331D2D89310001B8DE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0ED7D3B31D2F28C100D86AE3 /* MapKit.framework */,
+				0E622D341D2D89310001B8DE /* HealthKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0E622CD81D2D88160001B8DE /* Seizure Monitoring */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E622D2A1D2D88170001B8DE /* Build configuration list for PBXNativeTarget "Seizure Monitoring" */;
+			buildPhases = (
+				0E622CD51D2D88160001B8DE /* Sources */,
+				0E622CD61D2D88160001B8DE /* Frameworks */,
+				0E622CD71D2D88160001B8DE /* Resources */,
+				0E622D291D2D88170001B8DE /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0E622D041D2D88170001B8DE /* PBXTargetDependency */,
+			);
+			name = "Seizure Monitoring";
+			productName = "Seizure Monitoring";
+			productReference = 0E622CD91D2D88160001B8DE /* Seizure Monitoring.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0E622CEC1D2D88170001B8DE /* Seizure MonitoringTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E622D2D1D2D88170001B8DE /* Build configuration list for PBXNativeTarget "Seizure MonitoringTests" */;
+			buildPhases = (
+				0E622CE91D2D88170001B8DE /* Sources */,
+				0E622CEA1D2D88170001B8DE /* Frameworks */,
+				0E622CEB1D2D88170001B8DE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0E622CEF1D2D88170001B8DE /* PBXTargetDependency */,
+			);
+			name = "Seizure MonitoringTests";
+			productName = "Seizure MonitoringTests";
+			productReference = 0E622CED1D2D88170001B8DE /* Seizure MonitoringTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0E622CF71D2D88170001B8DE /* Seizure MonitoringUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E622D301D2D88170001B8DE /* Build configuration list for PBXNativeTarget "Seizure MonitoringUITests" */;
+			buildPhases = (
+				0E622CF41D2D88170001B8DE /* Sources */,
+				0E622CF51D2D88170001B8DE /* Frameworks */,
+				0E622CF61D2D88170001B8DE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0E622CFA1D2D88170001B8DE /* PBXTargetDependency */,
+			);
+			name = "Seizure MonitoringUITests";
+			productName = "Seizure MonitoringUITests";
+			productReference = 0E622CF81D2D88170001B8DE /* Seizure MonitoringUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		0E622D001D2D88170001B8DE /* Seizure Monitoring WatchKit App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E622D261D2D88170001B8DE /* Build configuration list for PBXNativeTarget "Seizure Monitoring WatchKit App" */;
+			buildPhases = (
+				0E622CFF1D2D88170001B8DE /* Resources */,
+				0E622D251D2D88170001B8DE /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0E622D131D2D88170001B8DE /* PBXTargetDependency */,
+			);
+			name = "Seizure Monitoring WatchKit App";
+			productName = "Seizure Monitoring WatchKit App";
+			productReference = 0E622D011D2D88170001B8DE /* Seizure Monitoring WatchKit App.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		0E622D0F1D2D88170001B8DE /* Seizure Monitoring WatchKit Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E622D221D2D88170001B8DE /* Build configuration list for PBXNativeTarget "Seizure Monitoring WatchKit Extension" */;
+			buildPhases = (
+				0E622D0C1D2D88170001B8DE /* Sources */,
+				0E622D0D1D2D88170001B8DE /* Frameworks */,
+				0E622D0E1D2D88170001B8DE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Seizure Monitoring WatchKit Extension";
+			productName = "Seizure Monitoring WatchKit Extension";
+			productReference = 0E622D101D2D88170001B8DE /* Seizure Monitoring WatchKit Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0E622CD11D2D88160001B8DE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = Gabriel;
+				TargetAttributes = {
+					0E622CD81D2D88160001B8DE = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = M234R3V5WK;
+						DevelopmentTeamName = "Gabriel Nahum (Personal Team)";
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					0E622CEC1D2D88170001B8DE = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = M234R3V5WK;
+						DevelopmentTeamName = "Gabriel Nahum (Personal Team)";
+						ProvisioningStyle = Automatic;
+						TestTargetID = 0E622CD81D2D88160001B8DE;
+					};
+					0E622CF71D2D88170001B8DE = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = M234R3V5WK;
+						DevelopmentTeamName = "Gabriel Nahum (Personal Team)";
+						ProvisioningStyle = Automatic;
+						TestTargetID = 0E622CD81D2D88160001B8DE;
+					};
+					0E622D001D2D88170001B8DE = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = M234R3V5WK;
+						DevelopmentTeamName = "Gabriel Nahum (Personal Team)";
+						ProvisioningStyle = Automatic;
+					};
+					0E622D0F1D2D88170001B8DE = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = M234R3V5WK;
+						DevelopmentTeamName = "Gabriel Nahum (Personal Team)";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 0E622CD41D2D88160001B8DE /* Build configuration list for PBXProject "Seizure Monitoring" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0E622CD01D2D88160001B8DE;
+			productRefGroup = 0E622CDA1D2D88170001B8DE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0E622CD81D2D88160001B8DE /* Seizure Monitoring */,
+				0E622CEC1D2D88170001B8DE /* Seizure MonitoringTests */,
+				0E622CF71D2D88170001B8DE /* Seizure MonitoringUITests */,
+				0E622D001D2D88170001B8DE /* Seizure Monitoring WatchKit App */,
+				0E622D0F1D2D88170001B8DE /* Seizure Monitoring WatchKit Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0E622CD71D2D88160001B8DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E4AE83D1D3D84AC00E4580E /* LaunchScreen.storyboard in Resources */,
+				0E622CE41D2D88170001B8DE /* Assets.xcassets in Resources */,
+				0E622CE21D2D88170001B8DE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E622CEB1D2D88170001B8DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E622CF61D2D88170001B8DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E622CFF1D2D88170001B8DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E622D0A1D2D88170001B8DE /* Assets.xcassets in Resources */,
+				0E622D081D2D88170001B8DE /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E622D0E1D2D88170001B8DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E622D1E1D2D88170001B8DE /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0E622CD51D2D88160001B8DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EF10D0B1D2DB53F00C6441C /* Settings.swift in Sources */,
+				0E622CDF1D2D88170001B8DE /* ViewController.swift in Sources */,
+				0EF10D0D1D2DB57200C6441C /* CareGiver.swift in Sources */,
+				0E42BBC11D3D541F004783EE /* UpdateLastEvent.swift in Sources */,
+				0EF10D0F1D2DB60C00C6441C /* Methods.swift in Sources */,
+				0E622CDD1D2D88170001B8DE /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E622CE91D2D88170001B8DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E622CF21D2D88170001B8DE /* Seizure_MonitoringTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E622CF41D2D88170001B8DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E622CFD1D2D88170001B8DE /* Seizure_MonitoringUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E622D0C1D2D88170001B8DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E622D1C1D2D88170001B8DE /* NotificationController.swift in Sources */,
+				0E622D1A1D2D88170001B8DE /* ExtensionDelegate.swift in Sources */,
+				0E622D181D2D88170001B8DE /* InterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0E622CEF1D2D88170001B8DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0E622CD81D2D88160001B8DE /* Seizure Monitoring */;
+			targetProxy = 0E622CEE1D2D88170001B8DE /* PBXContainerItemProxy */;
+		};
+		0E622CFA1D2D88170001B8DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0E622CD81D2D88160001B8DE /* Seizure Monitoring */;
+			targetProxy = 0E622CF91D2D88170001B8DE /* PBXContainerItemProxy */;
+		};
+		0E622D041D2D88170001B8DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0E622D001D2D88170001B8DE /* Seizure Monitoring WatchKit App */;
+			targetProxy = 0E622D031D2D88170001B8DE /* PBXContainerItemProxy */;
+		};
+		0E622D131D2D88170001B8DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0E622D0F1D2D88170001B8DE /* Seizure Monitoring WatchKit Extension */;
+			targetProxy = 0E622D121D2D88170001B8DE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0E4AE83B1D3D84AC00E4580E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0E4AE83C1D3D84AC00E4580E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		0E622CE01D2D88170001B8DE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0E622CE11D2D88170001B8DE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		0E622D061D2D88170001B8DE /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0E622D071D2D88170001B8DE /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0E622D201D2D88170001B8DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0E622D211D2D88170001B8DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0E622D231D2D88170001B8DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				INFOPLIST_FILE = "Seizure Monitoring WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-Monitoring.watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
+			};
+			name = Debug;
+		};
+		0E622D241D2D88170001B8DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				INFOPLIST_FILE = "Seizure Monitoring WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-Monitoring.watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
+			};
+			name = Release;
+		};
+		0E622D271D2D88170001B8DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				IBSC_MODULE = Seizure_Monitoring_WatchKit_Extension;
+				INFOPLIST_FILE = "Seizure Monitoring WatchKit App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-Monitoring.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
+			};
+			name = Debug;
+		};
+		0E622D281D2D88170001B8DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				IBSC_MODULE = Seizure_Monitoring_WatchKit_Extension;
+				INFOPLIST_FILE = "Seizure Monitoring WatchKit App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-Monitoring.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
+			};
+			name = Release;
+		};
+		0E622D2B1D2D88170001B8DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Seizure Monitoring/Seizure Monitoring.entitlements";
+				INFOPLIST_FILE = "Seizure Monitoring/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-Monitoring";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0E622D2C1D2D88170001B8DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Seizure Monitoring/Seizure Monitoring.entitlements";
+				INFOPLIST_FILE = "Seizure Monitoring/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-Monitoring";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0E622D2E1D2D88170001B8DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Seizure MonitoringTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-MonitoringTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Seizure Monitoring.app/Seizure Monitoring";
+			};
+			name = Debug;
+		};
+		0E622D2F1D2D88170001B8DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Seizure MonitoringTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-MonitoringTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Seizure Monitoring.app/Seizure Monitoring";
+			};
+			name = Release;
+		};
+		0E622D311D2D88170001B8DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Seizure MonitoringUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-MonitoringUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = "Seizure Monitoring";
+			};
+			name = Debug;
+		};
+		0E622D321D2D88170001B8DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Seizure MonitoringUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-MonitoringUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = "Seizure Monitoring";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0E622CD41D2D88160001B8DE /* Build configuration list for PBXProject "Seizure Monitoring" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E622D201D2D88170001B8DE /* Debug */,
+				0E622D211D2D88170001B8DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0E622D221D2D88170001B8DE /* Build configuration list for PBXNativeTarget "Seizure Monitoring WatchKit Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E622D231D2D88170001B8DE /* Debug */,
+				0E622D241D2D88170001B8DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0E622D261D2D88170001B8DE /* Build configuration list for PBXNativeTarget "Seizure Monitoring WatchKit App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E622D271D2D88170001B8DE /* Debug */,
+				0E622D281D2D88170001B8DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0E622D2A1D2D88170001B8DE /* Build configuration list for PBXNativeTarget "Seizure Monitoring" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E622D2B1D2D88170001B8DE /* Debug */,
+				0E622D2C1D2D88170001B8DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0E622D2D1D2D88170001B8DE /* Build configuration list for PBXNativeTarget "Seizure MonitoringTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E622D2E1D2D88170001B8DE /* Debug */,
+				0E622D2F1D2D88170001B8DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0E622D301D2D88170001B8DE /* Build configuration list for PBXNativeTarget "Seizure MonitoringUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E622D311D2D88170001B8DE /* Debug */,
+				0E622D321D2D88170001B8DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0E622CD11D2D88160001B8DE /* Project object */;
+}
