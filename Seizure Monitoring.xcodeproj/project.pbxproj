@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E42BBC11D3D541F004783EE /* UpdateLastEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E42BBC01D3D541F004783EE /* UpdateLastEvent.swift */; };
+		0E46C7361D4694A300BB5E3D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E46C7351D4694A300BB5E3D /* CoreLocation.framework */; };
 		0E4AE83D1D3D84AC00E4580E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E4AE83B1D3D84AC00E4580E /* LaunchScreen.storyboard */; };
 		0E622CDD1D2D88170001B8DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E622CDC1D2D88170001B8DE /* AppDelegate.swift */; };
 		0E622CDF1D2D88170001B8DE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E622CDE1D2D88170001B8DE /* ViewController.swift */; };
@@ -24,10 +25,10 @@
 		0E622D1C1D2D88170001B8DE /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E622D1B1D2D88170001B8DE /* NotificationController.swift */; };
 		0E622D1E1D2D88170001B8DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E622D1D1D2D88170001B8DE /* Assets.xcassets */; };
 		0E622D351D2D89310001B8DE /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E622D341D2D89310001B8DE /* HealthKit.framework */; };
-		0ED7D3B41D2F28C100D86AE3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED7D3B31D2F28C100D86AE3 /* MapKit.framework */; };
 		0EF10D0B1D2DB53F00C6441C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF10D0A1D2DB53F00C6441C /* Settings.swift */; };
 		0EF10D0D1D2DB57200C6441C /* CareGiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF10D0C1D2DB57200C6441C /* CareGiver.swift */; };
 		0EF10D0F1D2DB60C00C6441C /* Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF10D0E1D2DB60C00C6441C /* Methods.swift */; };
+		C0D708E41D4FC12900C4E7B1 /* SeizureMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D708E31D4FC12900C4E7B1 /* SeizureMonitoring.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 
 /* Begin PBXFileReference section */
 		0E42BBC01D3D541F004783EE /* UpdateLastEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateLastEvent.swift; sourceTree = "<group>"; };
+		0E46C7351D4694A300BB5E3D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		0E4AE83C1D3D84AC00E4580E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "../Seizure Alert/Seizure Alert/Base.lproj/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		0E622CD91D2D88160001B8DE /* Seizure Monitoring.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Seizure Monitoring.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E622CDC1D2D88170001B8DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 		0EF10D0A1D2DB53F00C6441C /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		0EF10D0C1D2DB57200C6441C /* CareGiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareGiver.swift; sourceTree = "<group>"; };
 		0EF10D0E1D2DB60C00C6441C /* Methods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Methods.swift; sourceTree = "<group>"; };
+		C0D708E31D4FC12900C4E7B1 /* SeizureMonitoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeizureMonitoring.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0ED7D3B41D2F28C100D86AE3 /* MapKit.framework in Frameworks */,
+				0E46C7361D4694A300BB5E3D /* CoreLocation.framework in Frameworks */,
 				0E622D351D2D89310001B8DE /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,8 +190,8 @@
 				0E622CDE1D2D88170001B8DE /* ViewController.swift */,
 				0E42BBC01D3D541F004783EE /* UpdateLastEvent.swift */,
 				0EF10D0A1D2DB53F00C6441C /* Settings.swift */,
-				0EF10D0E1D2DB60C00C6441C /* Methods.swift */,
 				0EF10D0C1D2DB57200C6441C /* CareGiver.swift */,
+				0EF10D0E1D2DB60C00C6441C /* Methods.swift */,
 				0E622CE01D2D88170001B8DE /* Main.storyboard */,
 				0E622CE31D2D88170001B8DE /* Assets.xcassets */,
 				0E4AE83B1D3D84AC00E4580E /* LaunchScreen.storyboard */,
@@ -230,6 +233,7 @@
 			children = (
 				0E622D171D2D88170001B8DE /* InterfaceController.swift */,
 				0E622D191D2D88170001B8DE /* ExtensionDelegate.swift */,
+				C0D708E31D4FC12900C4E7B1 /* SeizureMonitoring.swift */,
 				0E622D1B1D2D88170001B8DE /* NotificationController.swift */,
 				0E622D1D1D2D88170001B8DE /* Assets.xcassets */,
 				0E622D1F1D2D88170001B8DE /* Info.plist */,
@@ -249,6 +253,7 @@
 		0E622D331D2D89310001B8DE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0E46C7351D4694A300BB5E3D /* CoreLocation.framework */,
 				0ED7D3B31D2F28C100D86AE3 /* MapKit.framework */,
 				0E622D341D2D89310001B8DE /* HealthKit.framework */,
 			);
@@ -359,8 +364,8 @@
 				TargetAttributes = {
 					0E622CD81D2D88160001B8DE = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = M234R3V5WK;
-						DevelopmentTeamName = "Gabriel Nahum (Personal Team)";
+						DevelopmentTeam = C4476XT64Z;
+						DevelopmentTeamName = "TARBUT V'TORAH COMMUNITY DAY SCHOOL";
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -390,14 +395,14 @@
 					};
 					0E622D001D2D88170001B8DE = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = M234R3V5WK;
-						DevelopmentTeamName = "Gabriel Nahum (Personal Team)";
+						DevelopmentTeam = C4476XT64Z;
+						DevelopmentTeamName = "TARBUT V'TORAH COMMUNITY DAY SCHOOL";
 						ProvisioningStyle = Automatic;
 					};
 					0E622D0F1D2D88170001B8DE = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = M234R3V5WK;
-						DevelopmentTeamName = "Gabriel Nahum (Personal Team)";
+						DevelopmentTeam = C4476XT64Z;
+						DevelopmentTeamName = "TARBUT V'TORAH COMMUNITY DAY SCHOOL";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -505,6 +510,7 @@
 				0E622D1C1D2D88170001B8DE /* NotificationController.swift in Sources */,
 				0E622D1A1D2D88170001B8DE /* ExtensionDelegate.swift in Sources */,
 				0E622D181D2D88170001B8DE /* InterfaceController.swift in Sources */,
+				C0D708E41D4FC12900C4E7B1 /* SeizureMonitoring.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

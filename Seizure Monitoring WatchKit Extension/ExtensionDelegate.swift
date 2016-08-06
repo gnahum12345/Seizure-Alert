@@ -7,15 +7,24 @@
 //
 
 import WatchKit
+import WatchConnectivity
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
-
+    let monitoring = SeizureMonitoring()
+    var phone: String? = nil
+    var name: String? = nil
+    var careGiver: [String]? = nil
+    var lastEventTime: NSDate? = nil
+    
+    //let events: UserDefaults? = nil
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
     }
 
     func applicationDidBecomeActive() {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+//        monitoring.monitor()
+        
     }
 
     func applicationWillResignActive() {
@@ -25,6 +34,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
 
     func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
         // Sent when the system needs to launch the application in the background to process tasks. Tasks arrive in a set, so loop through and process each one.
+        //monitoring.monitor()
         backgroundTasks.forEach { (task) in
             // Process the background task
             
@@ -32,5 +42,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
             task.setTaskCompleted()
         }
     }
+    
+    
+    
 
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11129.15" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11173.2" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11103.10"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11143.2"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -162,7 +162,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tMq-GW-SB1">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Heart" translatesAutoresizingMaskIntoConstraints="NO" id="tMq-GW-SB1">
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="tMq-GW-SB1" secondAttribute="height" multiplier="1:1" id="B8e-JP-TbT"/>
                                         </constraints>
@@ -253,11 +253,13 @@
                     </view>
                     <connections>
                         <outlet property="careGiver" destination="WYu-Oc-Rmc" id="PKj-Y7-dd6"/>
+                        <outlet property="day" destination="CHf-sb-cIa" id="Dly-6A-d9Q"/>
                         <outlet property="dur" destination="RfQ-Es-to3" id="C0n-jg-uXr"/>
                         <outlet property="endTime" destination="1nr-Dl-xLp" id="zpQ-sw-YpZ"/>
                         <outlet property="history" destination="5Ld-Df-1cU" id="XSP-mv-aIy"/>
                         <outlet property="lastEvent" destination="UPH-Jh-Eb0" id="z3l-1I-crQ"/>
                         <outlet property="maxHR" destination="ccK-Hf-jgr" id="teV-n1-4fn"/>
+                        <outlet property="month" destination="bXv-CZ-fWj" id="K9a-fv-WKy"/>
                         <outlet property="name" destination="w50-k6-kf0" id="tha-1I-sez"/>
                         <outlet property="phone" destination="Y6a-n1-7pD" id="UPC-cT-wRt"/>
                         <outlet property="sliderValue" destination="frO-6O-i4u" id="its-p6-bvZ"/>
@@ -321,7 +323,7 @@
                                 <frame key="frameInset" minY="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="H99-Ek-FBW" id="ioN-iH-KRy">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -433,7 +435,7 @@
                                         <frame key="frameInset" minY="28" width="383" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wWX-6v-UMy" id="eBh-rk-lUv">
-                                            <frame key="frameInset" width="383" height="49"/>
+                                            <frame key="frameInset" width="383" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -477,6 +479,9 @@
             <point key="canvasLocation" x="678" y="493"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Heart" width="111" height="105"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Wz7-UR-Rpf"/>
     </inferredMetricsTieBreakers>

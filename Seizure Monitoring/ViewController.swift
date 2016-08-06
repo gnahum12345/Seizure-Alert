@@ -28,26 +28,49 @@ class ViewController: UIViewController {
     @IBAction func name(_ sender: UIButton) {
         let change = UIAlertController(title: "Change Primary Caregiver", message: "Change your primary caregiver", preferredStyle: UIAlertControllerStyle.actionSheet)
         let app = UIApplication.shared().delegate as! AppDelegate
-        
-        if app.careGiversArray == nil {
-            app.careGiversArray = [CareGiver]()
+        let defaults = app.careGiverFile
+        if (defaults.array(forKey: "CareGiverNames") != nil && defaults.array(forKey: "CareGiverNumbers") != nil ){
+            let careGiverNames = defaults.array(forKey: "CareGiverNames") as? [String]
+            let careGiverNumbers = defaults.array(forKey: "CareGiverNumbers") as? [String]
+            let care = getCareGivers(names: careGiverNames,numbers: careGiverNumbers)
+            
+//        if app.careGiversArray == nil {
+//            app.careGiversArray = [CareGiver]()
+//        }
+//        let care = app.careGiversArray
+            for i in care {
+                change.addAction(UIAlertAction(title: i.getName(), style: UIAlertActionStyle.default, handler:{(UIAlertAction) in self.careGiverSelected(i)}))
+            }
         }
-        let care = app.careGiversArray
-        for i in care! {
-            change.addAction(UIAlertAction(title: i.getName()!, style: UIAlertActionStyle.default, handler:{(UIAlertAction) in self.careGiverSelected(i)}))
-        }
-        
         change.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.cancel, handler:handleCancel))
         self.present(change, animated: true, completion: {
             print("Asked user = complete")
         })
 
     }
+    func getCareGivers(names: [String]?, numbers: [String]?) -> [CareGiver]{
+        var careGiverArray  = [CareGiver]()
+        if names == nil && numbers == nil {
+            return careGiverArray
+        }
+        if names?.count == 0 && numbers?.count == 0 {
+            return careGiverArray
+        }
+        let length = names!.count
+        for i in 0...length-1 {
+            careGiverArray.append(CareGiver(name: names![i], number: numbers![i]))
+        }
+        return careGiverArray
+    }
+        
     func handleCancel(_ alertView: UIAlertAction!)
     {
         
     }
     func callCareGiver(){
+        if self.phone.currentTitle! == "Number" {
+            return
+        }
         let urlString = "tel:" + self.phone.currentTitle!
         print("Phone number: " + urlString)
         // let url = NSURL(fileURLWithPath: urlString)
@@ -62,7 +85,65 @@ class ViewController: UIViewController {
         let phone = sender.getNumber()
         self.phone.setTitle(phone, for: UIControlState(rawValue: UInt(0)))
         self.name.setTitle(name, for: UIControlState(rawValue: UInt(0)))
+        let appDelegate = UIApplication.shared().delegate as! AppDelegate
+        appDelegate.careGiver.set(name, forKey: "Name of CareGiverSelected")
+        appDelegate.careGiver.set(phone, forKey: "Phone of CareGiverSelected")
         
+        
+        
+    }
+    func updateCareGiverButton(){
+        let app = UIApplication.shared().delegate as! AppDelegate
+        let name = app.careGiver.object(forKey: "Name of CareGiverSelected") as? String
+        let number = app.careGiver.object(forKey: "Phone of CareGiverSelected") as? String
+        let names = app.careGiverFile.array(forKey: "CareGiverNames") as? [String]
+        let numbers = app.careGiverFile.array(forKey: "CareGiverNumbers") as? [String]
+//        self.phone.setTitle(number!, for: UIControlState(rawValue: UInt(0)))
+//        self.name.setTitle(name!, for: UIControlState(rawValue: UInt(0)))
+//        if self.name.currentTitle == "" {
+//            self.name.setTitle("Name", for: UIControlState(rawValue:UInt(0)))
+//        }
+//        if self.phone.currentTitle == "" {
+//            self.phone.setTitle("Number", for: UIControlState(rawValue:UInt(0)))
+//        }
+
+        var cont = false
+        if name != nil && number != nil {
+            if names != nil {
+                if names?.count != 0 {
+                    print(names?.count)
+                    for i in names!{
+                        if i == name {
+                            cont = true
+                        }
+                    }
+                
+                    if !cont {
+                        self.name.setTitle(names?[0], for: UIControlState(rawValue: UInt(0)))
+                        self.phone.setTitle(numbers?[0], for: UIControlState(rawValue: UInt(0)))
+                    }else{
+                        self.name.setTitle(name!, for: UIControlState(rawValue: UInt(0)))
+                        self.phone.setTitle(number!, for: UIControlState(rawValue: UInt(0)))
+                    }
+                }else{
+                    self.name.setTitle("Name", for: UIControlState(rawValue: UInt(0)))
+                    self.phone.setTitle("Number", for: UIControlState(rawValue: UInt(0)))
+                }
+            }
+        }else{
+            if names != nil {
+                if names!.count != 0 {
+                    self.name.setTitle(names?[0], for: UIControlState(rawValue: UInt(0)))
+                    self.phone.setTitle(numbers?[0], for: UIControlState(rawValue: UInt(0)))
+                }else{
+                    self.name.setTitle("Name", for: UIControlState(rawValue: UInt(0)))
+                    self.phone.setTitle("Number", for: UIControlState(rawValue: UInt(0)))
+                }
+            }else{
+                self.name.setTitle("Name", for: UIControlState(rawValue: UInt(0)))
+                self.phone.setTitle("Number", for: UIControlState(rawValue: UInt(0)))
+            }
+        }
     }
     
     @IBOutlet var name: UIButton!
@@ -85,8 +166,10 @@ class ViewController: UIViewController {
         self.lastEvent.addGestureRecognizer(tapGestureLastEvent)
         self.history.addGestureRecognizer(tapGestureHistory)
         self.careGiver.addGestureRecognizer(tapGestureCareGiver)
-       // let update = UpdateLastEvent(hr: maxHR, dur: dur, sTime: startTime, eTime: endTime, type: type)
-       // update.update()
+        updateCareGiverButton()
+        let update = UpdateLastEvent(hr: maxHR, dur: dur, sTime: startTime, eTime: endTime, type: type, month: month, day: day)
+        update.update()
+        print("I'm in viewcontroller")
     }
     
     @IBOutlet var maxHR: UILabel!
@@ -94,6 +177,8 @@ class ViewController: UIViewController {
     @IBOutlet var startTime: UILabel!
     @IBOutlet var endTime: UILabel!
     @IBOutlet var type: UILabel!
+    @IBOutlet var month: UILabel!
+    @IBOutlet var day: UILabel!
     
     
     func lastEventScene(){

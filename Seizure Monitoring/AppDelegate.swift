@@ -20,9 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,  WCSessionDelegate {
     var careGiversArray: [CareGiver]?
     var methods: [Methods]?
     var textMessage: String?
-    let careGiverFile = UserDefaults.standard()
-    let events = UserDefaults.standard()
-
+    let careGiverFile = UserDefaults.standard
+    let events = UserDefaults.standard
+    let careGiver = UserDefaults.standard
+    
     
     //TODO: create conversasion between appdelegate and watch.
     //TODO: create new file to store events.

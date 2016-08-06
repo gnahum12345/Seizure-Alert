@@ -8,9 +8,51 @@
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Seizure_Monitoring_WatchKit_App" customModuleProvider="target"/>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Seizure_Monitoring_WatchKit_App" customModuleProvider="target">
+                    <items>
+                        <label alignment="left" text="Last Event:" id="nfK-pP-etv">
+                            <gestureRecognizers>
+                                <tapGestureRecognizer id="Qf6-T0-gGg">
+                                    <precedingGestureRecognizers/>
+                                    <connections>
+                                        <action selector="moveToMovie:" destination="AgC-eL-Hgc" id="f3Q-Kp-wFo"/>
+                                    </connections>
+                                </tapGestureRecognizer>
+                            </gestureRecognizers>
+                        </label>
+                        <label alignment="left" text="mm/dd/yy, hh:ss am" minimumScaleFactor="0.10000000000000001" id="Zup-mO-ia4">
+                            <gestureRecognizers>
+                                <tapGestureRecognizer id="Y7w-zh-F7e">
+                                    <precedingGestureRecognizers/>
+                                    <connections>
+                                        <action selector="moveToMovie:" destination="AgC-eL-Hgc" id="TFg-Fd-Qcr"/>
+                                    </connections>
+                                </tapGestureRecognizer>
+                            </gestureRecognizers>
+                        </label>
+                        <button width="1" height="101" alignment="left" backgroundImage="CareGiver" id="mGA-QB-eJ8">
+                            <connections>
+                                <action selector="callCareGiver" destination="AgC-eL-Hgc" id="v2W-VQ-dII"/>
+                            </connections>
+                        </button>
+                    </items>
+                    <connections>
+                        <outlet property="date" destination="Zup-mO-ia4" id="dAC-QK-LoZ"/>
+                    </connections>
+                </controller>
             </objects>
             <point key="canvasLocation" x="220" y="345"/>
+        </scene>
+        <!--Movie-->
+        <scene sceneID="N41-4c-1Nt">
+            <objects>
+                <controller identifier="Movie" title="Movie" id="b6N-TG-b7o">
+                    <items>
+                        <movie width="1" height="165" alignment="left" id="1eN-P0-vV4"/>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="437" y="346"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="AEw-b0-oYE">

@@ -118,18 +118,27 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         
         let appDelegate = UIApplication.shared().delegate as! AppDelegate
         let defaults = appDelegate.careGiverFile
-        if (defaults.dictionary(forKey: "CareGiverData") == nil ){
+        if (defaults.array(forKey: "CareGiverNames") != nil && defaults.array(forKey: "CareGiverNumbers") != nil ){
+            let careGiverNames = defaults.array(forKey: "CareGiverNames") as? [String]
+            let careGiverNumbers = defaults.array(forKey: "CareGiverNumbers") as? [String]
+            careGivers = getCareGivers(names: careGiverNames, numbers: careGiverNumbers)
+            
+            
+        }else{
             //Caregivers will be empty
             careGivers.removeAll()
-        }else{
-            let careGiverData = defaults.dictionary(forKey: "CareGiverData")
-            print(careGiverData!)
-            print(careGiverData!.count)
-            print(sizeof(CareGiver.self))
-            
-            careGivers = getCareGiver(careGiverData: careGiverData!)
-            
         }
+            
+//            let careGiverData = defaults.dictionary(forKey: "CareGiverData")
+//            print(careGiverData!)
+//            print(careGiverData!.count)
+//            print(sizeof(CareGiver.self))
+//            
+//            careGivers = getCareGiver(careGiverData: careGiverData!)
+
+            
+            
+        
         //FIX: delete appDelegate.careGiversArray and use only defaults.
         
         //        if appDelegate.careGiversArray != nil {
@@ -142,22 +151,36 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         myTableView.dataSource = self
         myTableView.separatorStyle = .none
         myTableView.rowHeight = 55
-        
-        
     }
-    func getCareGiver(careGiverData: [String: AnyObject])->[CareGiver]{
-        var c = [CareGiver]()
-        var num:AnyObject = ""
-        var name:AnyObject = ""
-        for i in 0...careGiverData.count{
-            num = careGiverData[String(i) + "Number"]!
-            name = careGiverData[String(i)+"Name"]!
-            c.append(CareGiver(name: name as! String, number: num as! String))
-            
+
+    func getCareGivers(names: [String]?, numbers: [String]?) -> [CareGiver]{
+        var careGiverArray  = [CareGiver]()
+        if names == nil || numbers == nil {
+            return careGiverArray
         }
-        return c
-        
+        if names?.count == 0 && numbers?.count == 0 {
+            return careGiverArray
+        }
+        let length = names!.count
+        for i in 0...length-1 {
+            careGiverArray.append(CareGiver(name: names![i], number: numbers![i]))
+        }
+        return careGiverArray
     }
+    //
+//    func getCareGiver(careGiverData: [String: AnyObject])->[CareGiver]{
+//        var c = [CareGiver]()
+//        var num:AnyObject = ""
+//        var name:AnyObject = ""
+//        for i in 0...careGiverData.count{
+//            num = careGiverData[String(i) + "Number"]!
+//            name = careGiverData[String(i)+"Name"]!
+//            c.append(CareGiver(name: name as! String, number: num as! String))
+//            
+//        }
+//        return c
+//        
+//    }
     //    var loc: CLLocation?
     //    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     //        if let location = locations.first {
@@ -220,9 +243,9 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
             myTableView.deleteRows(at: [indexPath], with: .left)
             
         }
-        let app = UIApplication.shared().delegate as! AppDelegate
-        app.careGiversArray = careGivers
-        
+//        let app = UIApplication.shared().delegate as! AppDelegate
+//        app.careGiversArray = careGivers
+//        
     }
     
     // method to run when table view cell is tapped
@@ -291,9 +314,18 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
     func deleteCareGiver(_ indexPath: Int){
         careGivers.remove(at: indexPath)
         myTableView.reloadData()
-        let app = UIApplication.shared().delegate as! AppDelegate
-        app.careGiversArray = careGivers
-        
+        let names = getCareGiverNames()
+        let numbers = getCareGiverNumbers()
+        let appDelegate = UIApplication.shared().delegate as! AppDelegate
+        let d = appDelegate.careGiverFile
+        d.setValue(names, forKey: "CareGiverNames")
+        d.setValue(numbers, forKey: "CareGiverNumbers")
+//        let app = UIApplication.shared().delegate as! AppDelegate
+//        if careGivers.count == 0 {
+//            app.careGiversArray = nil
+//        }else{
+//            app.careGiversArray = careGivers
+//        }
     }
     
     func callCareGiver(_ indexPath: Int){
@@ -345,8 +377,8 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
     func updateCareGiver(_ indexPath: Int){
         let care = CareGiver(name: self.nameField.text!, number: self.numberField.text!)
         careGivers[indexPath] = care
-        let app = UIApplication.shared().delegate as! AppDelegate
-        app.careGiversArray = careGivers
+//        let app = UIApplication.shared().delegate as! AppDelegate
+//        app.careGiversArray = careGivers
         myTableView.reloadData()
     }
     
@@ -566,10 +598,14 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         
         let appDelegate = UIApplication.shared().delegate as! AppDelegate
         
-        appDelegate.careGiversArray = careGivers
+        //appDelegate.careGiversArray = careGivers
         let d = appDelegate.careGiverFile
-        let data = setDataCareGiver()
-        d.setPersistentDomain(data, forName: "CareGiverData")
+        //let data = setDataCareGiver()
+        let names = getCareGiverNames()
+        let numbers = getCareGiverNumbers()
+        d.setValue(names, forKey: "CareGiverNames")
+        d.setValue(numbers, forKey: "CareGiverNumbers")
+     //   d.setPersistentDomain(data, forName: "CareGiverData")
         print(d.dictionaryRepresentation())
         
         //TODO: see if defaults has caregivers stored.
@@ -580,16 +616,31 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         self.present(resultViewController, animated:true, completion:nil)
         
     }
-    func setDataCareGiver()->[String:AnyObject]{
-        var data:[String:AnyObject] = [:]
-        var count = 0
+    func getCareGiverNumbers()->[String]{
+        var numbers = [String]()
         for i in careGivers{
-            let keyName = String(count) + "Name"
-            let keyNumber = String(count) + "Number"
-            data.updateValue(i.getName()!, forKey: keyName)
-            data.updateValue(i.getNumber()!, forKey: keyNumber)
-            count += 1
+            numbers.append(i.getNumber()!)
         }
-        return data
+        return numbers
     }
+    func getCareGiverNames()->[String]{
+        var name = [String]()
+        for i in careGivers{
+            name.append(i.getName()!)
+        }
+        return name
+    }
+    
+//    func setDataCareGiver()->[String:AnyObject]{
+//        var data:[String:AnyObject] = [:]
+//        var count = 0
+//        for i in careGivers{
+//            let keyName = String(count) + "Name"
+//            let keyNumber = String(count) + "Number"
+//            data.updateValue(i.getName()!, forKey: keyName)
+//            data.updateValue(i.getNumber()!, forKey: keyNumber)
+//            count += 1
+//        }
+//        return data
+//    }
 }

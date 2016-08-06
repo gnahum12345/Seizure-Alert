@@ -7,15 +7,39 @@
 //
 
 import WatchKit
+import WatchConnectivity
 import Foundation
-
 
 class InterfaceController: WKInterfaceController {
 
     override func awake(withContext context: AnyObject?) {
         super.awake(withContext: context)
-        
+        updateLastEvent()
         // Configure interface objects here.
+        print("The watch is on")
+    }
+
+    @IBOutlet var date: WKInterfaceLabel!
+
+    @IBAction func callCareGiver() {
+        let extensionDelegate = WKExtension.shared().delegate as! ExtensionDelegate
+        let phoneNumber = extensionDelegate.phone
+        if let telURL = URL(string: "tel:\(phoneNumber)"){
+            WKExtension.shared().openSystemURL(telURL)
+        }
+    }
+    func updateLastEvent(){
+        let extensionDelegate = WKExtension.shared().delegate as! ExtensionDelegate
+        let lastEvent = extensionDelegate.lastEventTime
+        if lastEvent == nil {
+            date.setText("None!")
+        }else{
+//            date.setText(lastEvent)
+        }
+        
+    }
+    @IBAction func moveToMovie(_ sender: AnyObject) {
+        //TODO: move to movie scene.
     }
     
     override func willActivate() {
