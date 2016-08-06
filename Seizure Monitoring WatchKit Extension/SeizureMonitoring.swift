@@ -15,7 +15,7 @@ import CoreFoundation
 import CoreLocation
 
 
-class SeizureMonitoring : WKInterfaceController, CLLocationManagerDelegate {
+class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
     //FIX: location manager
    // let locationManager = CLLocationManager()
     let motionManager = CMMotionManager()
@@ -151,8 +151,8 @@ class SeizureMonitoring : WKInterfaceController, CLLocationManagerDelegate {
         if countTick % 10 == 0 {
             // delete this afterwards.
             if countAcc >= minRateOfSeizure {
-                print("Seconds \(countTick/10)")
-                print("CountAcc: \(countAcc) \nCountElapse: \(countElapse)")
+                //print("Seconds \(countTick/10)")
+               // print("CountAcc: \(countAcc) \nCountElapse: \(countElapse)")
                 countAcc = 0
                 countElapse += 1
             }else{
@@ -160,6 +160,7 @@ class SeizureMonitoring : WKInterfaceController, CLLocationManagerDelegate {
                 countElapse = 0
             }
             if countElapse >= minTimeForSeizure {
+                //
                 print("The user might be having a seizure \n send notification, if notification = true then seizure start is true.")
                 seizureStart = true
                 print(seizureStart)
@@ -168,6 +169,7 @@ class SeizureMonitoring : WKInterfaceController, CLLocationManagerDelegate {
         }
         
         if seizureStart {
+            callCareGiver()
             if((abs(accX) < 1) && (abs(accY) < 1) && (abs(accZ) < 1)){
                 countCalmAcc += 1
             }
@@ -190,7 +192,7 @@ class SeizureMonitoring : WKInterfaceController, CLLocationManagerDelegate {
             }
         }
         //    let seizure = ["CountAcc": countAcc, "CountElapse":countElapse, "countTick":countTick]
-        print(countTick)
+        //print(countTick)
         
         
     }
@@ -247,6 +249,12 @@ class SeizureMonitoring : WKInterfaceController, CLLocationManagerDelegate {
         sumHeartRate += quantity.doubleValue(for: heartRateUnit)
         repetitions += 1
     }
-
+    func callCareGiver(){
+        let eD = WKExtension.shared().delegate as! ExtensionDelegate
+        let phone = eD.phone!
+        if let telURL = URL(string: "tel:\(phone)"){
+            WKExtension.shared().openSystemURL(telURL)
+        }
+    }
     
 }

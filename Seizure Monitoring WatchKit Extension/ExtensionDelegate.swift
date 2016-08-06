@@ -11,8 +11,9 @@ import WatchConnectivity
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
     let monitoring = SeizureMonitoring()
-    var phone: String? = nil
-    var name: String? = nil
+    //FIX: Change
+    var phone: String? = "9498610220"
+    var name: String? = "Abba"
     var careGiver: [String]? = nil
     var lastEventTime: NSDate? = nil
     
