@@ -132,14 +132,14 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
     var countAcc = 0
     var countTick = 0
     let minRateOfSeizure = 3 // change accordingly
-    let minTimeForSeizure = 10 // change
+    let minTimeForSeizure = 4 // change
     var seizureStart = false
     var countCalmAcc = 0
     var countCalmElapse = 0
     var maxHeartRate = 0.0
     var sumHeartRate = 0.0
     var repetitions = 0
-    
+    var called = false
     func updateLabelsAcc(accX: Double, accY: Double, accZ: Double){
         //FIX: Add HeartRate to if Seizure Start and Gyro data.
         countTick += 1
@@ -169,7 +169,12 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
         }
         
         if seizureStart {
-            callCareGiver()
+            if !called {
+                if countElapse >= minTimeForSeizure + 5 {
+                    callCareGiver()
+                    called = true
+                }
+            }
             if((abs(accX) < 1) && (abs(accY) < 1) && (abs(accZ) < 1)){
                 countCalmAcc += 1
             }
@@ -184,6 +189,7 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
                 }
                 if countCalmElapse >= 20 {
                     seizureStart = false
+                    called = false
                     appendEvent()
                     
                     print("sending info to cloud")
