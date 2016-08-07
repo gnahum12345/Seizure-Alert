@@ -396,8 +396,8 @@
                                                 <action selector="back:" destination="DbR-hr-SL6" id="VnW-Ug-VW3"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="+" id="KYd-Ah-S5M">
-                                            <inset key="imageInsets" minX="4" minY="6" maxX="5" maxY="8"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Add" width="8" id="KYd-Ah-S5M">
+                                            <inset key="imageInsets" minX="4" minY="5" maxX="4" maxY="8"/>
                                             <connections>
                                                 <action selector="changeNumbers:" destination="DbR-hr-SL6" id="WUO-b4-ilF"/>
                                             </connections>

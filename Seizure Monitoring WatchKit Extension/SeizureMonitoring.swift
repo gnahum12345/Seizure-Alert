@@ -29,6 +29,17 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
     override init(){
         super.init()
         print("SeizureMonitoring init")
+        guard HKHealthStore.isHealthDataAvailable() else {
+            return
+        }
+        let dataTypes = Set([heartRateType])
+        
+        healthStore.requestAuthorization(toShare: nil, read: dataTypes) { (success, error) -> Void in
+            guard success else {
+                return
+            }
+        }
+
         //let delegate = WKExtension.shared().delegate as! ExtensionDelegate
         //TODO: get phone number of CareGiver
         
@@ -63,16 +74,16 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
     func monitor(){
         motionManager.gyroUpdateInterval = 0.1
         motionManager.accelerometerUpdateInterval = 0.1
-        guard HKHealthStore.isHealthDataAvailable() else {
-            return
-        }
-        let dataTypes = Set([heartRateType])
-        
-        healthStore.requestAuthorization(toShare: nil, read: dataTypes) { (success, error) -> Void in
-            guard success else {
-                return
-            }
-        }
+//        guard HKHealthStore.isHealthDataAvailable() else {
+//            return
+//        }
+//        let dataTypes = Set([heartRateType])
+//        
+//        healthStore.requestAuthorization(toShare: nil, read: dataTypes) { (success, error) -> Void in
+//            guard success else {
+//                return
+//            }
+//        }
         
         // For use if having a seizure
 //        self.locationManager.requestAlwaysAuthorization()
@@ -131,8 +142,10 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
     var countElapse = 0
     var countAcc = 0
     var countTick = 0
+    let minCalmElapse = 10
+    let minPerecentOfCalmness = 70
     let minRateOfSeizure = 3 // change accordingly
-    let minTimeForSeizure = 4 // change
+    let minTimeForSeizure = 3 // change
     var seizureStart = false
     var countCalmAcc = 0
     var countCalmElapse = 0
@@ -140,6 +153,7 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
     var sumHeartRate = 0.0
     var repetitions = 0
     var called = false
+    
     func updateLabelsAcc(accX: Double, accY: Double, accZ: Double){
         //FIX: Add HeartRate to if Seizure Start and Gyro data.
         countTick += 1
@@ -170,16 +184,14 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
         
         if seizureStart {
             if !called {
-                if countElapse >= minTimeForSeizure + 5 {
-                    callCareGiver()
-                    called = true
-                }
+                textCareGiver()
+                called = true
             }
             if((abs(accX) < 1) && (abs(accY) < 1) && (abs(accZ) < 1)){
                 countCalmAcc += 1
             }
             if countTick % 10 == 0 {
-                if countCalmAcc > 7 {
+                if countCalmAcc > (minPerecentOfCalmness/10) { // 70% of 1 second the user is calm.
                     countCalmAcc = 0
                     countCalmElapse += 1
                     
@@ -187,7 +199,7 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
                     countCalmAcc = 0
                     countCalmElapse = 0
                 }
-                if countCalmElapse >= 20 {
+                if countCalmElapse >= minCalmElapse {
                     seizureStart = false
                     called = false
                     appendEvent()
@@ -255,12 +267,13 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
         sumHeartRate += quantity.doubleValue(for: heartRateUnit)
         repetitions += 1
     }
-    func callCareGiver(){
+    func textCareGiver(){
         let eD = WKExtension.shared().delegate as! ExtensionDelegate
         let phone = eD.phone!
-        if let telURL = URL(string: "tel:\(phone)"){
+        if let telURL = URL(string: "sms:\(phone)"){
             WKExtension.shared().openSystemURL(telURL)
         }
     }
+
     
 }

@@ -49,7 +49,7 @@ class UpdateLastEvent {
             endTime.text = "hh:mm"
             type.text = ""
             month.text = "Month"
-            day.text = "Day"
+            day.text = "n/a"
             
 
         }

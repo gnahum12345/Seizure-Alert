@@ -8,7 +8,6 @@
 
 import UIKit
 import CallKit
-
 extension Float {
     func string(fractionDigits:Int) -> String {
         let formatter = NumberFormatter()
@@ -152,9 +151,37 @@ class ViewController: UIViewController {
     @IBAction func phoneNumber(_ sender: UIButton) {
         let alert = UIAlertController(title: "Call caregiver", message: nil , preferredStyle: UIAlertControllerStyle.actionSheet)
         alert.addAction(UIAlertAction(title: "Call", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.callCareGiver()}))
+        alert.addAction(UIAlertAction(title: "Text", style: UIAlertActionStyle.default, handler: {(UIAlertAction)in self.textCareGiver()}))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {(UIAlertAction)in }))
         self.present(alert, animated: true, completion:{})
     }
+    var swiftRequest = SwiftRequest()
+    func textCareGiver(){
+        if self.phone.currentTitle! == "Number" {
+            return
+        }
+//        let urlString = "tel:" + self.phone.currentTitle!
+        //TODO: Text
+        print(self.phone.currentTitle!)
+        let data = [
+            "To" : "9498610220",
+            "From" : "19497937646",
+            "Body" : "Hello world"
+        ]
+        swiftRequest.post(url: "https://api.twilio.com/2010-04-01/Accounts/ACc968690090dfe344514fdcf9f88eed89/Messages",
+                          data: data,
+                          auth: ["username" : "ACc968690090dfe344514fdcf9f88eed89", "password" : "bf63f3f76348a9949b64974a3f422b51"],
+                          callback: {err, response, body in
+                            if err == nil {
+                                print("Success: \(response)")
+                            } else {
+                                print("Error: (err)")
+                            }
+        })
+        
+    }
+        
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -169,6 +196,7 @@ class ViewController: UIViewController {
         updateCareGiverButton()
         let update = UpdateLastEvent(hr: maxHR, dur: dur, sTime: startTime, eTime: endTime, type: type, month: month, day: day)
         update.update()
+        
         print("I'm in viewcontroller")
     }
     
