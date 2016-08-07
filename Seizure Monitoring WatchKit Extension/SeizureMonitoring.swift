@@ -270,9 +270,26 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
     func textCareGiver(){
         let eD = WKExtension.shared().delegate as! ExtensionDelegate
         let phone = eD.phone!
-        if let telURL = URL(string: "sms:\(phone)"){
-            WKExtension.shared().openSystemURL(telURL)
-        }
+//        if let telURL = URL(string: "sms:\(phone)"){
+//            WKExtension.shared().openSystemURL(telURL)
+//        }
+        let swiftRequest = SwiftRequest()
+        let data = [
+            "To" : phone,
+            "From" : "19497937646",
+            "Body" : "Help!!"
+        ]
+        swiftRequest.post(url: "https://api.twilio.com/2010-04-01/Accounts/ACc968690090dfe344514fdcf9f88eed89/Messages",
+                          data: data,
+                          auth: ["username" : "ACc968690090dfe344514fdcf9f88eed89", "password" : "bf63f3f76348a9949b64974a3f422b51"],
+                          callback: {err, response, body in
+                            if err == nil {
+                                print("Success: \(response)")
+                            } else {
+                                print("Error: (err)")
+                            }
+        })
+
     }
 
     

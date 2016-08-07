@@ -29,6 +29,7 @@
 		0EF10D0D1D2DB57200C6441C /* CareGiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF10D0C1D2DB57200C6441C /* CareGiver.swift */; };
 		0EF10D0F1D2DB60C00C6441C /* Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF10D0E1D2DB60C00C6441C /* Methods.swift */; };
 		C00CA69D1D56BB79007673A9 /* SwiftRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00CA69C1D56BB79007673A9 /* SwiftRequest.swift */; };
+		C00CA69F1D56D2FA007673A9 /* SwiftRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00CA69E1D56D2FA007673A9 /* SwiftRequest.swift */; };
 		C0D708E41D4FC12900C4E7B1 /* SeizureMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D708E31D4FC12900C4E7B1 /* SeizureMonitoring.swift */; };
 		C0F736341D5685AD00B22C5A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0F736331D5685AD00B22C5A /* HealthKit.framework */; };
 		C0F736361D569A7600B22C5A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0F736331D5685AD00B22C5A /* HealthKit.framework */; };
@@ -124,6 +125,7 @@
 		0EF10D0C1D2DB57200C6441C /* CareGiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareGiver.swift; sourceTree = "<group>"; };
 		0EF10D0E1D2DB60C00C6441C /* Methods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Methods.swift; sourceTree = "<group>"; };
 		C00CA69C1D56BB79007673A9 /* SwiftRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRequest.swift; sourceTree = "<group>"; };
+		C00CA69E1D56D2FA007673A9 /* SwiftRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRequest.swift; sourceTree = "<group>"; };
 		C0D708E31D4FC12900C4E7B1 /* SeizureMonitoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeizureMonitoring.swift; sourceTree = "<group>"; };
 		C0F736301D5685AB00B22C5A /* Seizure Monitoring WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		C0F736331D5685AD00B22C5A /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -249,6 +251,7 @@
 		0E622D141D2D88170001B8DE /* Seizure Monitoring WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				C00CA69E1D56D2FA007673A9 /* SwiftRequest.swift */,
 				C0F736301D5685AB00B22C5A /* Seizure Monitoring WatchKit Extension.entitlements */,
 				0E622D171D2D88170001B8DE /* InterfaceController.swift */,
 				0E622D191D2D88170001B8DE /* ExtensionDelegate.swift */,
@@ -546,6 +549,7 @@
 				0E622D1A1D2D88170001B8DE /* ExtensionDelegate.swift in Sources */,
 				0E622D181D2D88170001B8DE /* InterfaceController.swift in Sources */,
 				C0D708E41D4FC12900C4E7B1 /* SeizureMonitoring.swift in Sources */,
+				C00CA69F1D56D2FA007673A9 /* SwiftRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

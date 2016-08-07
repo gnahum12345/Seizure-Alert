@@ -149,7 +149,7 @@ class ViewController: UIViewController {
     @IBOutlet var phone: UIButton!
     
     @IBAction func phoneNumber(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Call caregiver", message: nil , preferredStyle: UIAlertControllerStyle.actionSheet)
+        let alert = UIAlertController(title: "Contact caregiver", message: nil , preferredStyle: UIAlertControllerStyle.actionSheet)
         alert.addAction(UIAlertAction(title: "Call", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.callCareGiver()}))
         alert.addAction(UIAlertAction(title: "Text", style: UIAlertActionStyle.default, handler: {(UIAlertAction)in self.textCareGiver()}))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {(UIAlertAction)in }))
@@ -164,7 +164,7 @@ class ViewController: UIViewController {
         //TODO: Text
         print(self.phone.currentTitle!)
         let data = [
-            "To" : "9498610220",
+            "To" : self.phone.currentTitle!,
             "From" : "19497937646",
             "Body" : "Hello world"
         ]
