@@ -19,7 +19,8 @@ class InterfaceController: WKInterfaceController {
         print("The watch is on")
         let eD = WKExtension.shared().delegate as! ExtensionDelegate
         eD.monitoring.monitor()
-//
+// 
+        eD.monitoring.setDate(date: date)
     }
 
     @IBOutlet var date: WKInterfaceLabel!

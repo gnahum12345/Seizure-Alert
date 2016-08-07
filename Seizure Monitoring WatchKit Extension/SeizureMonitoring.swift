@@ -26,8 +26,11 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
     let workoutConfiguration = HKWorkoutConfiguration()
     var longitude = 0.0
     var latitude = 0.0
-    
-    let locationManager = CLLocationManager()
+    var date: WKInterfaceLabel!
+    func setDate(date: WKInterfaceLabel!){
+        self.date = date
+    }
+  //  let locationManager = CLLocationManager()
     override init(){
         super.init()
         print("SeizureMonitoring init")
@@ -43,21 +46,18 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
         }
         
         // Ask for Authorisation from the User.
-    //    self.locationManager.requestAlwaysAuthorization()
+//        self.locationManager.requestAlwaysAuthorization()
 
-//        // For use in foreground
-        self.locationManager.requestWhenInUseAuthorization()
         
-        if  CLLocationManager.locationServicesEnabled(){
-            print("Im in if")
-        //    locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-           // locationManager.startUpdatingLocation()
-            print(locationManager)
-        }
+        
+//        if  CLLocationManager.locationServicesEnabled(){
+//        //    print("Im in if")
+//       //     locationManager.delegate = self
+//            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//         //   locationManager.startUpdatingLocation()
+//            print(locationManager.location?.coordinate.latitude)
+//        }
 
-        //let delegate = WKExtension.shared().delegate as! ExtensionDelegate
-        //TODO: get phone number of CareGiver
         
     }
 //    private func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
@@ -109,13 +109,13 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
 //        }
         
         // For use if having a seizure
-        self.locationManager.requestAlwaysAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        }
-        
+//        self.locationManager.requestAlwaysAuthorization()
+//        
+//        if CLLocationManager.locationServicesEnabled() {
+//            locationManager.delegate = self
+//            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        }
+//        
         
         if motionManager.isGyroAvailable {
             let handler: CMGyroHandler = {(data: CMGyroData?, error: NSError?) -> Void in
@@ -168,7 +168,7 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
     let minCalmElapse = 10
     let minPerecentOfCalmness = 70
     let minRateOfSeizure = 4 // change accordingly
-    let minAccOfSeizure = 3.0
+    let minAccOfSeizure = 2.0 //SENSITIVITY
     let minTimeForSeizure = 3 // change
     var seizureStart = false
     var countCalmAcc = 0
@@ -180,6 +180,7 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
     
     func updateLabelsAcc(accX: Double, accY: Double, accZ: Double){
         //FIX: Add HeartRate to if Seizure Start and Gyro data.
+        
         countTick += 1
         if((abs(accX) > minAccOfSeizure) || (abs(accY) > minAccOfSeizure) || (abs(accZ) > minAccOfSeizure)){
             // print("Acc:\nX: \(accX)\nY: \(accY)\nZ: \(accZ)")
@@ -218,8 +219,7 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
                 if countCalmAcc > (minPerecentOfCalmness/10) { // 70% of 1 second the user is calm.
                     countCalmAcc = 0
                     countCalmElapse += 1
-                    
-                }else{
+                 }else{
                     countCalmAcc = 0
                     countCalmElapse = 0
                 }
@@ -298,7 +298,7 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
 //            WKExtension.shared().openSystemURL(telURL)
 //        }
         let swiftRequest = SwiftRequest()
-        getCoordinates()
+        
         let data = [
             "To" : phone,
             "From" : "19497937646",
@@ -310,17 +310,12 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
                           callback: {err, response, body in
                             if err == nil {
                                 print("Success: \(response)")
+                                self.date.setText(NSDate.description())
                             } else {
                                 print("Error: (err)")
                             }
         })
 
     }
-    func getCoordinates() {
-        latitude = (locationManager.location?.coordinate.latitude)!
-        longitude = (locationManager.location?.coordinate.longitude)!
-    }
-
-
     
 }

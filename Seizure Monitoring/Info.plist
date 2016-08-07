@@ -37,7 +37,7 @@
 	</array>
 	<key>NSContactsUsageDescription</key>
 	<string>The information gathered here will be used to set a caregivers information.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
+	<key>NSLocationAlwaysUsageDescription</key>
 	<string>The information gathered will be sent to the caregivers. </string>
 	<key>UIBackgroundModes</key>
 	<array>

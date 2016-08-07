@@ -10,7 +10,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring/ViewController.swift"
-            timestampString = "492225962.116153"
+            timestampString = "492294566.409872"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
+            landmarkName = "ViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Seizure Monitoring/ViewController.swift"
+            timestampString = "492294566.409872"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "209"
@@ -26,27 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring/ViewController.swift"
-            timestampString = "492225962.116153"
+            timestampString = "492294566.409872"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
-            landmarkName = "ViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Seizure Monitoring/ViewController.swift"
-            timestampString = "492225962.116153"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "213"
-            endingLineNumber = "213"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
             landmarkName = "lastEventScene()"
             landmarkType = "7">
          </BreakpointContent>
@@ -54,7 +54,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring WatchKit Extension/ExtensionDelegate.swift"
@@ -67,14 +67,14 @@
             landmarkType = "3">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "Seizure_Monitoring_WatchKit_Extension.ExtensionDelegate.monitoring.getter : Seizure_Monitoring_WatchKit_Extension.SeizureMonitoring"
                   moduleName = "Seizure Monitoring WatchKit Extension"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Gabriel/XcodeProject/Seizure%20Monitoring/Seizure%20Monitoring%20WatchKit%20Extension/ExtensionDelegate.swift"
-                  timestampString = "492291977.052286"
+                  timestampString = "492297842.059505"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "13"
@@ -82,14 +82,14 @@
                   offsetFromSymbolStart = "44">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "Seizure_Monitoring_WatchKit_Extension.ExtensionDelegate.init () -&gt; Seizure_Monitoring_WatchKit_Extension.ExtensionDelegate"
                   moduleName = "Seizure Monitoring WatchKit Extension"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Gabriel/XcodeProject/Seizure%20Monitoring/Seizure%20Monitoring%20WatchKit%20Extension/ExtensionDelegate.swift"
-                  timestampString = "492291977.058626"
+                  timestampString = "492297842.063122"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "13"
@@ -150,20 +150,20 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring WatchKit Extension/SeizureMonitoring.swift"
-            timestampString = "492291975.336227"
+            timestampString = "492296744.356659"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
             landmarkName = "SeizureMonitoring"
             landmarkType = "3">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "Seizure_Monitoring_WatchKit_Extension.SeizureMonitoring.locationManager.getter : __ObjC.CLLocationManager"
@@ -178,7 +178,7 @@
                   offsetFromSymbolStart = "44">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "Seizure_Monitoring_WatchKit_Extension.SeizureMonitoring.init () -&gt; Seizure_Monitoring_WatchKit_Extension.SeizureMonitoring"
@@ -304,6 +304,22 @@
             startingLineNumber = "82"
             endingLineNumber = "82"
             landmarkName = "request(options:callback:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Seizure Monitoring WatchKit Extension/SeizureMonitoring.swift"
+            timestampString = "492299586.937749"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
+            landmarkName = "textCareGiver()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
