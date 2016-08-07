@@ -4,7 +4,8 @@
 //
 //  Created by Ricky Robinett on 6/20/14.
 //  Copyright (c) 2015 Ricky Robinett. All rights reserved.
-//
+// Converted to Swift 3.0 on 8/8/16 By Gabriel Nahum
+
 
 import Foundation
 
