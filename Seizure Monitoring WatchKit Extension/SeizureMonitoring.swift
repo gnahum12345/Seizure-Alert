@@ -17,7 +17,6 @@ import CoreLocation
 
 class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
     //FIX: location manager
-   // let locationManager = CLLocationManager()
     let motionManager = CMMotionManager()
     let healthStore = HKHealthStore()
     let heartRateType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
@@ -25,7 +24,10 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
     var heartRateQuery: HKQuery?
     var session: HKWorkoutSession?
     let workoutConfiguration = HKWorkoutConfiguration()
+    var longitude = 0.0
+    var latitude = 0.0
     
+    let locationManager = CLLocationManager()
     override init(){
         super.init()
         print("SeizureMonitoring init")
@@ -39,11 +41,32 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
                 return
             }
         }
+        
+        // Ask for Authorisation from the User.
+    //    self.locationManager.requestAlwaysAuthorization()
+
+//        // For use in foreground
+        self.locationManager.requestWhenInUseAuthorization()
+        
+        if  CLLocationManager.locationServicesEnabled(){
+            print("Im in if")
+        //    locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+           // locationManager.startUpdatingLocation()
+            print(locationManager)
+        }
 
         //let delegate = WKExtension.shared().delegate as! ExtensionDelegate
         //TODO: get phone number of CareGiver
         
     }
+//    private func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+//        let userLocation:CLLocation = locations[0] as! CLLocation
+//        longitude = userLocation.coordinate.longitude;
+//        latitude = userLocation.coordinate.latitude;
+//        print("Latitude: \(latitude) \nLongitude: \(longitude)")
+//        //Do What ever you want with it
+//    }
     
     func getisWorkoutOn()->(Bool,String){
         if session?.state == HKWorkoutSessionState.running {
@@ -86,13 +109,13 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
 //        }
         
         // For use if having a seizure
-//        self.locationManager.requestAlwaysAuthorization()
-//        
-//        if CLLocationManager.locationServicesEnabled() {
-//            locationManager.delegate = self
-//            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        }
-//        
+        self.locationManager.requestAlwaysAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        }
+        
         
         if motionManager.isGyroAvailable {
             let handler: CMGyroHandler = {(data: CMGyroData?, error: NSError?) -> Void in
@@ -131,10 +154,10 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
         
     }
     
-    @objc(locationManager:didUpdateLocations:) func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
-    }
+//    @objc(locationManager:didUpdateLocations:) func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+//        print("locations = \(locValue.latitude) \(locValue.longitude)")
+//    }
     
     func updateLabelsGyro(gyroX: Double, gyroY: Double, gyroZ: Double){
         print("Gyro:\nX: \(gyroX)\nY: \(gyroY)\nZ: \(gyroZ)")
@@ -144,7 +167,8 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
     var countTick = 0
     let minCalmElapse = 10
     let minPerecentOfCalmness = 70
-    let minRateOfSeizure = 3 // change accordingly
+    let minRateOfSeizure = 4 // change accordingly
+    let minAccOfSeizure = 3.0
     let minTimeForSeizure = 3 // change
     var seizureStart = false
     var countCalmAcc = 0
@@ -157,7 +181,7 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
     func updateLabelsAcc(accX: Double, accY: Double, accZ: Double){
         //FIX: Add HeartRate to if Seizure Start and Gyro data.
         countTick += 1
-        if((abs(accX) > 1) || (abs(accY) > 1) || (abs(accZ) > 1)){
+        if((abs(accX) > minAccOfSeizure) || (abs(accY) > minAccOfSeizure) || (abs(accZ) > minAccOfSeizure)){
             // print("Acc:\nX: \(accX)\nY: \(accY)\nZ: \(accZ)")
             countAcc += 1
         }
@@ -274,10 +298,11 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
 //            WKExtension.shared().openSystemURL(telURL)
 //        }
         let swiftRequest = SwiftRequest()
+        getCoordinates()
         let data = [
             "To" : phone,
             "From" : "19497937646",
-            "Body" : "Help!!"
+            "Body" : "Possible Seizure!! \(NSDate())\nMy location is: \nhttps://www.google.com/maps/@\(latitude),\(longitude)"
         ]
         swiftRequest.post(url: "https://api.twilio.com/2010-04-01/Accounts/ACc968690090dfe344514fdcf9f88eed89/Messages",
                           data: data,
@@ -291,6 +316,11 @@ class SeizureMonitoring : NSObject,  CLLocationManagerDelegate {
         })
 
     }
+    func getCoordinates() {
+        latitude = (locationManager.location?.coordinate.latitude)!
+        longitude = (locationManager.location?.coordinate.longitude)!
+    }
+
 
     
 }

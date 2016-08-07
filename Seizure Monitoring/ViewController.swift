@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     @IBOutlet var lastEvent: UIView!
     @IBOutlet var history: UIView!
     @IBOutlet var careGiver: UIView!
-    
+
     @IBAction func name(_ sender: UIButton) {
         let change = UIAlertController(title: "Change Primary Caregiver", message: "Change your primary caregiver", preferredStyle: UIAlertControllerStyle.actionSheet)
         let app = UIApplication.shared().delegate as! AppDelegate
@@ -182,7 +182,6 @@ class ViewController: UIViewController {
     }
         
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -196,7 +195,7 @@ class ViewController: UIViewController {
         updateCareGiverButton()
         let update = UpdateLastEvent(hr: maxHR, dur: dur, sTime: startTime, eTime: endTime, type: type, month: month, day: day)
         update.update()
-        
+    
         print("I'm in viewcontroller")
     }
     

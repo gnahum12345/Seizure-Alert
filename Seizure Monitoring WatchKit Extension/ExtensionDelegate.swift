@@ -16,15 +16,43 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     var name: String? = "Abba"
     var careGiver: [String]? = nil
     var lastEventTime: NSDate? = nil
-    
     //let events: UserDefaults? = nil
+   //    let locationManager = CLLocationManager()
+    
+    //let delegate = WKExtension.shared().delegate as! ExtensionDelegate
+    //TODO: get phone number of CareGiver
+    
+//    var latitude = 0.0
+//    var longitude = 0.0
+
+//    private func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+//    let userLocation:CLLocation = locations[0] as! CLLocation
+//        longitude = userLocation.coordinate.longitude;
+//        latitude = userLocation.coordinate.latitude;
+//        print("Latitude: \(latitude) \nLongitude: \(longitude)")
+//        //Do What ever you want with it
+//    }
+    
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
+        // For use in foreground
+//        locationManager.requestWhenInUseAuthorization()
+//        
+//        if  CLLocationManager.locationServicesEnabled(){
+//            print("Im in if")
+//            locationManager.delegate = self
+//            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//            locationManager.startUpdatingLocation()
+//            print(locationManager.location?.coordinate.latitude)
+//            print(locationManager.location?.coordinate.longitude)
+//            
+//        }
+
     }
 
     func applicationDidBecomeActive() {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        monitoring.monitor()
+  //      monitoring.monitor()
         
     }
 
