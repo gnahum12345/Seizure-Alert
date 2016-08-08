@@ -8,13 +8,12 @@
 
 import UIKit
 import HealthKit
-import WatchConnectivity
 //import ResearchKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate,  WCSessionDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate  {
     
-    
+    var count = 0
     var window: UIWindow?
     var snooze = false
     var careGiversArray: [CareGiver]?
@@ -23,8 +22,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate,  WCSessionDelegate {
     let careGiverFile = UserDefaults.standard
     let events = UserDefaults.standard
     let careGiver = UserDefaults.standard
-    
-    
+    var latitude: Double?
+    var longitude: Double?
+
+    func getLatitude()-> Double? {
+        return latitude
+    }
+    func getLongitude()-> Double? {
+        return longitude
+    }
+
     //TODO: create conversasion between appdelegate and watch.
     //TODO: create new file to store events.
     
@@ -71,39 +78,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,  WCSessionDelegate {
     }
     
     
-    func sessionWatchStateDidChange(_ session: WCSession) {
-//        print(#function)
-//        print(session)
-//        print("reachable:\(session.isReachable)")
-    }
     
-//    func session(_ session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void)->(){
-//        print(#function)
-//        guard message["request"] as? String == "fireLocalNotification" else {return}
-//        
-//        let localNotification = UILocalNotification()
-//        localNotification.alertBody = "Message Received!"
-//        localNotification.fireDate = Date()
-//        localNotification.soundName = UILocalNotificationDefaultSoundName;
-//        
-//        UIApplication.shared().scheduleLocalNotification(localNotification)
-//    }
-    
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: NSError?) {
-        //
-    }
-    
-    //    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: NSError?) {
-    //
-    //    }
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        
-    }
-    func sessionDidDeactivate(_ session: WCSession) {
-        
-    }
-    func session(_ session: WCSession, didReceive file: WCSessionFile) {
-    }
+
     
 }
 

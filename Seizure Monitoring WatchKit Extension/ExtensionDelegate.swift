@@ -7,23 +7,20 @@
 //
 
 import WatchKit
-import WatchConnectivity
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
     let monitoring = SeizureMonitoring()
     //FIX: Change
-    var phone: String? = "9498610220"
-    var name: String? = "Abba"
-    var careGiver: [String]? = nil
     var lastEventTime: NSDate? = nil
+    
     //let events: UserDefaults? = nil
    //    let locationManager = CLLocationManager()
     
     //let delegate = WKExtension.shared().delegate as! ExtensionDelegate
     //TODO: get phone number of CareGiver
     
-//    var latitude = 0.0
-//    var longitude = 0.0
+    var latitude = 0.0
+    var longitude = 0.0
 
 //    private func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
 //    let userLocation:CLLocation = locations[0] as! CLLocation
@@ -73,6 +70,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     }
     
     
+
     
 
 }

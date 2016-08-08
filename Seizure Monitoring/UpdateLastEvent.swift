@@ -33,15 +33,17 @@ class UpdateLastEvent {
     func update(){
         let app = UIApplication.shared().delegate as! AppDelegate
         let e = app.events
-        let d = e.array(forKey: "lastEvent") as? [String]
+        let d = e.persistentDomain(forName: "Event \(app.count)")
+        
         if d != nil && d?.count == 7{
-            maxHR.text = d?[0]
-            dur.text = d?[1]
-            startTime.text = d?[2]
-            endTime.text = d?[3]
-            type.text = getType(str: d?[4])
-            month.text = d?[5]
-            day.text = d?[6]
+//            maxHR.text = d?[0]
+//            dur.text = d?[1]
+//            startTime.text = d?[2]
+//            endTime.text = d?[3]
+//            type.text = getType(str: d?[4])
+//            month.text = d?[5]
+//            day.text = d?[6]
+
         }else{
             maxHR.text = "---"
             dur.text = "---"

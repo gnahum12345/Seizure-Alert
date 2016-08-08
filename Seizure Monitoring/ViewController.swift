@@ -7,7 +7,9 @@
 //
 
 import UIKit
-import CallKit
+import WatchConnectivity
+import CoreLocation
+
 extension Float {
     func string(fractionDigits:Int) -> String {
         let formatter = NumberFormatter()
@@ -18,7 +20,7 @@ extension Float {
 }
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDelegate {
 
     @IBOutlet var lastEvent: UIView!
     @IBOutlet var history: UIView!
@@ -163,10 +165,13 @@ class ViewController: UIViewController {
 //        let urlString = "tel:" + self.phone.currentTitle!
         //TODO: Text
         print(self.phone.currentTitle!)
+        let latitude = self.appDelegate.latitude!
+        let longitude = self.appDelegate.longitude!
         let data = [
             "To" : self.phone.currentTitle!,
             "From" : "19497937646",
-            "Body" : "Hello world"
+            "Body" : "I am at:\nhttps://www.google.com/maps/dir//\(latitude),\(longitude)"
+ 
         ]
         swiftRequest.post(url: "https://api.twilio.com/2010-04-01/Accounts/ACc968690090dfe344514fdcf9f88eed89/Messages",
                           data: data,
@@ -195,7 +200,8 @@ class ViewController: UIViewController {
         updateCareGiverButton()
         let update = UpdateLastEvent(hr: maxHR, dur: dur, sTime: startTime, eTime: endTime, type: type, month: month, day: day)
         update.update()
-    
+        commonInit()
+        startUpdatingLocationAllowingBackground(commandedFromPhone: true)
         print("I'm in viewcontroller")
     }
     
@@ -256,7 +262,119 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: Properties
+    
+    /// Default WatchConnectivity session for communicating with the watch.
+    let session = WCSession.default()
+    
+    /// Location manager used to start and stop updating location.
+    let manager = CLLocationManager()
+    
+    func commonInit() {
+        session.delegate = self
+        session.activate()
+        // Initialize the `WCSession` and the `CLLocationManager`.
+        manager.delegate = self
+    }
+    func startUpdatingLocationAllowingBackground(commandedFromPhone: Bool) {
+        // When commanding from the phone, request authorization and inform the watch app of the state change.
+        manager.requestAlwaysAuthorization()
+       
+    
+        
+        manager.allowsBackgroundLocationUpdates = true
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.startUpdatingLocation()
+        print("Im updating")
+        manager.requestLocation()
+    }
+    let appDelegate = UIApplication.shared().delegate as! AppDelegate
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("Im in location manager")
+        for i in locations {
+            print(i.coordinate)
+            self.appDelegate.latitude = i.coordinate.latitude
+             self.appDelegate.longitude = i.coordinate.longitude
+        }
+        
+        
+    }
+    
+    /// Log any errors to the console.
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: NSError) {
+        print("Error occured: \(error.localizedDescription).")
+    }
 
+    //MARK: WCSessionDelegate methods
+    
+    /**
+     On the receipt of a message, check for expected commands.
+    */
+    func session(_ session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Swift.Void) {
+        
+        DispatchQueue.main.async {
+            switch message.keys.first! {
+                case "Seizure":
+                    self.sendText()
+                    break
+                case "Event":
+                    self.appendEvent()
+                    break
+            default:
+                break
+            }
+        }
+    }
+    /**
+     This determines whether the phone is actively connected to the watch.
+     If the activationState is active, do nothing. If the activation state is inactive,
+     temporarily disable location streaming by modifying the UI.
+     */
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: NSError?) {
+        print(error)
+    }
+    
 
+    func sessionDidBecomeInactive(_ session: WCSession) {
+
+    }
+    
+    func sessionDidDeactivate(_ session: WCSession) {
+    }
+    
+    func sessionWatchStateDidChange(_ session: WCSession) {
+        
+    }
+    func session(_ session: WCSession, didReceive file: WCSessionFile){
+        
+    }
+    func session(_ session: WCSession,didFinish userInfoTransfer: WCSessionUserInfoTransfer,error: NSError?){
+        
+    }
+    
+    //MARK: Connecting to caregivers
+    func sendText(){
+        let latitude = self.appDelegate.latitude!
+        let longitude = self.appDelegate.longitude!
+        let data = [
+            "To" : self.phone.currentTitle!,
+            "From" : "19497937646",
+            "Body" : "Possible Seizure!! \(NSDate().description)\nMy location is: \nhttps://www.google.com/maps/dir//\(latitude),\(longitude)"
+            
+        ]
+        swiftRequest.post(url: "https://api.twilio.com/2010-04-01/Accounts/ACc968690090dfe344514fdcf9f88eed89/Messages",
+                          data: data,
+                          auth: ["username" : "ACc968690090dfe344514fdcf9f88eed89", "password" : "bf63f3f76348a9949b64974a3f422b51"],
+                          callback: {err, response, body in
+                            if err == nil {
+                                print("Success: \(response)")
+                            } else {
+                                print("Error: (err)")
+                            }
+        })
+
+    }
+    func appendEvent(){}
 }
 
