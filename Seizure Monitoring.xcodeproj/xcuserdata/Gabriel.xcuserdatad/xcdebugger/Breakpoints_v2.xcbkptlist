@@ -287,8 +287,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "296"
             endingLineNumber = "296"
-            landmarkName = "updateLabelsAcc(accX:accY:accZ:)"
-            landmarkType = "7">
+            landmarkName = "SeizureMonitoring"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -319,7 +319,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "43"
             endingLineNumber = "43"
-            landmarkName = "init()"
+            landmarkName = "setDate(date:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring/ViewController.swift"
-            timestampString = "492378661.08233"
+            timestampString = "492383981.525266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "322"
-            endingLineNumber = "322"
+            startingLineNumber = "318"
+            endingLineNumber = "318"
             landmarkName = "session(_:didReceiveMessage:replyHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -346,12 +346,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring WatchKit Extension/SeizureMonitoring.swift"
-            timestampString = "492379514.468197"
+            timestampString = "492383981.525266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "450"
-            endingLineNumber = "450"
-            landmarkName = "sendMessageToText()"
+            startingLineNumber = "442"
+            endingLineNumber = "442"
+            landmarkName = "addSamples(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
