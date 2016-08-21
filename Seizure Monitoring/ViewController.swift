@@ -201,6 +201,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         commonInit()
         startUpdatingLocationAllowingBackground(commandedFromPhone: true)
         print("I'm in viewcontroller")
+    
     }
     
     
@@ -397,7 +398,48 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         let eTimeArr = arr["EndTime"]?.characters.split{$0 == " "}.map(String.init)
         let eTime = eTimeArr?[1]
         let day = arr["Day"]
-        let month = arr["Month"]
+        var month = arr["Month"]
+        switch month! {
+        case "1":
+            month = "January"
+            break
+        case "2":
+            month = "February"
+            break
+        case "3":
+            month = "April"
+            break
+        case "4":
+            month = "March"
+            break
+        case "5":
+            month = "May"
+            break
+        case "6":
+            month = "June"
+            break
+        case "7":
+            month = "July"
+            break
+        case "8":
+            month = "August"
+            break
+        case "9":
+            month = "September"
+            break
+        case "10":
+            month = "October"
+            break
+        case "11":
+            month = "November"
+            break
+        case "12":
+            month = "December"
+            break
+        default:
+            break
+            
+        }
         let duration = arr["Duration"]
         let maxhr = arr["MaxHR"]
         self.month.text = month!
@@ -406,7 +448,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         self.startTime.text = sTime!
         self.endTime.text = eTime!
         self.dur.text = duration!
-            
+        
     }
     
     func getDay(date: String)-> String {
