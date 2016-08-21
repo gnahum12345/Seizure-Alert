@@ -17,6 +17,7 @@ import CoreFoundation
 class SeizureMonitoring : NSObject, WCSessionDelegate {
     //FIX: location manager
     let motionManager = CMMotionManager()
+    let dateFormatter = DateFormatter()
     let healthStore = HKHealthStore()
     let heartRateType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
     let heartRateUnit = HKUnit(from: "count/min")
@@ -30,6 +31,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     var gyroData: [CMGyroData?] = [CMGyroData]()
     var sTime: String?
     var eTime: String?
+    var heartRateSamples = [Double]()
     func setDate(date: WKInterfaceLabel!){
         self.date = date
     }
@@ -57,7 +59,10 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
             WCsession!.delegate = self
             WCsession!.activate()
         }
-   
+        dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
+        dateFormatter.dateStyle = DateFormatter.Style.short//Set date style
+        dateFormatter.timeZone = TimeZone()
+
 //        locationManager.delegate = self
 //        let authorizationStatus = CLLocationManager.authorizationStatus()
 //        
@@ -273,7 +278,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     let minCalmElapse = 10
     let minPerecentOfCalmness = 70
     let minRateOfSeizure = 4 // change accordingly
-    let minAccOfSeizure = 2.0 //SENSITIVITY
+    let minAccOfSeizure = 1.0 //SENSITIVITY
     let minTimeForSeizure = 3 // change
     var seizureStart = false
     var countCalmAcc = 0
@@ -309,7 +314,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
                 print("The user might be having a seizure \n send notification, if notification = true then seizure start is true.")
                 seizureStart = true
                 if sTime == nil {
-                    sTime = NSDate().description
+                    sTime = dateFormatter.string(for: NSDate())
                 }
                 print(seizureStart)
                 
@@ -336,7 +341,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
                     seizureStart = false
                     called = false
                     if eTime == nil {
-                        eTime = NSDate().description
+                        eTime = dateFormatter.string(for: NSDate())
                         
                     }
                     print(eTime)
@@ -355,10 +360,16 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     
     func appendEvent(){
         //TODO: append event to array and send it to AppDelegate.
-        let s :[String:AnyObject] = ["StartTime":sTime!, "EndTime": eTime!]
+        let s :[String:AnyObject] = ["Event": true, "StartTime":sTime!, "EndTime": eTime!, "HeartRate": heartRateSamples]
         print(accData)
         print(gyroData)
         print(s)
+        WCsession!.sendMessage(s, replyHandler:  { replyDict in
+            print("reply \(replyDict)")
+            }, errorHandler: {error in
+                print("Error: \(error)")
+        })
+
 
     }
     // Ask for Authorisation from the User.
@@ -436,6 +447,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
             maxHeartRate = quantity.doubleValue(for: heartRateUnit)
         }
         print(quantity.doubleValue(for: heartRateUnit))
+        heartRateSamples.append(quantity.doubleValue(for: heartRateUnit))
         sumHeartRate += quantity.doubleValue(for: heartRateUnit)
         repetitions += 1
     }

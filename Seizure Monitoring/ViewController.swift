@@ -198,12 +198,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         self.history.addGestureRecognizer(tapGestureHistory)
         self.careGiver.addGestureRecognizer(tapGestureCareGiver)
         updateCareGiverButton()
-        let update = UpdateLastEvent(hr: maxHR, dur: dur, sTime: startTime, eTime: endTime, type: type, month: month, day: day)
-        update.update()
         commonInit()
         startUpdatingLocationAllowingBackground(commandedFromPhone: true)
         print("I'm in viewcontroller")
     }
+    
     
     @IBOutlet var maxHR: UILabel!
     @IBOutlet var dur: UILabel!
@@ -318,10 +317,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
                 case "Seizure":
                     self.sendText()
                     break
-                case "Event":
-                    self.appendEvent()
-                    break
             default:
+                self.appendEvent(message: message)
                 break
             }
         }
@@ -375,6 +372,79 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         })
 
     }
-    func appendEvent(){}
+    func appendEvent(message: [String:AnyObject]){
+        let sTime = message["StartTime"] as? String
+        let eTime = message["EndTime"] as? String
+        let hr = message["HeartRate"] as? [Double]
+        let app = UIApplication.shared().delegate as! AppDelegate
+        if ((sTime != nil) && (eTime != nil) && (hr != nil)){
+            let startTime = self.getTime(time: sTime!)
+            let endTime = self.getTime(time: eTime!)
+            let dur = self.getDuration(startTime: startTime, endTime: endTime)
+            let maxHR = self.getMaxHr(hr: hr!)
+            let day = self.getDay(date: sTime!)
+            let month = self.getMonth(date: sTime!)
+            let arr = ["StartTime": sTime!, "EndTime":eTime!, "Duration":dur, "MaxHR":maxHR, "Month":month, "Day": day]
+            app.events.set(arr, forKey: "Event \(app.count)")
+            app.count += 1
+            self.updateLastEvent(arr:arr)
+        }
+        
+    }
+    func updateLastEvent(arr: [String: String]){
+        let sTimeArr = arr["StartTime"]?.characters.split{$0 == " "}.map(String.init)
+        let sTime = sTimeArr?[1]
+        let eTimeArr = arr["EndTime"]?.characters.split{$0 == " "}.map(String.init)
+        let eTime = eTimeArr?[1]
+        let day = arr["Day"]
+        let month = arr["Month"]
+        let duration = arr["Duration"]
+        let maxhr = arr["MaxHR"]
+        self.month.text = month!
+        self.day.text = day!
+        self.maxHR.text = maxhr!
+        self.startTime.text = sTime!
+        self.endTime.text = eTime!
+        self.dur.text = duration!
+            
+    }
+    
+    func getDay(date: String)-> String {
+        let arr = date.characters.split{$0 == " "}.map(String.init)
+        let cal = arr[0].characters.split{$0 == "/"}.map(String.init)
+        return cal[1]
+    }
+    func getMonth(date: String)->String{
+        let arr = date.characters.split{$0 == " "}.map(String.init)
+        let cal = arr[0].characters.split{$0 == "/"}.map(String.init)
+        return cal[0]
+    }
+    
+    func getTime(time: String)-> String{
+        let arr = time.characters.split{$0 == " "}.map(String.init)
+        let timeArr = arr[1].characters.split{$0 == ":"}.map(String.init)
+        let hourSec = Int(timeArr[0])! * 60 * 60
+        let minSec = Int(timeArr[1])! * 60
+        let sec = Int(timeArr[2])! + hourSec + minSec
+        return String(sec)
+    }
+    func getDuration(startTime: String, endTime: String)-> String {
+        return String((Int(endTime)! - Int(startTime)!))
+    }
+    func getMaxHr(hr:[Double])->String{
+        var max = 0.0
+        for i in hr{
+            if i > max {
+                max = i
+            }
+        }
+        if max == 0.0 {
+            return "---"
+        }
+        return String(max)
+    }
+    
+    
+    
 }
 

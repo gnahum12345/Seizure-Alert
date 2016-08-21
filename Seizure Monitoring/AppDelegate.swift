@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
     let careGiver = UserDefaults.standard
     var latitude: Double?
     var longitude: Double?
-
     func getLatitude()-> Double? {
         return latitude
     }

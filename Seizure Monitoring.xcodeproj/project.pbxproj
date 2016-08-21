@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E42BBC11D3D541F004783EE /* UpdateLastEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E42BBC01D3D541F004783EE /* UpdateLastEvent.swift */; };
 		0E46C7361D4694A300BB5E3D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E46C7351D4694A300BB5E3D /* CoreLocation.framework */; };
 		0E4AE83D1D3D84AC00E4580E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E4AE83B1D3D84AC00E4580E /* LaunchScreen.storyboard */; };
 		0E622CDD1D2D88170001B8DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E622CDC1D2D88170001B8DE /* AppDelegate.swift */; };
@@ -94,7 +93,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0E42BBC01D3D541F004783EE /* UpdateLastEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateLastEvent.swift; sourceTree = "<group>"; };
 		0E46C7351D4694A300BB5E3D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		0E4AE83C1D3D84AC00E4580E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "../Seizure Alert/Seizure Alert/Base.lproj/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		0E622CD91D2D88160001B8DE /* Seizure Monitoring.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Seizure Monitoring.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -212,7 +210,6 @@
 				0E622D361D2D89310001B8DE /* Seizure Monitoring.entitlements */,
 				0E622CDC1D2D88170001B8DE /* AppDelegate.swift */,
 				0E622CDE1D2D88170001B8DE /* ViewController.swift */,
-				0E42BBC01D3D541F004783EE /* UpdateLastEvent.swift */,
 				0EF10D0A1D2DB53F00C6441C /* Settings.swift */,
 				0EF10D0C1D2DB57200C6441C /* CareGiver.swift */,
 				0EF10D0E1D2DB60C00C6441C /* Methods.swift */,
@@ -527,7 +524,6 @@
 				0EF10D0B1D2DB53F00C6441C /* Settings.swift in Sources */,
 				0E622CDF1D2D88170001B8DE /* ViewController.swift in Sources */,
 				0EF10D0D1D2DB57200C6441C /* CareGiver.swift in Sources */,
-				0E42BBC11D3D541F004783EE /* UpdateLastEvent.swift in Sources */,
 				0EF10D0F1D2DB60C00C6441C /* Methods.swift in Sources */,
 				C00CA69D1D56BB79007673A9 /* SwiftRequest.swift in Sources */,
 				0E622CDD1D2D88170001B8DE /* AppDelegate.swift in Sources */,
