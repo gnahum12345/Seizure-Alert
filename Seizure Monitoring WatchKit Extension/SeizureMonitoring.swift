@@ -277,9 +277,9 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     var countTick = 0
     let minCalmElapse = 10
     let minPerecentOfCalmness = 70
-    let minRateOfSeizure = 4 // change accordingly
+    let minRateOfSeizure = 2 // change accordingly
     let minAccOfSeizure = 1.0 //SENSITIVITY
-    let minTimeForSeizure = 3 // change
+    let minTimeForSeizure = 2 // change
     var seizureStart = false
     var countCalmAcc = 0
     var countCalmElapse = 0
