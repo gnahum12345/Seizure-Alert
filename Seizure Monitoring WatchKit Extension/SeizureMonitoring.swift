@@ -1,3 +1,4 @@
+
 //
 //  SeizureMonitoring.swift
 //  Seizure Monitoring
@@ -357,6 +358,9 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
                     }
                     print(eTime)
                     appendEvent()
+                    sTime = nil
+                    eTime = nil
+                    
                     print("sending info to cloud")
                     print("calling careGiver")
                     

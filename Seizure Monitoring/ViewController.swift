@@ -317,8 +317,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             switch message.keys.first! {
                 case "Seizure":
                     self.sendText()
-                    self.appendEvent(message: message)
-                    print("Appended event")
+                   // self.appendEvent(message: message)
+                    //print("Appended event")
                     break
             default:
                 print("appending event")
