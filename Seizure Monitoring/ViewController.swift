@@ -312,13 +312,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
      On the receipt of a message, check for expected commands.
     */
     func session(_ session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Swift.Void) {
-        
+        print("Hello world")
         DispatchQueue.main.async {
             switch message.keys.first! {
                 case "Seizure":
                     self.sendText()
+                    self.appendEvent(message: message)
+                    print("Appended event")
                     break
             default:
+                print("appending event")
                 self.appendEvent(message: message)
                 break
             }
@@ -386,9 +389,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             let day = self.getDay(date: sTime!)
             let month = self.getMonth(date: sTime!)
             let arr = ["StartTime": sTime!, "EndTime":eTime!, "Duration":dur, "MaxHR":maxHR, "Month":month, "Day": day]
-            app.events.set(arr, forKey: "Event \(app.count)")
             app.count += 1
-            print(app.events.dictionary(forKey: "Event \(app.count - 1)"))
+            app.events.set(arr, forKey: "Event \(app.count)")
+            print(app.count)
+//            print(app.events.dictionaryRepresentation())
+
+         //   print(app.events.dictionary(forKey: "Event \(app.count - 1)"))
             
             self.updateLastEvent(arr:arr)
         }
