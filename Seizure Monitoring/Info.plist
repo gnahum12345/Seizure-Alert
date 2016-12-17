@@ -18,7 +18,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.Gabriel-Nahum.Seizure-Alert</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -39,6 +39,8 @@
 	<string>The information gathered here will be used to set a caregivers information.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>The information gathered will be sent to the caregivers. </string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Monitor heart rate for detection of seizures. </string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>

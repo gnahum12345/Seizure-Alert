@@ -15,6 +15,13 @@ import CoreFoundation
 //import CoreLocation
 
 class SeizureMonitoring : NSObject, WCSessionDelegate {
+    /** Called when the session has completed activation. If session state is WCSessionActivationStateNotActivated there will be an error with more details. */
+    @available(watchOS 2.2, *)
+    public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        //do nothing
+    }
+
+  
     //FIX: location manager
     let motionManager = CMMotionManager()
     let dateFormatter = DateFormatter()
@@ -61,8 +68,10 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
         }
         dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
         dateFormatter.dateStyle = DateFormatter.Style.short//Set date style
-        dateFormatter.timeZone = TimeZone()
-
+        dateFormatter.timeZone = TimeZone.ReferenceType.system
+        
+        
+        
 //        locationManager.delegate = self
 //        let authorizationStatus = CLLocationManager.authorizationStatus()
 //        
@@ -228,27 +237,29 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
 //        
         
         if motionManager.isGyroAvailable {
+            
             let handler: CMGyroHandler = {(data: CMGyroData?, error: NSError?) -> Void in
                 self.updateLabelsGyro(gyroX: data!.rotationRate.x, gyroY: data!.rotationRate.y, gyroZ: data!.rotationRate.z)
                 self.gyroData.append(data)
-            }
+            } as! CMGyroHandler
             motionManager.startGyroUpdates(to: OperationQueue.current!, withHandler: handler)
-        }
-        else {
-            print("not availabe")
-            
+
+        }else{
+            print("Gyro not available")
+        
         }
         
         
         if motionManager.isAccelerometerAvailable {
-            let handler:CMAccelerometerHandler = {(data: CMAccelerometerData?, error: NSError?) -> Void in
+            
+            let handler:CMAccelerometerHandler  = {(data: CMAccelerometerData?, error: Error?) -> Void in
                 self.updateLabelsAcc(accX: data!.acceleration.x, accY: data!.acceleration.y, accZ: data!.acceleration.z)
                 self.accData.append(data)
-            }
-            motionManager.startAccelerometerUpdates(to: OperationQueue.current!, withHandler: handler)
-        }
-        else {
-            print("Acc\nX: not available \nY:not available \nZ: not Avialable")
+            } 
+             motionManager.startAccelerometerUpdates(to: OperationQueue.current!, withHandler: handler)
+           // print(handler)
+        }else{
+            print("Acc not available")
         }
         
         
@@ -360,7 +371,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     
     func appendEvent(){
         //TODO: append event to array and send it to AppDelegate.
-        let s :[String:AnyObject] = ["Event": true, "StartTime":sTime!, "EndTime": eTime!, "HeartRate": heartRateSamples]
+        let s :[String:AnyObject] = ["Event": true as AnyObject, "StartTime":sTime! as AnyObject, "EndTime": eTime! as AnyObject, "HeartRate": heartRateSamples as AnyObject]
         print(accData)
         print(gyroData)
         print(s)
@@ -386,7 +397,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
         let data = [
             "To" : "9498611052",
             "From" : "19497937646",
-            "Body" : "Possible Seizure!! \(NSDate().description)\nMy location is: \nhttps://www.google.com/maps/dir//\(latitude),\(longitude)"
+            "Body" : "Possible Seizure!! \( dateFormatter.string(for: NSDate()))\nMy location is: \nhttps://www.google.com/maps/dir//\(latitude),\(longitude)"
         ]
         print(latitude)
         print(longitude)

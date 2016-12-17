@@ -4,8 +4,6 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This information will be sent to the caregiver. </string>
 	<key>CFBundleDisplayName</key>
 	<string>Seizure Alert WatchKit Extension</string>
 	<key>CFBundleDocumentTypes</key>
@@ -22,7 +20,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.Gabriel-Nahum.Seizure-Alert.watchkit.extension</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -44,11 +42,13 @@
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>WKAppBundleIdentifier</key>
-			<string>com.Gabriel-Nahum.Seizure-Alert.watchkit</string>
+			<string>com.Gabriel-Nahum.SeizureApp.watchkit</string>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.watchkit</string>
 	</dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This information will be sent to the caregiver. </string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>healthkit</string>

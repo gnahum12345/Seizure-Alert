@@ -17,19 +17,19 @@ public class SwiftRequest {
     }
     
     // GET requests
-    public func get(url: String, auth: [String: String] = [String: String](), params: [String: String] = [String: String](), callback: ((err: NSError?, response: HTTPURLResponse?, body: AnyObject?)->())? = nil) {
+    public func get(url: String, auth: [String: String] = [String: String](), params: [String: String] = [String: String](), callback: ((_ err: NSError?, _ response: HTTPURLResponse?, _ body: AnyObject?)->())? = nil) {
         let qs = dictToQueryString(data: params)
         request(options: ["url" : url, "auth" : auth, "querystring": qs ], callback: callback )
     }
     
     // POST requests
-    public func post(url: String, data: [String: String] = [String: String](), auth: [String: String] = [String: String](), callback: ((err: NSError?, response: HTTPURLResponse?, body: AnyObject?)->())? = nil) {
+    public func post(url: String, data: [String: String] = [String: String](), auth: [String: String] = [String: String](), callback: ((_ err: NSError?, _ response: HTTPURLResponse?, _ body: AnyObject?)->())? = nil) {
         let qs = dictToQueryString(data: data)
         request(options: ["url": url, "method" : "POST", "body" : qs, "auth" : auth] , callback: callback)
     }
     
     // Actually make the request
-    func request(options: [String: Any], callback: ((err: NSError?, response: HTTPURLResponse?, body: AnyObject?)->())?) {
+    func request(options: [String: Any], callback: ((_ err: NSError?, _ response: HTTPURLResponse?,_ body: AnyObject?)->())?) {
         if( options["url"] == nil ) { return }
         
         var urlString = options["url"] as! String
@@ -73,26 +73,26 @@ public class SwiftRequest {
             if( err == nil) {
                 if(response?.mimeType == "text/html") {
                     let bodyStr = NSString(data: body!, encoding:String.Encoding.utf8.rawValue)
-                    return callback!(err: err, response: resp, body: bodyStr)
+                    return callback!(err as NSError?, resp, bodyStr)
                 } else if(response?.mimeType == "application/json") {
 //                    let localError: NSError?
                     var json:AnyObject?
                     do {
-                        json = try JSONSerialization.jsonObject(with: body! as Data, options: JSONSerialization.ReadingOptions.mutableContainers)
+                        json = try JSONSerialization.jsonObject(with: body! as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
                     }catch{
-                        print(err)
+                        print(err!)
                     }
-                    return callback!(err: err, response: resp, body: json);
+                    return callback!(err as NSError?, resp, json);
                 }
             }
             
-            return callback!(err: err, response: resp, body: body)
+            return callback!(err as NSError?, resp, body as AnyObject?)
         })
         
         task.resume()
     }
     
-    func request(url: String, callback: ((err: NSError?, response: HTTPURLResponse?, body: AnyObject?)->())? = nil) {
+    func request(url: String, callback: ((_ err: NSError?, _ response: HTTPURLResponse?, _ body: AnyObject?)->())? = nil) {
         request(options: ["url" : url ], callback: callback )
     }
 

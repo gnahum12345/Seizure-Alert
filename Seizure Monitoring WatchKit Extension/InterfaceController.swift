@@ -13,8 +13,12 @@ import Foundation
 class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ {
     
     // let locationManager = CLLocationManager()
+    @IBAction func text() {
+        let eD = WKExtension.shared().delegate as! ExtensionDelegate
+        eD.monitoring.sendMessageToText()
+    }
     
-    override func awake(withContext context: AnyObject?) {
+    override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         //        request to use location
         // locationManager.requestAlwaysAuthorization()
@@ -97,7 +101,7 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
     @IBOutlet var date: WKInterfaceLabel!
 
     @IBAction func callCareGiver() {
-        let message: [String: AnyObject]  = ["Call":true]
+        let message: [String: AnyObject]  = ["Call":true as AnyObject]
         let eD = WKExtension.shared().delegate as! ExtensionDelegate
         eD.monitoring.WCsession!.sendMessage(message, replyHandler: nil, errorHandler: nil)
     }

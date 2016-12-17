@@ -15,7 +15,8 @@ extension Float {
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = fractionDigits
         formatter.maximumFractionDigits = fractionDigits
-        return formatter.string(from: self) ?? "\(self)"
+//        return formatter.string(from: NSNumber(self)) ?? "\(self)"
+        return formatter.string(for: self) ?? "\(self)"
     }
 }
 
@@ -28,7 +29,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 
     @IBAction func name(_ sender: UIButton) {
         let change = UIAlertController(title: "Change Primary Caregiver", message: "Change your primary caregiver", preferredStyle: UIAlertControllerStyle.actionSheet)
-        let app = UIApplication.shared().delegate as! AppDelegate
+        let app = UIApplication.shared.delegate as! AppDelegate
         let defaults = app.careGiverFile
         if (defaults.array(forKey: "CareGiverNames") != nil && defaults.array(forKey: "CareGiverNumbers") != nil ){
             let careGiverNames = defaults.array(forKey: "CareGiverNames") as? [String]
@@ -75,7 +76,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         let urlString = "tel:" + self.phone.currentTitle!
         print("Phone number: " + urlString)
         // let url = NSURL(fileURLWithPath: urlString)
-        UIApplication.shared().open(URL(string: urlString)!,options: [:],completionHandler: nil)
+        UIApplication.shared.open(URL(string: urlString)!,options: [:],completionHandler: nil)
         print("finished dialing")
         
     }
@@ -86,7 +87,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         let phone = sender.getNumber()
         self.phone.setTitle(phone, for: UIControlState(rawValue: UInt(0)))
         self.name.setTitle(name, for: UIControlState(rawValue: UInt(0)))
-        let appDelegate = UIApplication.shared().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.careGiver.set(name, forKey: "Name of CareGiverSelected")
         appDelegate.careGiver.set(phone, forKey: "Phone of CareGiverSelected")
         
@@ -94,7 +95,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         
     }
     func updateCareGiverButton(){
-        let app = UIApplication.shared().delegate as! AppDelegate
+        let app = UIApplication.shared.delegate as! AppDelegate
         let name = app.careGiver.object(forKey: "Name of CareGiverSelected") as? String
         let number = app.careGiver.object(forKey: "Phone of CareGiverSelected") as? String
         let names = app.careGiverFile.array(forKey: "CareGiverNames") as? [String]
@@ -251,7 +252,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         }else{
             snoozeDuration.text = "0"
         }
-        let app = UIApplication.shared().delegate as! AppDelegate
+        let app = UIApplication.shared.delegate as! AppDelegate
         app.snooze = true
     }
     
@@ -289,7 +290,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         print("Im updating")
         manager.requestLocation()
     }
-    let appDelegate = UIApplication.shared().delegate as! AppDelegate
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("Im in location manager")
         for i in locations {
@@ -300,7 +301,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         
         
     }
-    
     /// Log any errors to the console.
     func locationManager(_ manager: CLLocationManager, didFailWithError error: NSError) {
         print("Error occured: \(error.localizedDescription).")
@@ -329,7 +329,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
      If the activationState is active, do nothing. If the activation state is inactive,
      temporarily disable location streaming by modifying the UI.
      */
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: NSError?) {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         print(error)
     }
     
@@ -377,7 +377,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         let sTime = message["StartTime"] as? String
         let eTime = message["EndTime"] as? String
         let hr = message["HeartRate"] as? [Double]
-        let app = UIApplication.shared().delegate as! AppDelegate
+        let app = UIApplication.shared.delegate as! AppDelegate
         if ((sTime != nil) && (eTime != nil) && (hr != nil)){
             let startTime = self.getTime(time: sTime!)
             let endTime = self.getTime(time: eTime!)
@@ -388,6 +388,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             let arr = ["StartTime": sTime!, "EndTime":eTime!, "Duration":dur, "MaxHR":maxHR, "Month":month, "Day": day]
             app.events.set(arr, forKey: "Event \(app.count)")
             app.count += 1
+            print(app.events.dictionary(forKey: "Event \(app.count - 1)"))
+            
             self.updateLastEvent(arr:arr)
         }
         
@@ -443,6 +445,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         let duration = arr["Duration"]
         let maxhr = arr["MaxHR"]
         self.month.text = month!
+        self.month.sizeToFit()
         self.day.text = day!
         self.maxHR.text = maxhr!
         self.startTime.text = sTime!

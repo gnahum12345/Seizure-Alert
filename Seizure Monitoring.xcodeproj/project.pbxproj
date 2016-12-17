@@ -119,7 +119,6 @@
 		0E622D1D1D2D88170001B8DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E622D1F1D2D88170001B8DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E622D341D2D89310001B8DE /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
-		0E622D361D2D89310001B8DE /* Seizure Monitoring.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Seizure Monitoring.entitlements"; sourceTree = "<group>"; };
 		0ED7D3B31D2F28C100D86AE3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0EF10D0A1D2DB53F00C6441C /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		0EF10D0C1D2DB57200C6441C /* CareGiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareGiver.swift; sourceTree = "<group>"; };
@@ -127,10 +126,11 @@
 		C00CA69C1D56BB79007673A9 /* SwiftRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRequest.swift; sourceTree = "<group>"; };
 		C00CA69E1D56D2FA007673A9 /* SwiftRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRequest.swift; sourceTree = "<group>"; };
 		C00CA6A01D57B718007673A9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.0.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
+		C0811C951E0493BA00ADABFB /* Seizure Monitoring.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring.entitlements"; sourceTree = "<group>"; };
+		C0811C961E0493D200ADABFB /* Seizure Monitoring WatchKit App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring WatchKit App.entitlements"; sourceTree = "<group>"; };
+		C0811C971E0493E900ADABFB /* Seizure Monitoring WatchKit Extension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		C0D708E31D4FC12900C4E7B1 /* SeizureMonitoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeizureMonitoring.swift; sourceTree = "<group>"; };
-		C0F736301D5685AB00B22C5A /* Seizure Monitoring WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		C0F736331D5685AD00B22C5A /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
-		C0F736351D569A7600B22C5A /* Seizure Monitoring WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring WatchKit App.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,8 +206,8 @@
 		0E622CDB1D2D88170001B8DE /* Seizure Monitoring */ = {
 			isa = PBXGroup;
 			children = (
+				C0811C951E0493BA00ADABFB /* Seizure Monitoring.entitlements */,
 				C00CA69C1D56BB79007673A9 /* SwiftRequest.swift */,
-				0E622D361D2D89310001B8DE /* Seizure Monitoring.entitlements */,
 				0E622CDC1D2D88170001B8DE /* AppDelegate.swift */,
 				0E622CDE1D2D88170001B8DE /* ViewController.swift */,
 				0EF10D0A1D2DB53F00C6441C /* Settings.swift */,
@@ -242,7 +242,7 @@
 		0E622D051D2D88170001B8DE /* Seizure Monitoring WatchKit App */ = {
 			isa = PBXGroup;
 			children = (
-				C0F736351D569A7600B22C5A /* Seizure Monitoring WatchKit App.entitlements */,
+				C0811C961E0493D200ADABFB /* Seizure Monitoring WatchKit App.entitlements */,
 				0E622D061D2D88170001B8DE /* Interface.storyboard */,
 				0E622D091D2D88170001B8DE /* Assets.xcassets */,
 				0E622D0B1D2D88170001B8DE /* Info.plist */,
@@ -253,8 +253,8 @@
 		0E622D141D2D88170001B8DE /* Seizure Monitoring WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				C0811C971E0493E900ADABFB /* Seizure Monitoring WatchKit Extension.entitlements */,
 				C00CA69E1D56D2FA007673A9 /* SwiftRequest.swift */,
-				C0F736301D5685AB00B22C5A /* Seizure Monitoring WatchKit Extension.entitlements */,
 				0E622D171D2D88170001B8DE /* InterfaceController.swift */,
 				0E622D191D2D88170001B8DE /* ExtensionDelegate.swift */,
 				C0D708E31D4FC12900C4E7B1 /* SeizureMonitoring.swift */,
@@ -391,7 +391,7 @@
 				TargetAttributes = {
 					0E622CD81D2D88160001B8DE = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = C4476XT64Z;
+						DevelopmentTeam = H97DWZ6DZ4;
 						DevelopmentTeamName = "TARBUT V'TORAH COMMUNITY DAY SCHOOL";
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -422,10 +422,13 @@
 					};
 					0E622D001D2D88170001B8DE = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = C4476XT64Z;
+						DevelopmentTeam = H97DWZ6DZ4;
 						DevelopmentTeamName = "TARBUT V'TORAH COMMUNITY DAY SCHOOL";
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
+							com.apple.BackgroundModes.watchos.app = {
+								enabled = 1;
+							};
 							com.apple.HealthKit.watchos = {
 								enabled = 1;
 							};
@@ -433,7 +436,7 @@
 					};
 					0E622D0F1D2D88170001B8DE = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = C4476XT64Z;
+						DevelopmentTeam = H97DWZ6DZ4;
 						DevelopmentTeamName = "TARBUT V'TORAH COMMUNITY DAY SCHOOL";
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -706,9 +709,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_ENTITLEMENTS = "Seizure Monitoring WatchKit Extension/Seizure Monitoring WatchKit Extension.entitlements";
+				DEVELOPMENT_TEAM = H97DWZ6DZ4;
 				INFOPLIST_FILE = "Seizure Monitoring WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-Alert.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Gabriel-Nahum.SeizureApp.watchkit.extension";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -723,9 +727,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_ENTITLEMENTS = "Seizure Monitoring WatchKit Extension/Seizure Monitoring WatchKit Extension.entitlements";
+				DEVELOPMENT_TEAM = H97DWZ6DZ4;
 				INFOPLIST_FILE = "Seizure Monitoring WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-Alert.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Gabriel-Nahum.SeizureApp.watchkit.extension";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -741,10 +746,14 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Seizure Monitoring WatchKit App/Seizure Monitoring WatchKit App.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = H97DWZ6DZ4;
 				IBSC_MODULE = Seizure_Monitoring_WatchKit_Extension;
 				INFOPLIST_FILE = "Seizure Monitoring WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-Alert.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Gabriel-Nahum.SeizureApp.watchkit";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "789f06c8-a4c3-42e0-8fd6-9f575154c546";
+				PROVISIONING_PROFILE_SPECIFIER = seizureAppWatch;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -759,9 +768,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Seizure Monitoring WatchKit App/Seizure Monitoring WatchKit App.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				IBSC_MODULE = Seizure_Monitoring_WatchKit_Extension;
 				INFOPLIST_FILE = "Seizure Monitoring WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-Alert.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Gabriel-Nahum.SeizureApp.watchkit";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -776,9 +787,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Seizure Monitoring/Seizure Monitoring.entitlements";
+				DEVELOPMENT_TEAM = H97DWZ6DZ4;
 				INFOPLIST_FILE = "Seizure Monitoring/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-Alert";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Gabriel-Nahum.SeizureApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -790,9 +802,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Seizure Monitoring/Seizure Monitoring.entitlements";
+				DEVELOPMENT_TEAM = H97DWZ6DZ4;
 				INFOPLIST_FILE = "Seizure Monitoring/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Gabriel-Nahum.Seizure-Alert";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Gabriel-Nahum.SeizureApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

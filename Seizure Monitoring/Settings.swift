@@ -63,7 +63,7 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
     
     
     func usersMessage(){
-        let app = UIApplication.shared().delegate as! AppDelegate
+        let app = UIApplication.shared.delegate as! AppDelegate
         app.textMessage = textMessageField.text
         askedUserFinish = true
         print(askedUserFinish)
@@ -90,7 +90,7 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         var methods = [Methods]()
         methods.append(Methods(bool: textOn))
         methods.append(Methods(bool: callOn))
-        let app = UIApplication.shared().delegate as! AppDelegate
+        let app = UIApplication.shared.delegate as! AppDelegate
         app.methods = methods
         
         
@@ -98,7 +98,7 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
     func setSwitch(){
         var methods = [Methods]()
         
-        let app = UIApplication.shared().delegate as! AppDelegate
+        let app = UIApplication.shared.delegate as! AppDelegate
         if app.methods == nil {
             let textOn = self.text.isOn
             let callOn = self.call.isOn
@@ -116,7 +116,7 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         //  manager.delegate = self
         //  manager.requestLocation()
         
-        let appDelegate = UIApplication.shared().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let defaults = appDelegate.careGiverFile
         if (defaults.array(forKey: "CareGiverNames") != nil && defaults.array(forKey: "CareGiverNumbers") != nil ){
             let careGiverNames = defaults.array(forKey: "CareGiverNames") as? [String]
@@ -219,7 +219,7 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 18.0)
         cell.detailTextLabel?.text = self.careGivers[(indexPath as NSIndexPath).row].getNumber()!
         
-        cell.detailTextLabel?.textColor = UIColor.blue()
+        cell.detailTextLabel?.textColor = UIColor.blue
         cell.detailTextLabel?.font = UIFont(name: (cell.detailTextLabel?.font?.fontName)!, size: 16)
         // cell.detailTextLabel?.enabled = true
         //cell.indentationWidth = 40
@@ -276,7 +276,7 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
     }
     
     func textCareGiver(_ indexPath: Int){
-        let app = UIApplication.shared().delegate as! AppDelegate
+        let app = UIApplication.shared.delegate as! AppDelegate
         var message: String?
         print( "text: " + String(text.isOn))
         
@@ -316,7 +316,7 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         myTableView.reloadData()
         let names = getCareGiverNames()
         let numbers = getCareGiverNumbers()
-        let appDelegate = UIApplication.shared().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let d = appDelegate.careGiverFile
         d.setValue(names, forKey: "CareGiverNames")
         d.setValue(numbers, forKey: "CareGiverNumbers")
@@ -332,7 +332,7 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         let urlString = "tel:" + careGivers[indexPath].getNumber()!
         print("Phone number: " + urlString)
         // let url = NSURL(fileURLWithPath: urlString)
-        UIApplication.shared().open(URL(string: urlString)!,options: [:],completionHandler: nil)
+        UIApplication.shared.open(URL(string: urlString)!,options: [:],completionHandler: nil)
         print("finished dialing")
         
     }
@@ -573,7 +573,7 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
     
     
     func addCareGiverToArray(){
-        if self.numberField.text == "" || self.nameField == "" {
+        if ((self.numberField.text!.isEmpty) || (self.nameField!.isEqual(""))){
             self.addCareGiver()
         }else{
             self.careGivers.append(CareGiver(name: self.nameField.text!, number: self.numberField.text!))
@@ -584,9 +584,9 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
     func checkCount(_ userDidFinish: Bool){
         if userDidFinish {
             for CareGiver in careGivers {
-                print(CareGiver.getInfo())
-                print(CareGiver.getName())
-                print(CareGiver.getNumber())
+                print(CareGiver.getInfo() ?? "null info")
+                print(CareGiver.getName() ?? "null name")
+                print(CareGiver.getNumber() ?? "null number")
                 print()
             }
         }
@@ -596,7 +596,7 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         //        NSPropertyListSerialization
         //
         
-        let appDelegate = UIApplication.shared().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         //appDelegate.careGiversArray = careGivers
         let d = appDelegate.careGiverFile
