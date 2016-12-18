@@ -13,7 +13,7 @@ import HealthKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate  {
     
-    var count = 0
+    var count = UserDefaults.standard
     var window: UIWindow?
     var snooze = false
     var careGiversArray: [CareGiver]?

@@ -29,8 +29,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 
     @IBAction func name(_ sender: UIButton) {
         let change = UIAlertController(title: "Change Primary Caregiver", message: "Change your primary caregiver", preferredStyle: UIAlertControllerStyle.actionSheet)
-        let app = UIApplication.shared.delegate as! AppDelegate
-        let defaults = app.careGiverFile
+        let defaults = self.appDelegate.careGiverFile
         if (defaults.array(forKey: "CareGiverNames") != nil && defaults.array(forKey: "CareGiverNumbers") != nil ){
             let careGiverNames = defaults.array(forKey: "CareGiverNames") as? [String]
             let careGiverNumbers = defaults.array(forKey: "CareGiverNumbers") as? [String]
@@ -87,19 +86,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         let phone = sender.getNumber()
         self.phone.setTitle(phone, for: UIControlState(rawValue: UInt(0)))
         self.name.setTitle(name, for: UIControlState(rawValue: UInt(0)))
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.careGiver.set(name, forKey: "Name of CareGiverSelected")
-        appDelegate.careGiver.set(phone, forKey: "Phone of CareGiverSelected")
+        self.appDelegate.careGiver.set(name, forKey: "Name of CareGiverSelected")
+        self.appDelegate.careGiver.set(phone, forKey: "Phone of CareGiverSelected")
         
         
         
     }
     func updateCareGiverButton(){
-        let app = UIApplication.shared.delegate as! AppDelegate
-        let name = app.careGiver.object(forKey: "Name of CareGiverSelected") as? String
-        let number = app.careGiver.object(forKey: "Phone of CareGiverSelected") as? String
-        let names = app.careGiverFile.array(forKey: "CareGiverNames") as? [String]
-        let numbers = app.careGiverFile.array(forKey: "CareGiverNumbers") as? [String]
+        let name = self.appDelegate.careGiver.object(forKey: "Name of CareGiverSelected") as? String
+        let number = self.appDelegate.careGiver.object(forKey: "Phone of CareGiverSelected") as? String
+        let names = self.appDelegate.careGiverFile.array(forKey: "CareGiverNames") as? [String]
+        let numbers = self.appDelegate.careGiverFile.array(forKey: "CareGiverNumbers") as? [String]
 //        self.phone.setTitle(number!, for: UIControlState(rawValue: UInt(0)))
 //        self.name.setTitle(name!, for: UIControlState(rawValue: UInt(0)))
 //        if self.name.currentTitle == "" {
@@ -199,12 +196,39 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         self.history.addGestureRecognizer(tapGestureHistory)
         self.careGiver.addGestureRecognizer(tapGestureCareGiver)
         updateCareGiverButton()
+        print("CareGiver file \n\n\nCareGiverFile\n\n\nCareGiverFile Now\n\n\n\n")
+        print(self.appDelegate.careGiverFile.dictionaryRepresentation())
+        print("\n\n\n\n\nEvents file \n\n\nEvents\n\n\nEvents Now\n\n\n\n")
+        print(self.appDelegate.events.dictionaryRepresentation())
+        if hasEvent(defaults: self.appDelegate.events.dictionaryRepresentation()) {
+            let lastEvent = getLastEvent(events: self.appDelegate.events)
+            self.updateLastEvent(arr: lastEvent as! [String : String] )
+        }
         commonInit()
         startUpdatingLocationAllowingBackground(commandedFromPhone: true)
         print("I'm in viewcontroller")
     
     }
-    
+    func hasEvent( defaults: [String:Any] ) -> Bool {
+//*******************DEBUGGING PURPOSE. SEE WHAT IS INSIDE THE FILE **************************************
+        
+//        print("\n\n\n\n\n\n\n\n\nDefaults values\n\n\n\n")
+//        print(defaults.values)
+//        print("\n\nIndex\n")
+//       print(defaults.keys.reversed())
+//        print(appDelegate.count.integer(forKey: "count"))
+//        print("Event \(appDelegate.count.integer(forKey: "count"))")
+//        print("\n\n\n\n description \n\n\n\n\n \(defaults.description)")
+        if(defaults.description.contains("Event \(appDelegate.count.integer(forKey: "count"))")){
+            return true
+        }
+        
+//        print(defaults.index(forKey: "Event \(appDelegate.count)"))
+        return false
+    }
+    func getLastEvent( events: UserDefaults) ->[String:Any] {
+        return events.dictionary(forKey: "Event \(appDelegate.count.integer(forKey: "count"))")!
+    }
     
     @IBOutlet var maxHR: UILabel!
     @IBOutlet var dur: UILabel!
@@ -252,8 +276,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         }else{
             snoozeDuration.text = "0"
         }
-        let app = UIApplication.shared.delegate as! AppDelegate
-        app.snooze = true
+        appDelegate.snooze = true
     }
     
    
@@ -320,10 +343,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
                    // self.appendEvent(message: message)
                     //print("Appended event")
                     break
-            default:
-                print("appending event")
-                self.appendEvent(message: message)
-                break
+                default:
+                    print("appending event")
+                    self.appendEvent(message: message)
+                    break
             }
         }
     }
@@ -380,7 +403,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         let sTime = message["StartTime"] as? String
         let eTime = message["EndTime"] as? String
         let hr = message["HeartRate"] as? [Double]
-        let app = UIApplication.shared.delegate as! AppDelegate
         if ((sTime != nil) && (eTime != nil) && (hr != nil)){
             let startTime = self.getTime(time: sTime!)
             let endTime = self.getTime(time: eTime!)
@@ -389,9 +411,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             let day = self.getDay(date: sTime!)
             let month = self.getMonth(date: sTime!)
             let arr = ["StartTime": sTime!, "EndTime":eTime!, "Duration":dur, "MaxHR":maxHR, "Month":month, "Day": day]
-            app.count += 1
-            app.events.set(arr, forKey: "Event \(app.count)")
-            print(app.count)
+            var con = self.appDelegate.count.integer(forKey: "count")
+            con += 1
+            self.appDelegate.count.set(con, forKey: "count")
+            self.appDelegate.events.set(arr, forKey: "Event \(self.appDelegate.count.integer(forKey: "count"))")
+            print(self.appDelegate.count.integer(forKey: "count"))
 //            print(app.events.dictionaryRepresentation())
 
          //   print(app.events.dictionary(forKey: "Event \(app.count - 1)"))

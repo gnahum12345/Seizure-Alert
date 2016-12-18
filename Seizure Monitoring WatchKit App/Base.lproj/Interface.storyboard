@@ -31,7 +31,7 @@
                                 </tapGestureRecognizer>
                             </gestureRecognizers>
                         </label>
-                        <button width="1" height="101" alignment="left" backgroundImage="CareGiver" id="mGA-QB-eJ8">
+                        <button width="1" height="101" alignment="left" title="Push for help" backgroundImage="CareGiver" id="mGA-QB-eJ8">
                             <connections>
                                 <action selector="text" destination="AgC-eL-Hgc" id="o3W-Bf-Uxf"/>
                             </connections>
