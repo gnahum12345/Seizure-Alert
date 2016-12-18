@@ -59,7 +59,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
             guard success else {
                 return
             }
-          //  self.getHeartRate() // Getting the heart rate
+            self.getHeartRate() // Getting the heart rate
             
         }
         if WCSession.isSupported() {
@@ -422,7 +422,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     // =========================================================================
     // MARK: - HeartRate
     func getHeartRate() {
-        guard heartRateQuery == nil else { return }
+        guard heartRateQuery == nil else { print(heartRateQuery?.description); return }
         
         if heartRateQuery == nil {
             // start
