@@ -465,6 +465,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
         heartRateSamples.append(quantity.doubleValue(for: heartRateUnit))
         sumHeartRate += quantity.doubleValue(for: heartRateUnit)
         repetitions += 1
+        print(quantity.doubleValue(for: heartRateUnit))
     }
     
     // MARK: Sending Commands to Phone

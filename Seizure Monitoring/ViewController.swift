@@ -196,10 +196,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         self.history.addGestureRecognizer(tapGestureHistory)
         self.careGiver.addGestureRecognizer(tapGestureCareGiver)
         updateCareGiverButton()
-        print("CareGiver file \n\n\nCareGiverFile\n\n\nCareGiverFile Now\n\n\n\n")
-        print(self.appDelegate.careGiverFile.dictionaryRepresentation())
-        print("\n\n\n\n\nEvents file \n\n\nEvents\n\n\nEvents Now\n\n\n\n")
-        print(self.appDelegate.events.dictionaryRepresentation())
+//        print("CareGiver file \n\n\nCareGiverFile\n\n\nCareGiverFile Now\n\n\n\n")
+//        print(self.appDelegate.careGiverFile.dictionaryRepresentation())
+//        print("\n\n\n\n\nEvents file \n\n\nEvents\n\n\nEvents Now\n\n\n\n")
+//        print(self.appDelegate.events.dictionaryRepresentation())
         if hasEvent(defaults: self.appDelegate.events.dictionaryRepresentation()) {
             let lastEvent = getLastEvent(events: self.appDelegate.events)
             self.updateLastEvent(arr: lastEvent as! [String : String] )
@@ -315,9 +315,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     }
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("Im in location manager")
+      //  print("Im in location manager")
         for i in locations {
-            print(i.coordinate)
+      //      print(i.coordinate)
             self.appDelegate.latitude = i.coordinate.latitude
              self.appDelegate.longitude = i.coordinate.longitude
         }
