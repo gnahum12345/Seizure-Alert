@@ -484,13 +484,14 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="day" destination="PsN-vB-qeV" id="gLz-BG-kQa"/>
+                                            <outlet property="duration" destination="nfE-MJ-VgH" id="NKm-s2-aow"/>
                                             <outlet property="endTime" destination="IZ0-Lw-MZ8" id="yU0-9H-Wdi"/>
                                             <outlet property="maxHR" destination="qcA-O8-4be" id="gdV-CP-MfU"/>
                                             <outlet property="month" destination="bfU-Z8-lyG" id="Q7O-HR-fkA"/>
                                             <outlet property="nameOfEvent" destination="3MV-93-h8l" id="jFh-iS-p7d"/>
-                                            <outlet property="seconds" destination="nfE-MJ-VgH" id="5a0-a5-XnL"/>
                                             <outlet property="startTime" destination="XAh-rM-1rg" id="A5c-VY-F3Q"/>
                                             <outlet property="typeSeizure" destination="mE5-j3-NgA" id="BqJ-cT-jDd"/>
+                                            <outlet property="unitOfMeasure" destination="Ycr-cG-oa5" id="6Ll-DG-IxB"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

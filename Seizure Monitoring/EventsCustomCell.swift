@@ -19,10 +19,11 @@ class EventsCustomCell: UITableViewCell {
     @IBOutlet var typeSeizure: UILabel!
     @IBOutlet var endTime: UILabel!
     @IBOutlet var startTime: UILabel!
-    @IBOutlet var seconds: UILabel!
+    @IBOutlet var duration: UILabel!
     @IBOutlet var nameOfEvent: UILabel!
     @IBOutlet var month: UILabel!
     @IBOutlet var day: UILabel!
+    @IBOutlet var unitOfMeasure: UILabel!
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
