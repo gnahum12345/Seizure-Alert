@@ -513,14 +513,20 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
         
         for i in applicationContext.keys {
             if i == "lastEvent" {
-                eD.lastEventTime = applicationContext[i] as? NSDate
+                eD.lastEvent = applicationContext[i] as? NSDate
             }
         }
         
     }
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        switch message.keys.first!{
+            case "LastEvent":
+               let eD =  WKExtension.shared().delegate as! ExtensionDelegate
+               eD.lastEvent = message["LastEvent"] as! NSDate?
+               break;
+        default:
+            print("Default")
+        }
+    }
 
-    
-
-    
-    
 }

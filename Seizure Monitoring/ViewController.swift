@@ -240,10 +240,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     
     
     func lastEventScene(){
-//        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let rvc = storyBoard.instantiateViewController(withIdentifier: "Events") as! Events
-//        self.present(rvc, animated: true, completion: nil)
-        print("Hello")
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let rvc = storyBoard.instantiateViewController(withIdentifier: "Event") as! EventsController
+        self.present(rvc, animated: true, completion: nil)
 
     }
     func historyScene(){
@@ -342,6 +341,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
                     self.sendText()
                    // self.appendEvent(message: message)
                     //print("Appended event")
+                    break
+                case "LastEvent":
+                    //TODO: Send message to WCSession with lastEvent info.
                     break
                 default:
                     print("appending event")

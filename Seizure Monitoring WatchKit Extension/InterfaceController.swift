@@ -41,6 +41,7 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
         eD.monitoring.setDate(date: date)
 
         eD.monitoring.monitor()
+        
 //
     }
     
@@ -106,8 +107,10 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
         eD.monitoring.WCsession!.sendMessage(message, replyHandler: nil, errorHandler: nil)
     }
     func updateLastEvent(){
-        let extensionDelegate = WKExtension.shared().delegate as! ExtensionDelegate
-        let lastEvent = extensionDelegate.lastEventTime
+        let eD = WKExtension.shared().delegate as! ExtensionDelegate
+        eD.monitoring.WCsession?.sendMessage(["LastEvent": true as Any], replyHandler: nil, errorHandler: nil)
+        
+        let lastEvent = eD.lastEvent
         if lastEvent == nil {
             date.setText("None!")
         }else{

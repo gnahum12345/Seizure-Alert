@@ -11,7 +11,7 @@ import WatchKit
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
     let monitoring = SeizureMonitoring()
     //FIX: Change
-    var lastEventTime: NSDate? = nil
+    var lastEvent: NSDate? = nil
     
     //let events: UserDefaults? = nil
    //    let locationManager = CLLocationManager()
