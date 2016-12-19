@@ -14,7 +14,7 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    var events = [String:String]()
+    var events = [String:Any]()
     override func viewDidLoad() {
         super.viewDidLoad()
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -26,8 +26,10 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
         while (i <= count){
             print("Hello world")
             print(appDelegate.events.dictionary(forKey: "Event \(i)"))
+            events["Event \(i)"]  = appDelegate.events.dictionary(forKey: "Event \(i)")
             i += 1
         }
+        print("\n\n\n\n\n\nEvents \n\n\n")
         print(events)
     
     }
@@ -35,21 +37,65 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     @IBOutlet var tableView: UITableView!
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return events.count
+        return 6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "EventsCustomCell", for: indexPath) as! EventsCustomCell
-//        cell.day = getDay(events["Event \(count)"] as! [String : Any])
-//        cell.month = getMonth(events["Event \(count)"] as! [String : Any])
-//        cell.endTime
-//        cell.startTime
-//        cell.maxHR
-//        cell.nameOfEvent
-//        cell.typeSeizure
-//        cell.seconds
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "seizureEventCell", for: indexPath) as! EventsCustomCell
+//        cell.day.text = getDay(events["Event \(count)"] as! [String : Any])
+//        cell.month.text = getMonth(events["Event \(count)"] as! [String : Any])
+//        cell.endTime.text
+//        cell.startTime.text
+//        cell.maxHR.text
+//        cell.nameOfEvent.text
+//        cell.typeSeizure.text
+//        cell.seconds.text
+        cell.day.text = getDay(events["Event \(indexPath.row+1)"] as! [String : String])
+        cell.month.text = getMonth(events["Event \(indexPath.row+1)"] as! [String: String])
+        cell.startTime.text = getStartTime(events["Event \(indexPath.row+1)"] as! [String:String])
         return cell
     }
+    func getStartTime(_ event: [String: String])-> String{
+        let time = event["StartTime"]
+        let arr = time!.characters.split{$0 == " "}.map(String.init)
+        let timeArr = arr[1].characters.split{$0 == ":"}.map(String.init)
+        let hourSec = Int(timeArr[0])! * 60 * 60
+        let minSec = Int(timeArr[1])! * 60
+        let sec = Int(timeArr[2])! + hourSec + minSec
+        return String(sec)
+    }
+    func getDay(_ event: [String:String])-> String {
+        print("\n\n\n Event")
+        print(event)
+        let date = event["StartTime"]
+        print("\n\n \(date)")
+        let arr = date?.characters.split{$0 == " "}.map(String.init)
+        let cal = arr?[0].characters.split{$0 == "/"}.map(String.init)
+        return cal![1]
+    }
+    func getMonth(_ event: [String: String])-> String{
+        let date = event["StartTime"]
+        print("\n\n \(date)")
+        let arr = date?.characters.split{$0 == " "}.map(String.init)
+        let cal = arr?[0].characters.split{$0 == "/"}.map(String.init)
+        switch cal![0]{
+        case "1": return "Janurary"
+        case "2": return "February"
+        case "3": return "March"
+        case "4": return "April"
+        case "5": return "May"
+        case "6": return "June"
+        case "7": return "July"
+        case "8": return "August"
+        case "9": return "September"
+        case "10": return "October"
+        case "11": return "November"
+        case "12": return "December"
+        default: return cal![0]
+        }
+        
+    }
+    
     
     
 }
