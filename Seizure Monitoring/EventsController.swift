@@ -40,6 +40,17 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return events.count
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.eventSelected = (events.count - indexPath.row)
+        appDelegate.eventCount = events.count
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        
+        let resultViewController = storyBoard.instantiateViewController(withIdentifier: "EventExtensionViewController") as! EventExtensionViewController
+        
+        self.present(resultViewController, animated:true, completion:nil)
+
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "seizureEventCell", for: indexPath) as! EventsCustomCell
@@ -51,19 +62,46 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
 //        cell.nameOfEvent.text
 //        cell.typeSeizure.text
 //        cell.seconds.text
-        cell.day.text = getDay(events["Event \(events.count-indexPath.row)"] as! [String : String])
-        cell.month.text = getMonth(events["Event \(events.count-indexPath.row)"] as! [String: String])
-        cell.startTime.text = getTime(events["Event \(events.count-indexPath.row)"] as! [String:String], "StartTime")
-        cell.endTime.text = getTime(events["Event \(events.count-indexPath.row)"] as! [String:String], "EndTime")
-        cell.nameOfEvent.text = getEventName(events["Event \(events.count-indexPath.row)"] as! [String: String], (events.count - indexPath.row))
-        cell.duration.text = getDuration(events["Event \(events.count-indexPath.row)"] as! [String: String])
+        cell.day.text = getDay(events["Event \(events.count-indexPath.row)"] as! [String : Any])
+        cell.month.text = getMonth(events["Event \(events.count-indexPath.row)"] as! [String: Any])
+        cell.startTime.text = getTime(events["Event \(events.count-indexPath.row)"] as! [String:Any], "StartTime")
+        cell.endTime.text = getTime(events["Event \(events.count-indexPath.row)"] as! [String:Any], "EndTime")
+        cell.nameOfEvent.text = getEventName((events.count - indexPath.row))
+        var duration = getDuration(events["Event \(events.count-indexPath.row)"] as! [String: Any])
+        if (duration >= 3600){
+            let seconds = duration % 3600
+            let minutes = duration % 60
+            duration = duration/3600
+            let completeDuration = String(duration) + ":" + String(minutes) + ":" + String(seconds)
+            cell.duration.text = String(completeDuration)
+            cell.unitOfMeasure.text = "Hours"
+        }else if (duration >= 60){
+            let seconds = duration % 60
+            var stringSeconds = ""
+            if (seconds < 10){
+                stringSeconds = "0" + String(seconds)
+            }else {
+                stringSeconds = String(seconds)
+            }
+            duration = duration/60
+            let completeDuration = String(duration) + ":" + stringSeconds
+            cell.duration.text = completeDuration
+            cell.unitOfMeasure.text = "Minutes"
+        }else{
+            cell.duration.text = String(duration)
+            cell.unitOfMeasure.text = "Seconds"
+        }
+        cell.typeSeizure.text = "Other"
+        cell.maxHR.text = getMaxHr(events["Event \(events.count-indexPath.row)"] as! [String:Any])
         return cell
     }
-    
-    func getDuration( _ event: [String: String])-> String{
-        let startTime = self.getSeconds(time: event["StartTime"]!)
-        let endTime = self.getSeconds(time: event["EndTime"]!)
-        return String((Int(endTime)! - Int(startTime)!))
+    func getMaxHr(_ event: [String:Any])-> String{
+        return (event["MaxHR"] as! String)
+    }
+    func getDuration( _ event: [String: Any])-> Int{
+        let startTime = self.getSeconds(time: event["StartTime"] as! String)
+        let endTime = self.getSeconds(time: event["EndTime"] as! String)
+        return ((Int(endTime)! - Int(startTime)!))
     }
     
     func getSeconds(time: String)-> String{
@@ -75,7 +113,7 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
         return String(sec)
     }
 
-    func getEventName(_ event: [String:String], _ index: Int)-> String{
+    func getEventName(_ index: Int)-> String{
 //        print("GetEventName \(event)")
 //        print("Event index: \(index)")
         if index == events.count {
@@ -86,13 +124,13 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
         
     }
     
-    func getTime(_ event: [String: String], _ key: String)-> String{
+    func getTime(_ event: [String: Any], _ key: String)-> String{
         
-        let time = event[key]
+        let time = event[key] as! String
 //        print("key: \(key)")
 //        print("Time: \(time)")
 
-        let arr = time!.characters.split{$0 == " "}.map(String.init)
+        let arr = time.characters.split{$0 == " "}.map(String.init)
         //print("arr \(arr)")
         let timeArr = arr[1].characters.split{$0 == ":"}.map(String.init)
        // print("timeArr: \(timeArr)")
@@ -102,21 +140,21 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
         
     }
     
-    func getDay(_ event: [String:String])-> String {
+    func getDay(_ event: [String:Any])-> String {
 //        print("\n\n\n Event")
 //        print(event)
-        let date = event["StartTime"]
+        let date = event["StartTime"] as! String
 //        print("\n\n \(date)")
-        let arr = date?.characters.split{$0 == " "}.map(String.init)
-        let cal = arr?[0].characters.split{$0 == "/"}.map(String.init)
-        return cal![1]
+        let arr = date.characters.split{$0 == " "}.map(String.init)
+        let cal = arr[0].characters.split{$0 == "/"}.map(String.init)
+        return cal[1]
     }
-    func getMonth(_ event: [String: String])-> String{
-        let date = event["StartTime"]
+    func getMonth(_ event: [String: Any])-> String{
+        let date = event["StartTime"] as! String
 //        print("\n\n \(date)")
-        let arr = date?.characters.split{$0 == " "}.map(String.init)
-        let cal = arr?[0].characters.split{$0 == "/"}.map(String.init)
-        switch cal![0]{
+        let arr = date.characters.split{$0 == " "}.map(String.init)
+        let cal = arr[0].characters.split{$0 == "/"}.map(String.init)
+        switch cal[0]{
         case "1": return "Jan"
         case "2": return "Feb"
         case "3": return "Mar"
@@ -129,7 +167,7 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
         case "10": return "Oct"
         case "11": return "Nov"
         case "12": return "Dec"
-        default: return cal![0]
+        default: return cal[0]
         }
     }
     

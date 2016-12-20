@@ -33,6 +33,7 @@
 		C00CA6A21D57B766007673A9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED7D3B31D2F28C100D86AE3 /* MapKit.framework */; };
 		C017DA511E074FA100D5451D /* EventsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017DA501E074FA100D5451D /* EventsController.swift */; };
 		C017DA531E07517900D5451D /* EventsCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017DA521E07517900D5451D /* EventsCustomCell.swift */; };
+		C017DA551E089D5A00D5451D /* EventExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017DA541E089D5A00D5451D /* EventExtensionViewController.swift */; };
 		C0D708E41D4FC12900C4E7B1 /* SeizureMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D708E31D4FC12900C4E7B1 /* SeizureMonitoring.swift */; };
 		C0F736341D5685AD00B22C5A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0F736331D5685AD00B22C5A /* HealthKit.framework */; };
 		C0F736361D569A7600B22C5A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0F736331D5685AD00B22C5A /* HealthKit.framework */; };
@@ -130,6 +131,7 @@
 		C00CA6A01D57B718007673A9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.0.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
 		C017DA501E074FA100D5451D /* EventsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsController.swift; sourceTree = "<group>"; };
 		C017DA521E07517900D5451D /* EventsCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCustomCell.swift; sourceTree = "<group>"; };
+		C017DA541E089D5A00D5451D /* EventExtensionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventExtensionViewController.swift; sourceTree = "<group>"; };
 		C0811C951E0493BA00ADABFB /* Seizure Monitoring.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring.entitlements"; sourceTree = "<group>"; };
 		C0811C961E0493D200ADABFB /* Seizure Monitoring WatchKit App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring WatchKit App.entitlements"; sourceTree = "<group>"; };
 		C0811C971E0493E900ADABFB /* Seizure Monitoring WatchKit Extension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring WatchKit Extension.entitlements"; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				0EF10D0C1D2DB57200C6441C /* CareGiver.swift */,
 				0EF10D0E1D2DB60C00C6441C /* Methods.swift */,
 				0E622CE01D2D88170001B8DE /* Main.storyboard */,
+				C017DA541E089D5A00D5451D /* EventExtensionViewController.swift */,
 				C017DA501E074FA100D5451D /* EventsController.swift */,
 				C017DA521E07517900D5451D /* EventsCustomCell.swift */,
 				0E622CE31D2D88170001B8DE /* Assets.xcassets */,
@@ -537,6 +540,7 @@
 				0EF10D0F1D2DB60C00C6441C /* Methods.swift in Sources */,
 				C00CA69D1D56BB79007673A9 /* SwiftRequest.swift in Sources */,
 				C017DA511E074FA100D5451D /* EventsController.swift in Sources */,
+				C017DA551E089D5A00D5451D /* EventExtensionViewController.swift in Sources */,
 				0E622CDD1D2D88170001B8DE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
