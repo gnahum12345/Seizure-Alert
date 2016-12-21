@@ -80,6 +80,18 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
     func completeNotes(){
         self.notes.text = notesFromAlert?.text
         notesFromStorage = self.notes.text
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        var event = appDelegate.events.dictionary(forKey: "Event \(appDelegate.eventSelected)")
+        event?["Notes"] = notesFromStorage
+        appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")
+        if (appDelegate.events.synchronize()){
+            //Do nothing
+        }else{
+            print("Failed to save")
+        }
+
+        
        // print("\n\n\nNotesfrom storage \(notesFromStorage)")
     }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -94,6 +106,16 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
       //  print(seizureTypes[row])
         seizure = seizureTypes[row]
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        var event = appDelegate.events.dictionary(forKey: "Event \(appDelegate.eventSelected)")
+        event?["Type of Seizure"] = seizure
+        appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")
+        if (appDelegate.events.synchronize()){
+            //Do nothing
+        }else{
+            print("Failed to save")
+        }
+
     }
     
     var notesFromStorage:String? = nil
@@ -117,15 +139,25 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         eventTitle.topItem?.title = getEventTitle(selected, count)
         print("getIsOn(): \(getIsOn(event!))")
         falseAlarmValue.setOn(getIsOn(event!), animated: false)
-//        seizure = event?["Type Of Seizure"] as! String
-//        typeOfSeizure.
+        seizure = event?["Type Of Seizure"] as! String
+       
+        var i = 0
+        while(i<seizureTypes.count){
+            if (seizureTypes[i] == seizure){
+                break
+            }
+            i += 1
+        }
+        
+        self.typeOfSeizure.selectRow(i, inComponent: 0, animated: true)
+    
     }
     func getIsOn(_ event: [String: Any])-> Bool {
        // print(event.description)
-        print("Event false alarm: \(event["False Alarm"])")
+//        print("Event false alarm: \(event["False Alarm"])")
         if ((event["False Alarm"] as? Bool) != nil){
-            print("in if")
-            print("Event false alarm: \(event["False Alarm"] as? Bool)")
+//            print("in if")
+//            print("Event false alarm: \(event["False Alarm"] as? Bool)")
             return (event["False Alarm"] as? Bool)!
         }else {
             return false
@@ -148,7 +180,10 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         let date = event["StartTime"] as! String
         //        print("\n\n \(date)")
         let arr = date.characters.split{$0 == " "}.map(String.init)
-        return "Date: \(arr[0])"
+        let correctDate = arr[0].characters.split{$0 == ","}.map(String.init)
+//        print(arr)
+//        print(correctDate)
+        return "Date: \(correctDate[0])"
     }
    
     func getMaxHr(_ event: [String:Any])-> String{
@@ -210,6 +245,19 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func falseAlarmChanged(_ sender: Any) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        var event = appDelegate.events.dictionary(forKey: "Event \(appDelegate.eventSelected)")
+        event?["False Alarm"] = falseAlarmValue.isOn
+        appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")
+        if (appDelegate.events.synchronize()){
+            //Do nothing
+        }else{
+            print("Failed to save")
+        }
+        
+    
+    }
 
     /*
     // MARK: - Navigation

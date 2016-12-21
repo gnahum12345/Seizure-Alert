@@ -91,9 +91,16 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
             cell.duration.text = String(duration)
             cell.unitOfMeasure.text = "Seconds"
         }
-        cell.typeSeizure.text = "Other"
+        cell.typeSeizure.text = getTypeSeizure(events["Event \(events.count-indexPath.row)"] as! [String:Any])
         cell.maxHR.text = getMaxHr(events["Event \(events.count-indexPath.row)"] as! [String:Any])
         return cell
+    }
+    func getTypeSeizure(_ event: [String: Any])-> String{
+        if (event["Type of Seizure"] != nil){
+            return (event["Type of Seizure"] as! String)
+        }else{
+            return ""
+        }
     }
     func getMaxHr(_ event: [String:Any])-> String{
         return (event["MaxHR"] as! String)

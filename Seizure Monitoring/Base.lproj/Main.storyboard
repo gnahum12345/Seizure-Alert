@@ -515,7 +515,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hVg-94-upc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="556" y="-171.36431784107947"/>
+            <point key="canvasLocation" x="535" y="-185"/>
         </scene>
         <!--EventExtensionViewController-->
         <scene sceneID="IUq-8M-yXD">
@@ -589,6 +589,9 @@
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3da-c2-H7C">
                                 <rect key="frame" x="113" y="344" width="51" height="31"/>
+                                <connections>
+                                    <action selector="falseAlarmChanged:" destination="wXC-SI-jhV" eventType="valueChanged" id="4F1-vr-xNh"/>
+                                </connections>
                             </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

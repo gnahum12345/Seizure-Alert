@@ -496,6 +496,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         self.startTime.text = sTime
         self.endTime.text = eTime
         self.dur.text = duration
+        if(arr["Type of Seizure"] != nil){
+            self.type.text = arr["Type of Seizure"] as! String
+        }
         
     }
     
