@@ -17,7 +17,7 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         event?["Notes"] = self.notes.text
         event?["False Alarm"] = self.falseAlarmValue.isOn
         event?["Type Of Seizure"] = seizure
-        print(event)
+        print("event: \(event)")
         
         appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")  //Uncomment this line.
         if( appDelegate.events.synchronize()){ //uncomment this line too.
@@ -115,12 +115,18 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         duration.text = getDuration(event! )
         date.text = getDate(event!)
         eventTitle.topItem?.title = getEventTitle(selected, count)
+        print("getIsOn(): \(getIsOn(event!))")
         falseAlarmValue.setOn(getIsOn(event!), animated: false)
+//        seizure = event?["Type Of Seizure"] as! String
+//        typeOfSeizure.
     }
     func getIsOn(_ event: [String: Any])-> Bool {
        // print(event.description)
+        print("Event false alarm: \(event["False Alarm"])")
         if ((event["False Alarm"] as? Bool) != nil){
-            return ((event["False Alarm"] as! Bool) != nil)
+            print("in if")
+            print("Event false alarm: \(event["False Alarm"] as? Bool)")
+            return (event["False Alarm"] as? Bool)!
         }else {
             return false
         }
