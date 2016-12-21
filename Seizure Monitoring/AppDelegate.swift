@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
     var count = UserDefaults.standard
     var eventSelected = -1
     var eventCount = -1
+    var fromViewController = false
     var window: UIWindow?
     var snooze = false
     var careGiversArray: [CareGiver]?

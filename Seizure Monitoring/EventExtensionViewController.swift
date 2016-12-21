@@ -18,16 +18,34 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         event?["False Alarm"] = self.falseAlarmValue.isOn
         event?["Type Of Seizure"] = seizure
         print(event)
+        
+        appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")  //Uncomment this line.
+        if( appDelegate.events.synchronize()){ //uncomment this line too.
+            //do nothing
+        }else {
+            print("Failure :(")
+        }
+       // print(appDelegate.events.dictionary(forKey: "Event \(appDelegate.eventSelected)"))
+        
+        let returningTo = appDelegate.fromViewController
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        
+        if returningTo {
+            appDelegate.fromViewController = false
+            
+            let resultViewController = storyBoard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+            self.present(resultViewController, animated:true, completion:nil)
+
+        }else{
+            let resultViewController = storyBoard.instantiateViewController(withIdentifier: "Event") as! EventsController
+            self.present(resultViewController, animated:true, completion:nil)
+        }
 //        appDelegate.events.removeObject(forKey: "Event \(appDelegate.eventSelected)")
-//        appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")
+//        appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")  //Uncomment this line.
         
         //TODO: Set Event to appDelegate.events
         //Go back.
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        
-        let resultViewController = storyBoard.instantiateViewController(withIdentifier: "Event") as! EventsController
-        
-        self.present(resultViewController, animated:true, completion:nil)
+       
         
     }
     var seizure = "other"
@@ -62,7 +80,7 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
     func completeNotes(){
         self.notes.text = notesFromAlert?.text
         notesFromStorage = self.notes.text
-        print("\n\n\nNotesfrom storage \(notesFromStorage)")
+       // print("\n\n\nNotesfrom storage \(notesFromStorage)")
     }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -74,7 +92,7 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         return seizureTypes[row]
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print(seizureTypes[row])
+      //  print(seizureTypes[row])
         seizure = seizureTypes[row]
     }
     
@@ -100,8 +118,7 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         falseAlarmValue.setOn(getIsOn(event!), animated: false)
     }
     func getIsOn(_ event: [String: Any])-> Bool {
-        print("hello world")
-        print(event.description)
+       // print(event.description)
         if ((event["False Alarm"] as? Bool) != nil){
             return ((event["False Alarm"] as! Bool) != nil)
         }else {
@@ -174,12 +191,6 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         }
     }
     
-    @IBAction func falseAlarm(_ sender: UISwitch) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        var events = appDelegate.events.dictionary(forKey: "Event \(appDelegate.eventSelected)")
-        events?["False Alarm"] = falseAlarmValue.isOn
-        print(events?["False Alarm"])
-    }
     @IBOutlet var falseAlarmValue: UISwitch!
     @IBOutlet var notes: UITextView!
     @IBOutlet var typeOfSeizure: UIPickerView!

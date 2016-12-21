@@ -20,7 +20,7 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         var count = appDelegate.count.integer(forKey: "count")
         print("Count: \(count)")
-        print("\n\nEvents\n\n")
+//        print("\nEvents\n")
         
         while (count>=1){
 //            print("Hello world")
@@ -30,7 +30,7 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
         }
         count = appDelegate.count.integer(forKey: "count")
         
-        print("\n\n\n\n\n\nEvents \n\n\n")
+        print("\n\nEvents\n")
         print(events)
     
     }

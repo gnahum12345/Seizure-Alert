@@ -589,9 +589,6 @@
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3da-c2-H7C">
                                 <rect key="frame" x="113" y="344" width="51" height="31"/>
-                                <connections>
-                                    <action selector="falseAlarm:" destination="wXC-SI-jhV" eventType="valueChanged" id="LFb-dc-GGY"/>
-                                </connections>
                             </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

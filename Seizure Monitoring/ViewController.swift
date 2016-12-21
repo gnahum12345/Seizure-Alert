@@ -202,7 +202,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //        print(self.appDelegate.events.dictionaryRepresentation())
         if hasEvent(defaults: self.appDelegate.events.dictionaryRepresentation()) {
             let lastEvent = getLastEvent(events: self.appDelegate.events)
-            self.updateLastEvent(arr: lastEvent as! [String : String] )
+            self.updateLastEvent(arr: lastEvent as! [String : Any] )
+        }else {
+//            self.updateLastEvent(arr: <#T##[String : String]#>)
         }
         commonInit()
         startUpdatingLocationAllowingBackground(commandedFromPhone: true)
@@ -240,9 +242,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     
     
     func lastEventScene(){
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let rvc = storyBoard.instantiateViewController(withIdentifier: "Event") as! EventsController
-        self.present(rvc, animated: true, completion: nil)
+        if (self.appDelegate.count.object(forKey: "count") == nil){}else{
+            print("Count \(self.appDelegate.count.integer(forKey: "count"))")
+            let count = self.appDelegate.count.integer(forKey: "count")
+            self.appDelegate.eventCount = count
+            self.appDelegate.eventSelected = count
+            self.appDelegate.fromViewController = true
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let resultViewController = storyBoard.instantiateViewController(withIdentifier: "EventExtensionViewController") as! EventExtensionViewController
+            self.present(resultViewController, animated:true, completion:nil)
+        }
 
     }
     func historyScene(){
@@ -250,6 +259,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //        let rvc = storyBoard.instantiateViewController(withIdentifier: "History") as! History
 //        self.present(rvc, animated: true, completion: nil)
         print("hi")
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let rvc = storyBoard.instantiateViewController(withIdentifier: "Event") as! EventsController
+        self.present(rvc, animated: true, completion: nil)
     }
     func editSnooze(){
         print("Hello Im in editSnooze")
@@ -426,14 +438,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         }
         
     }
-    func updateLastEvent(arr: [String: String]){
-        let sTimeArr = arr["StartTime"]?.characters.split{$0 == " "}.map(String.init)
-        let sTime = sTimeArr?[1]
-        let eTimeArr = arr["EndTime"]?.characters.split{$0 == " "}.map(String.init)
-        let eTime = eTimeArr?[1]
-        let day = arr["Day"]
-        var month = arr["Month"]
-        switch month! {
+    func updateLastEvent(arr: [String: Any]){
+        
+        let sTimeArr = (arr["StartTime"] as! String).characters.split{$0 == " "}.map(String.init)
+        let sTime = sTimeArr[1]
+        let eTimeArr = (arr["EndTime"] as! String).characters.split{$0 == " "}.map(String.init)
+        let eTime = eTimeArr[1]
+        let day = arr["Day"] as! String
+        var month = arr["Month"] as! String
+        switch month {
         case "1":
             month = "Jan"
             break
@@ -474,15 +487,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             break
             
         }
-        let duration = arr["Duration"]
-        let maxhr = arr["MaxHR"]
-        self.month.text = month!
+        let duration = arr["Duration"] as! String
+        let maxhr = arr["MaxHR"] as! String
+        self.month.text = month
         self.month.sizeToFit()
-        self.day.text = day!
-        self.maxHR.text = maxhr!
-        self.startTime.text = sTime!
-        self.endTime.text = eTime!
-        self.dur.text = duration!
+        self.day.text = day
+        self.maxHR.text = maxhr
+        self.startTime.text = sTime
+        self.endTime.text = eTime
+        self.dur.text = duration
         
     }
     

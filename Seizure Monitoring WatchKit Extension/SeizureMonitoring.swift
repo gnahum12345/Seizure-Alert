@@ -334,6 +334,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
         }
         
         if seizureStart {
+            print("In seizure Start: Called: \(called)")
             if !called {
                 sendMessageToText()
                 called = true
