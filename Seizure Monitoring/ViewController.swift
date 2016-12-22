@@ -186,9 +186,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         
     }
         
-    
+    let dateFormatter = DateFormatter()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
+        dateFormatter.dateStyle = DateFormatter.Style.short//Set date style
+        dateFormatter.timeZone = TimeZone.ReferenceType.system
         // Do any additional setup after loading the view, typically from a nib.
         let tapGestureLastEvent =  UITapGestureRecognizer(target: self, action: #selector(ViewController.lastEventScene as (ViewController) -> () -> ()))
         let tapGestureHistory =  UITapGestureRecognizer(target: self, action: #selector(ViewController.historyScene as (ViewController) -> () -> ()))
@@ -215,7 +219,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //        let numSeizures = getNumPerDa
         if appDelegate.events.object(forKey: "count") == nil {}else{
             let dates = getNumDates()
-            let numSeizures = getNumSeizures()
+            let numSeizures = getNumSeizures(dates)
             setChart(dataPoints: dates, values: numSeizures)
         }
         
@@ -240,26 +244,58 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             }
         
         }
-//        print(dates)
+        print(dates)
+        
+        let dateFormatterTwo = DateFormatter()
+        dateFormatterTwo.dateFormat = "yyyy-MM-dd"
+        let cal = NSCalendar.current
+    
+        if (dates.count < 1){/*TODO LATER*/
+    
+        }else{
+            let date = dates[0]
+            print(date)
+            
+            let dateArr = date.characters.split{$0 == "/"}.map(String.init)
+            var startDay = "20\(dateArr[2])-\(dateArr[0])-\(dateArr[1])"
+            let endDay = dateFormatterTwo.string(from: Date())
+            let startDate:Date = dateFormatterTwo.date(from: startDay)!
+            let endDate:Date = dateFormatterTwo.date(from: endDay)!
+            let c = cal.dateComponents([.day], from: startDate, to: endDate)
+            
+            var dateQuestion = startDate
+            
+            while dateQuestion < endDate {
+                print(dateFormatterTwo.string(from: dateQuestion))
+                dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
+                dates.append(dateFormatter.string(from: dateQuestion))
+            }
+            
+        }
+        print(dates)
         return dates
     }
-   
+  
     
-    func getNumSeizures()->[Double]{
+    func getNumSeizures(_ dates: [String])->[Double]{
         let count = appDelegate.count.integer(forKey: "count")
 //        print("Events in NumDates \(count)")
         
         var numSeizures = [Double]()
-        var dates = [String]()
+        let dateFormatterTwo = DateFormatter()
+        dateFormatterTwo.dateFormat = "yyyy-MM-dd"
+        let cal = NSCalendar.current
+
+        var days = [String]()
         for i in 0..<count {
             let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
             let startTime = event?["StartTime"] as! String
             let timeArr = startTime.characters.split{$0 == " "}.map(String.init)
             let dateArr = timeArr[0].characters.split{$0 == ","}.map(String.init)
             
-            if(dates.contains(dateArr[0])){
-                for j in 0..<dates.count {
-                    if dateArr[0] == dates[j] {
+            if(days.contains(dateArr[0])){
+                for j in 0..<days.count {
+                    if dateArr[0] == days[j] {
 //                        print(numSeizures[j])
                         numSeizures[j] += 1
                     }
@@ -267,12 +303,37 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             }else{
                 
                 numSeizures.append(1.0)
-                dates.append(dateArr[0])
+                days.append(dateArr[0])
+            }
+        }
+    
+        if (days.count < 1){/*TODO LATER*/
+        
+        }else{
+            let date = dates[0]
+            print(date)
+            
+            let dateArr = date.characters.split{$0 == "/"}.map(String.init)
+            var startDay = "20\(dateArr[2])-\(dateArr[0])-\(dateArr[1])"
+            let endDay = dateFormatterTwo.string(from: Date())
+            let startDate:Date = dateFormatterTwo.date(from: startDay)!
+            let endDate:Date = dateFormatterTwo.date(from: endDay)!
+            let c = cal.dateComponents([.day], from: startDate, to: endDate)
+            
+            var dateQuestion = startDate
+            
+            while dateQuestion < endDate {
+                print(dateFormatterTwo.string(from: dateQuestion))
+                dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
+                numSeizures.append(0.0)
             }
             
         }
-//        print(dates)
-//        print(numSeizures)
+
+        print(dates)
+        print(numSeizures)
+        
+      
         return numSeizures
     }
     func setChart(dataPoints: [String], values: [Double]) {
@@ -482,7 +543,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         let data = [
             "To" : self.phone.currentTitle!,
             "From" : "19497937646",
-            "Body" : "Possible Seizure!! \(NSDate().description)\nMy location is: \nhttps://www.google.com/maps/dir//\(latitude),\(longitude)"
+            "Body" : "Possible Seizure!! \(self.dateFormatter.string(from: Date()))\nMy location is: \nhttps://www.google.com/maps/dir//\(latitude),\(longitude)"
             
         ]
         swiftRequest.post(url: "https://api.twilio.com/2010-04-01/Accounts/ACc968690090dfe344514fdcf9f88eed89/Messages",
