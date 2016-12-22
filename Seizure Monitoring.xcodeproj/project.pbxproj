@@ -34,6 +34,7 @@
 		C017DA511E074FA100D5451D /* EventsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017DA501E074FA100D5451D /* EventsController.swift */; };
 		C017DA531E07517900D5451D /* EventsCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017DA521E07517900D5451D /* EventsCustomCell.swift */; };
 		C017DA551E089D5A00D5451D /* EventExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017DA541E089D5A00D5451D /* EventExtensionViewController.swift */; };
+		C0CDEF851E0B47AC00ACACDE /* AddEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CDEF841E0B47AC00ACACDE /* AddEventController.swift */; };
 		C0D708E41D4FC12900C4E7B1 /* SeizureMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D708E31D4FC12900C4E7B1 /* SeizureMonitoring.swift */; };
 		C0F736341D5685AD00B22C5A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0F736331D5685AD00B22C5A /* HealthKit.framework */; };
 		C0F736361D569A7600B22C5A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0F736331D5685AD00B22C5A /* HealthKit.framework */; };
@@ -135,6 +136,7 @@
 		C0811C951E0493BA00ADABFB /* Seizure Monitoring.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring.entitlements"; sourceTree = "<group>"; };
 		C0811C961E0493D200ADABFB /* Seizure Monitoring WatchKit App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring WatchKit App.entitlements"; sourceTree = "<group>"; };
 		C0811C971E0493E900ADABFB /* Seizure Monitoring WatchKit Extension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring WatchKit Extension.entitlements"; sourceTree = "<group>"; };
+		C0CDEF841E0B47AC00ACACDE /* AddEventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventController.swift; sourceTree = "<group>"; };
 		C0D708E31D4FC12900C4E7B1 /* SeizureMonitoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeizureMonitoring.swift; sourceTree = "<group>"; };
 		C0F736331D5685AD00B22C5A /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -220,6 +222,7 @@
 				0EF10D0C1D2DB57200C6441C /* CareGiver.swift */,
 				0EF10D0E1D2DB60C00C6441C /* Methods.swift */,
 				0E622CE01D2D88170001B8DE /* Main.storyboard */,
+				C0CDEF841E0B47AC00ACACDE /* AddEventController.swift */,
 				C017DA541E089D5A00D5451D /* EventExtensionViewController.swift */,
 				C017DA501E074FA100D5451D /* EventsController.swift */,
 				C017DA521E07517900D5451D /* EventsCustomCell.swift */,
@@ -535,6 +538,7 @@
 			files = (
 				0EF10D0B1D2DB53F00C6441C /* Settings.swift in Sources */,
 				C017DA531E07517900D5451D /* EventsCustomCell.swift in Sources */,
+				C0CDEF851E0B47AC00ACACDE /* AddEventController.swift in Sources */,
 				0E622CDF1D2D88170001B8DE /* ViewController.swift in Sources */,
 				0EF10D0D1D2DB57200C6441C /* CareGiver.swift in Sources */,
 				0EF10D0F1D2DB60C00C6441C /* Methods.swift in Sources */,

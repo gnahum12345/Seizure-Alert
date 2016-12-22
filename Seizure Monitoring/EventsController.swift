@@ -131,6 +131,13 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
         
     }
     
+    @IBAction func addEvent(_ sender: Any) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let rvc = storyBoard.instantiateViewController(withIdentifier: "AddEvent") as! AddEventController
+        self.present(rvc, animated: true, completion: nil)
+    }
+    
+    
     func getTime(_ event: [String: Any], _ key: String)-> String{
         
         let time = event[key] as! String

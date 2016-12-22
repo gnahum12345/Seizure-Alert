@@ -293,6 +293,112 @@
             </objects>
             <point key="canvasLocation" x="-242.40000000000001" y="-184.85757121439281"/>
         </scene>
+        <!--AddEvent-->
+        <scene sceneID="DYm-rO-DhQ">
+            <objects>
+                <viewController storyboardIdentifier="AddEvent" title="AddEvent" useStoryboardIdentifierAsRestorationIdentifier="YES" id="I9U-4N-Prs" customClass="AddEventController" customModule="Seizure_Monitoring" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MGw-IV-YTK"/>
+                        <viewControllerLayoutGuide type="bottom" id="vkN-PL-6TE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xVo-ln-tzu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qcK-Sa-Ow3">
+                                <rect key="frame" x="16" y="72" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e8P-t5-nUx">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Add Event" id="eaQ-8L-F6V">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="q6K-VL-pG4">
+                                            <connections>
+                                                <action selector="back:" destination="I9U-4N-Prs" id="4ca-cg-3wb"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Save" id="UmQ-nX-VeE">
+                                            <connections>
+                                                <action selector="save:" destination="I9U-4N-Prs" id="cAE-aG-A3P"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start time: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64J-t0-jku">
+                                <rect key="frame" x="16" y="101" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLq-A9-ELG">
+                                <rect key="frame" x="16" y="130" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r3A-f8-qLc">
+                                <rect key="frame" x="16" y="159" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="800-qf-vQf">
+                                <rect key="frame" x="16" y="188" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="goI-LF-2zr">
+                                <rect key="frame" x="16" y="217" width="343" height="442"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="r3A-f8-qLc" secondAttribute="trailing" id="0Fg-Eh-B13"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="goI-LF-2zr" secondAttribute="leading" id="1a1-54-tcw"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="e8P-t5-nUx" secondAttribute="trailing" constant="-16" id="1ed-Jd-KZI"/>
+                            <constraint firstItem="dLq-A9-ELG" firstAttribute="top" secondItem="64J-t0-jku" secondAttribute="bottom" constant="8" id="2oi-X4-gYc"/>
+                            <constraint firstItem="r3A-f8-qLc" firstAttribute="top" secondItem="dLq-A9-ELG" secondAttribute="bottom" constant="8" id="3bh-gU-39n"/>
+                            <constraint firstItem="goI-LF-2zr" firstAttribute="leading" secondItem="800-qf-vQf" secondAttribute="trailing" constant="-343" id="4tM-rN-u0N"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="qcK-Sa-Ow3" secondAttribute="leading" id="6sL-eR-DM0"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="dLq-A9-ELG" secondAttribute="leading" id="985-or-Pa9"/>
+                            <constraint firstItem="vkN-PL-6TE" firstAttribute="top" secondItem="goI-LF-2zr" secondAttribute="bottom" constant="8" id="9d4-Pt-yct"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="r3A-f8-qLc" secondAttribute="leading" id="9nL-wg-fqT"/>
+                            <constraint firstItem="e8P-t5-nUx" firstAttribute="leading" secondItem="xVo-ln-tzu" secondAttribute="leadingMargin" constant="-16" id="Bul-ep-Bto"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qcK-Sa-Ow3" secondAttribute="trailing" id="GtG-WS-F6w"/>
+                            <constraint firstItem="800-qf-vQf" firstAttribute="top" secondItem="r3A-f8-qLc" secondAttribute="bottom" constant="8" id="OEA-az-lXp"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="64J-t0-jku" secondAttribute="leading" id="OML-Sh-OQh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="800-qf-vQf" secondAttribute="trailing" id="QZF-0Z-1cX"/>
+                            <constraint firstItem="goI-LF-2zr" firstAttribute="top" secondItem="800-qf-vQf" secondAttribute="bottom" constant="8" id="YpJ-JM-woy"/>
+                            <constraint firstItem="64J-t0-jku" firstAttribute="top" secondItem="qcK-Sa-Ow3" secondAttribute="bottom" constant="8" id="a1V-NP-7j6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="64J-t0-jku" secondAttribute="trailing" id="awU-16-O3M"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="800-qf-vQf" secondAttribute="leading" id="hSD-AU-7nD"/>
+                            <constraint firstItem="qcK-Sa-Ow3" firstAttribute="top" secondItem="e8P-t5-nUx" secondAttribute="bottom" constant="8" id="haz-4s-eb8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dLq-A9-ELG" secondAttribute="trailing" id="pqh-EC-4Wy"/>
+                            <constraint firstItem="800-qf-vQf" firstAttribute="leading" secondItem="r3A-f8-qLc" secondAttribute="trailing" constant="-343" id="twR-Mc-lrn"/>
+                            <constraint firstItem="e8P-t5-nUx" firstAttribute="top" secondItem="MGw-IV-YTK" secondAttribute="bottom" id="wBV-Fm-UvB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="goI-LF-2zr" secondAttribute="trailing" id="ycX-PG-93X"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="date" destination="qcK-Sa-Ow3" id="Z6S-2v-KzK"/>
+                        <outlet property="endTime" destination="dLq-A9-ELG" id="4U9-Q4-8A2"/>
+                        <outlet property="notes" destination="goI-LF-2zr" id="fTA-71-2Y1"/>
+                        <outlet property="startTime" destination="64J-t0-jku" id="kWf-hg-Ol5"/>
+                        <outlet property="type" destination="r3A-f8-qLc" id="IuD-Bz-Hzz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tS1-4K-vbv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="551.20000000000005" y="-832.53373313343332"/>
+        </scene>
         <!--Events-->
         <scene sceneID="qHI-dm-QYy">
             <objects>
@@ -313,6 +419,11 @@
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="JGP-Ui-O2B">
                                             <connections>
                                                 <segue destination="BYZ-38-t0r" kind="show" id="w9w-og-KbO"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="+" id="qR5-OQ-OKP">
+                                            <connections>
+                                                <action selector="addEvent:" destination="Mcg-3R-iGp" id="GfE-Mt-dCL"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
