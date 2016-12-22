@@ -26,7 +26,6 @@
 		0E622D351D2D89310001B8DE /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E622D341D2D89310001B8DE /* HealthKit.framework */; };
 		0EF10D0B1D2DB53F00C6441C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF10D0A1D2DB53F00C6441C /* Settings.swift */; };
 		0EF10D0D1D2DB57200C6441C /* CareGiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF10D0C1D2DB57200C6441C /* CareGiver.swift */; };
-		0EF10D0F1D2DB60C00C6441C /* Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF10D0E1D2DB60C00C6441C /* Methods.swift */; };
 		C00CA69D1D56BB79007673A9 /* SwiftRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00CA69C1D56BB79007673A9 /* SwiftRequest.swift */; };
 		C00CA69F1D56D2FA007673A9 /* SwiftRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00CA69E1D56D2FA007673A9 /* SwiftRequest.swift */; };
 		C00CA6A11D57B718007673A9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00CA6A01D57B718007673A9 /* MapKit.framework */; };
@@ -167,7 +166,6 @@
 		0ED7D3B31D2F28C100D86AE3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0EF10D0A1D2DB53F00C6441C /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		0EF10D0C1D2DB57200C6441C /* CareGiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareGiver.swift; sourceTree = "<group>"; };
-		0EF10D0E1D2DB60C00C6441C /* Methods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Methods.swift; sourceTree = "<group>"; };
 		C00CA69C1D56BB79007673A9 /* SwiftRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRequest.swift; sourceTree = "<group>"; };
 		C00CA69E1D56D2FA007673A9 /* SwiftRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRequest.swift; sourceTree = "<group>"; };
 		C00CA6A01D57B718007673A9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.0.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -264,7 +262,6 @@
 				0E622CDE1D2D88170001B8DE /* ViewController.swift */,
 				0EF10D0A1D2DB53F00C6441C /* Settings.swift */,
 				0EF10D0C1D2DB57200C6441C /* CareGiver.swift */,
-				0EF10D0E1D2DB60C00C6441C /* Methods.swift */,
 				0E622CE01D2D88170001B8DE /* Main.storyboard */,
 				C0CDEF841E0B47AC00ACACDE /* AddEventController.swift */,
 				C017DA541E089D5A00D5451D /* EventExtensionViewController.swift */,
@@ -627,7 +624,6 @@
 				C0CDEF851E0B47AC00ACACDE /* AddEventController.swift in Sources */,
 				0E622CDF1D2D88170001B8DE /* ViewController.swift in Sources */,
 				0EF10D0D1D2DB57200C6441C /* CareGiver.swift in Sources */,
-				0EF10D0F1D2DB60C00C6441C /* Methods.swift in Sources */,
 				C00CA69D1D56BB79007673A9 /* SwiftRequest.swift in Sources */,
 				C017DA511E074FA100D5451D /* EventsController.swift in Sources */,
 				C017DA551E089D5A00D5451D /* EventExtensionViewController.swift in Sources */,

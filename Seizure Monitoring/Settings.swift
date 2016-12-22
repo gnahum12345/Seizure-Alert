@@ -40,15 +40,6 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
     //    default:
     //    print("Not handled")
     //    }
-    @IBAction func call(_ sender: UISwitch) {
-        changeSwitch()
-    }
-    @IBAction func text(_ sender: UISwitch) {
-        changeSwitch()
-        if text.isOn {
-            self.askUserMessage()
-        }
-    }
     
     
     func askUserMessage(){
@@ -82,34 +73,6 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
     @IBOutlet var call: UISwitch!
     
     @IBOutlet weak var myTableView: UITableView!
-    func changeSwitch(){
-        
-        let textOn = self.text.isOn
-        let callOn = self.call.isOn
-        
-        var methods = [Methods]()
-        methods.append(Methods(bool: textOn))
-        methods.append(Methods(bool: callOn))
-        let app = UIApplication.shared.delegate as! AppDelegate
-        app.methods = methods
-        
-        
-    }
-    func setSwitch(){
-        var methods = [Methods]()
-        
-        let app = UIApplication.shared.delegate as! AppDelegate
-        if app.methods == nil {
-            let textOn = self.text.isOn
-            let callOn = self.call.isOn
-            methods.append(Methods(bool: textOn))
-            methods.append(Methods(bool: callOn))
-            app.methods = methods
-        }
-        methods = app.methods!
-        text.setOn(methods[0].getTrueORFalse(), animated: true)
-        call.setOn(methods[1].getTrueORFalse(), animated: true)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -145,7 +108,6 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         //            careGivers = appDelegate.careGiversArray!
         //        }
         
-        setSwitch()
         self.myTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         myTableView.delegate = self
         myTableView.dataSource = self

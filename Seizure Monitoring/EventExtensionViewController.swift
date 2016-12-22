@@ -188,9 +188,9 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
    
     func getMaxHr(_ event: [String:Any])-> String{
         if (event["MaxHR"] as! String) == "---" {
-            return "Max heartrate cannot be determined"
+            return "Max heart rate cannot be determined"
         }else{
-            return "Max heartrate: \(event["MaxHR"] as! String)"
+            return "Max heart rate: \(event["MaxHR"] as! String)"
 
         }
     }

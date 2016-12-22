@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
     var window: UIWindow?
     var snooze = false
     var careGiversArray: [CareGiver]?
-    var methods: [Methods]?
     var textMessage: String?
     let careGiverFile = UserDefaults.standard
     let events = UserDefaults.standard

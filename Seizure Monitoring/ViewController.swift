@@ -225,7 +225,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     }
     func getNumDates() -> [String] {
        let count = appDelegate.count.integer(forKey: "count")
-        print("Events in NumDates \(count)")
+//        print("Events in NumDates \(count)")
         
         var dates = [String]()
         
@@ -240,14 +240,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             }
         
         }
-        print(dates)
+//        print(dates)
         return dates
     }
    
     
     func getNumSeizures()->[Double]{
         let count = appDelegate.count.integer(forKey: "count")
-        print("Events in NumDates \(count)")
+//        print("Events in NumDates \(count)")
         
         var numSeizures = [Double]()
         var dates = [String]()
@@ -260,7 +260,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             if(dates.contains(dateArr[0])){
                 for j in 0..<dates.count {
                     if dateArr[0] == dates[j] {
-                        print(numSeizures[j])
+//                        print(numSeizures[j])
                         numSeizures[j] += 1
                     }
                 }
@@ -271,8 +271,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             }
             
         }
-        print(dates)
-        print(numSeizures)
+//        print(dates)
+//        print(numSeizures)
         return numSeizures
     }
     func setChart(dataPoints: [String], values: [Double]) {
@@ -287,10 +287,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             dataEntries.append(dataEntry)
         }
         
-        let chartDataSet = BarChartDataSet(values: dataEntries, label: "Seizures had")
+        let chartDataSet = BarChartDataSet(values: dataEntries, label: "No. Seizures")
         chartDataSet.colors = ChartColorTemplates.colorful()
         let chartData = BarChartData(dataSet: chartDataSet)
         barChartView.data = chartData
+//        barChartView.xAxis.accessibilityElementsHidden = true
         barChartView.xAxis.labelPosition = .bottom
         barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
     }
@@ -326,7 +327,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     
     func lastEventScene(){
         if (self.appDelegate.count.object(forKey: "count") == nil){}else{
-            print("Count \(self.appDelegate.count.integer(forKey: "count"))")
+         //   print("Count \(self.appDelegate.count.integer(forKey: "count"))")
             let count = self.appDelegate.count.integer(forKey: "count")
             self.appDelegate.eventCount = count
             self.appDelegate.eventSelected = count
@@ -341,13 +342,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
 //        let rvc = storyBoard.instantiateViewController(withIdentifier: "History") as! History
 //        self.present(rvc, animated: true, completion: nil)
-        print("hi")
+      //  print("hi")
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let rvc = storyBoard.instantiateViewController(withIdentifier: "Event") as! EventsController
         self.present(rvc, animated: true, completion: nil)
     }
     func editSnooze(){
-        print("Hello Im in editSnooze")
+//        print("Hello Im in editSnooze")
     }
     func careGiverScene(){
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
@@ -404,7 +405,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         manager.allowsBackgroundLocationUpdates = true
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.startUpdatingLocation()
-        print("Im updating")
+//        print("Im updating")
         manager.requestLocation()
     }
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -512,7 +513,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             con += 1
             self.appDelegate.count.set(con, forKey: "count")
             self.appDelegate.events.set(arr, forKey: "Event \(self.appDelegate.count.integer(forKey: "count"))")
-            print("Count: \(self.appDelegate.count.integer(forKey: "count"))")
+//            print("Count: \(self.appDelegate.count.integer(forKey: "count"))")
 //            print(app.events.dictionaryRepresentation())
 
          //   print(app.events.dictionary(forKey: "Event \(app.count - 1)"))
