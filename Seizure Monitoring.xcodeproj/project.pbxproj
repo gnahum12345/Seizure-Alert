@@ -34,6 +34,8 @@
 		C017DA511E074FA100D5451D /* EventsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017DA501E074FA100D5451D /* EventsController.swift */; };
 		C017DA531E07517900D5451D /* EventsCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017DA521E07517900D5451D /* EventsCustomCell.swift */; };
 		C017DA551E089D5A00D5451D /* EventExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017DA541E089D5A00D5451D /* EventExtensionViewController.swift */; };
+		C022BA071E0B9002006491A4 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C022B9FB1E0B8D0C006491A4 /* Charts.framework */; };
+		C022BA081E0B9002006491A4 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C022B9FB1E0B8D0C006491A4 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C0CDEF851E0B47AC00ACACDE /* AddEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CDEF841E0B47AC00ACACDE /* AddEventController.swift */; };
 		C0D708E41D4FC12900C4E7B1 /* SeizureMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D708E31D4FC12900C4E7B1 /* SeizureMonitoring.swift */; };
 		C0F736341D5685AD00B22C5A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0F736331D5685AD00B22C5A /* HealthKit.framework */; };
@@ -69,6 +71,34 @@
 			remoteGlobalIDString = 0E622D0F1D2D88170001B8DE;
 			remoteInfo = "Seizure Monitoring WatchKit Extension";
 		};
+		C022B9FA1E0B8D0C006491A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C022B9F41E0B8D0C006491A4 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06165F241D8110E600722320;
+			remoteInfo = Charts;
+		};
+		C022B9FC1E0B8D0C006491A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C022B9F41E0B8D0C006491A4 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06B120D51D811E6200D14B02;
+			remoteInfo = ChartsRealm;
+		};
+		C022B9FE1E0B8D0C006491A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C022B9F41E0B8D0C006491A4 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06165F2E1D8110E600722320;
+			remoteInfo = ChartsTests;
+		};
+		C022BA091E0B9002006491A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C022B9F41E0B8D0C006491A4 /* Charts.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 06165F231D8110E600722320;
+			remoteInfo = Charts;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -92,6 +122,17 @@
 				0E622D021D2D88170001B8DE /* Seizure Monitoring WatchKit App.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C022BA0B1E0B9002006491A4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C022BA081E0B9002006491A4 /* Charts.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -133,6 +174,7 @@
 		C017DA501E074FA100D5451D /* EventsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsController.swift; sourceTree = "<group>"; };
 		C017DA521E07517900D5451D /* EventsCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCustomCell.swift; sourceTree = "<group>"; };
 		C017DA541E089D5A00D5451D /* EventExtensionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventExtensionViewController.swift; sourceTree = "<group>"; };
+		C022B9F41E0B8D0C006491A4 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../../Desktop/Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
 		C0811C951E0493BA00ADABFB /* Seizure Monitoring.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring.entitlements"; sourceTree = "<group>"; };
 		C0811C961E0493D200ADABFB /* Seizure Monitoring WatchKit App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring WatchKit App.entitlements"; sourceTree = "<group>"; };
 		C0811C971E0493E900ADABFB /* Seizure Monitoring WatchKit Extension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring WatchKit Extension.entitlements"; sourceTree = "<group>"; };
@@ -147,6 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E46C7361D4694A300BB5E3D /* CoreLocation.framework in Frameworks */,
+				C022BA071E0B9002006491A4 /* Charts.framework in Frameworks */,
 				C00CA6A21D57B766007673A9 /* MapKit.framework in Frameworks */,
 				0E622D351D2D89310001B8DE /* HealthKit.framework in Frameworks */,
 			);
@@ -214,6 +257,7 @@
 		0E622CDB1D2D88170001B8DE /* Seizure Monitoring */ = {
 			isa = PBXGroup;
 			children = (
+				C022B9F41E0B8D0C006491A4 /* Charts.xcodeproj */,
 				C0811C951E0493BA00ADABFB /* Seizure Monitoring.entitlements */,
 				C00CA69C1D56BB79007673A9 /* SwiftRequest.swift */,
 				0E622CDC1D2D88170001B8DE /* AppDelegate.swift */,
@@ -298,6 +342,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C022B9F51E0B8D0C006491A4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C022B9FB1E0B8D0C006491A4 /* Charts.framework */,
+				C022B9FD1E0B8D0C006491A4 /* ChartsRealm.framework */,
+				C022B9FF1E0B8D0C006491A4 /* ChartsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -309,11 +363,13 @@
 				0E622CD61D2D88160001B8DE /* Frameworks */,
 				0E622CD71D2D88160001B8DE /* Resources */,
 				0E622D291D2D88170001B8DE /* Embed Watch Content */,
+				C022BA0B1E0B9002006491A4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				0E622D041D2D88170001B8DE /* PBXTargetDependency */,
+				C022BA0A1E0B9002006491A4 /* PBXTargetDependency */,
 			);
 			name = "Seizure Monitoring";
 			productName = "Seizure Monitoring";
@@ -476,6 +532,12 @@
 			mainGroup = 0E622CD01D2D88160001B8DE;
 			productRefGroup = 0E622CDA1D2D88170001B8DE /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C022B9F51E0B8D0C006491A4 /* Products */;
+					ProjectRef = C022B9F41E0B8D0C006491A4 /* Charts.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				0E622CD81D2D88160001B8DE /* Seizure Monitoring */,
@@ -486,6 +548,30 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C022B9FB1E0B8D0C006491A4 /* Charts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Charts.framework;
+			remoteRef = C022B9FA1E0B8D0C006491A4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C022B9FD1E0B8D0C006491A4 /* ChartsRealm.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ChartsRealm.framework;
+			remoteRef = C022B9FC1E0B8D0C006491A4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C022B9FF1E0B8D0C006491A4 /* ChartsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ChartsTests.xctest;
+			remoteRef = C022B9FE1E0B8D0C006491A4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		0E622CD71D2D88160001B8DE /* Resources */ = {
@@ -599,6 +685,11 @@
 			isa = PBXTargetDependency;
 			target = 0E622D0F1D2D88170001B8DE /* Seizure Monitoring WatchKit Extension */;
 			targetProxy = 0E622D121D2D88170001B8DE /* PBXContainerItemProxy */;
+		};
+		C022BA0A1E0B9002006491A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Charts;
+			targetProxy = C022BA091E0B9002006491A4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -801,6 +892,7 @@
 		0E622D2B1D2D88170001B8DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Seizure Monitoring/Seizure Monitoring.entitlements";
 				DEVELOPMENT_TEAM = H97DWZ6DZ4;
@@ -816,6 +908,7 @@
 		0E622D2C1D2D88170001B8DE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Seizure Monitoring/Seizure Monitoring.entitlements";
 				DEVELOPMENT_TEAM = H97DWZ6DZ4;

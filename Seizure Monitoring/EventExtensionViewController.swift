@@ -108,7 +108,7 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         seizure = seizureTypes[row]
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         var event = appDelegate.events.dictionary(forKey: "Event \(appDelegate.eventSelected)")
-        event?["Type of Seizure"] = seizure
+        event?["Type Of Seizure"] = seizure
         appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")
         if (appDelegate.events.synchronize()){
             //Do nothing

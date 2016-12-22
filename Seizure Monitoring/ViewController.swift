@@ -9,6 +9,7 @@
 import UIKit
 import WatchConnectivity
 import CoreLocation
+import Charts
 
 extension Float {
     func string(fractionDigits:Int) -> String {
@@ -22,7 +23,8 @@ extension Float {
 
 
 class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDelegate {
-
+   
+    @IBOutlet weak var barChartView: BarChartView!
     @IBOutlet var lastEvent: UIView!
     @IBOutlet var history: UIView!
     @IBOutlet var careGiver: UIView!
@@ -204,12 +206,93 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             let lastEvent = getLastEvent(events: self.appDelegate.events)
             self.updateLastEvent(arr: lastEvent as! [String : Any] )
         }else {
-//            self.updateLastEvent(arr: <#T##[String : String]#>)
+//            self.updateLastEvent(arr: )
         }
         commonInit()
         startUpdatingLocationAllowingBackground(commandedFromPhone: true)
         print("I'm in viewcontroller")
+        barChartView.noDataText = "No Seizures!!"
+//        let numSeizures = getNumPerDa
+        if appDelegate.events.object(forKey: "count") == nil {}else{
+            let dates = getNumDates()
+            let numSeizures = getNumSeizures()
+            setChart(dataPoints: dates, values: numSeizures)
+        }
+        
+//        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+//        let unitsSold = [20.0, 4.0, 6.0, 3.0, 12.0, 16.0, 4.0, 18.0, 2.0, 4.0, 5.0, 4.0]
+//        setChart(dataPoints: months, values: unitsSold)
+    }
+    func getNumDates() -> [String] {
+       let count = appDelegate.count.integer(forKey: "count")
+        print("Events in NumDates \(count)")
+        
+        var dates = [String]()
+        
+        for i in 0..<count {
+            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
+            let startTime = event?["StartTime"] as! String
+            let timeArr = startTime.characters.split{$0 == " "}.map(String.init)
+            let dateArr = timeArr[0].characters.split{$0 == ","}.map(String.init)
+            
+            if(dates.contains(dateArr[0])){}else{
+                dates.append(dateArr[0])
+            }
+        
+        }
+        print(dates)
+        return dates
+    }
+   
     
+    func getNumSeizures()->[Double]{
+        let count = appDelegate.count.integer(forKey: "count")
+        print("Events in NumDates \(count)")
+        
+        var numSeizures = [Double]()
+        var dates = [String]()
+        for i in 0..<count {
+            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
+            let startTime = event?["StartTime"] as! String
+            let timeArr = startTime.characters.split{$0 == " "}.map(String.init)
+            let dateArr = timeArr[0].characters.split{$0 == ","}.map(String.init)
+            
+            if(dates.contains(dateArr[0])){
+                for j in 0..<dates.count {
+                    if dateArr[0] == dates[j] {
+                        print(numSeizures[j])
+                        numSeizures[j] += 1
+                    }
+                }
+            }else{
+                
+                numSeizures.append(1.0)
+                dates.append(dateArr[0])
+            }
+            
+        }
+        print(dates)
+        print(numSeizures)
+        return numSeizures
+    }
+    func setChart(dataPoints: [String], values: [Double]) {
+        barChartView.noDataText = "No Seizures!!"
+        barChartView.chartDescription?.text = ""
+        var dataEntries: [BarChartDataEntry] = []
+        
+        for i in 0..<dataPoints.count {
+//            let dataEntry = BarChartDataEntry(value: values[i], xIndex: i)
+            
+            let dataEntry = BarChartDataEntry(x: Double(i), y: values[i])
+            dataEntries.append(dataEntry)
+        }
+        
+        let chartDataSet = BarChartDataSet(values: dataEntries, label: "Seizures had")
+        chartDataSet.colors = ChartColorTemplates.colorful()
+        let chartData = BarChartData(dataSet: chartDataSet)
+        barChartView.data = chartData
+        barChartView.xAxis.labelPosition = .bottom
+        barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
     }
     func hasEvent( defaults: [String:Any] ) -> Bool {
 //*******************DEBUGGING PURPOSE. SEE WHAT IS INSIDE THE FILE **************************************
@@ -429,7 +512,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             con += 1
             self.appDelegate.count.set(con, forKey: "count")
             self.appDelegate.events.set(arr, forKey: "Event \(self.appDelegate.count.integer(forKey: "count"))")
-            print(self.appDelegate.count.integer(forKey: "count"))
+            print("Count: \(self.appDelegate.count.integer(forKey: "count"))")
 //            print(app.events.dictionaryRepresentation())
 
          //   print(app.events.dictionary(forKey: "Event \(app.count - 1)"))
@@ -496,8 +579,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         self.startTime.text = sTime
         self.endTime.text = eTime
         self.dur.text = duration
-        if(arr["Type of Seizure"] != nil){
-            self.type.text = arr["Type of Seizure"] as! String
+        if(arr["Type Of Seizure"] != nil){
+            self.type.text = arr["Type Of Seizure"] as! String
         }
         
     }

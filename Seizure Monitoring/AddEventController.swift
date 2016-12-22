@@ -9,21 +9,22 @@
 import UIKit
 
 class AddEventController: UIViewController, UIPickerViewDelegate {
-
+    
+    @IBAction func date(_ sender: Any) {
+        
+    }
+    @IBAction func startTimeAction(_ sender: Any) {
+    }
+    @IBAction func endTimeAction(_ sender: Any) {
+    }
+    @IBAction func enterTypeAction(_ sender: Any) {
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let dateGesture = UITapGestureRecognizer(target: self, action: #selector(AddEventController.pickDate as (AddEventController) -> () -> ()))
-        let sTimeGesture = UITapGestureRecognizer(target: self, action: #selector(AddEventController.pickStartTime as (AddEventController) -> () -> ()))
-        let eTimeGesture = UITapGestureRecognizer(target: self, action: #selector(AddEventController.pickEndTime as (AddEventController) -> () -> ()))
-        let typeGesture = UITapGestureRecognizer(target: self, action: #selector(AddEventController.pickType as (AddEventController) -> () -> ()))
-        let noteGesture = UITapGestureRecognizer(target: self, action: #selector(AddEventController.setNotes as (AddEventController) -> () -> ()))
-        // Do any additional setup after loading the view.
-        self.date.addGestureRecognizer(dateGesture)
-        self.startTime.addGestureRecognizer(sTimeGesture)
-        self.endTime.addGestureRecognizer(eTimeGesture)
-        self.type.addGestureRecognizer(typeGesture)
-        self.notes.addGestureRecognizer(noteGesture)
+      //        // Do any additional setup after loading the view.
+        
+
         print("Im in addEvent")
     }
     let seizureTypes = ["Other", "Tonic Seizure", "Clonic Seizure","Tonic-Clonic Seizure", "Absence Seizures", "Myoclonic Seizure", "Simple Partial Seizure", "Complex Partial Seizure","Atonic Seizure", "Infantile Spasms", "Psychogenic Non-epileptic Seizures"]
@@ -41,11 +42,15 @@ class AddEventController: UIViewController, UIPickerViewDelegate {
     }
     
     func pickEndTime(){
+        print("Hi")
     }
     func pickStartTime(){
+        print("Hi")
+
     }
     func pickDate(){
-        
+        print("Hi")
+
         
     }
     
@@ -78,12 +83,12 @@ class AddEventController: UIViewController, UIPickerViewDelegate {
     @IBAction func save(_ sender: Any) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let event = ["Date": date.text, "StartTime": startTime.text, "EndTime":endTime.text, "Type of Seizure": type.text, "notes": notes.text]
-        
+        print(event)
         if(appDelegate.count.object(forKey: "count") == nil){}else{
             var count = appDelegate.count.integer(forKey: "count")
             count += 1
-            appDelegate.events.set(event, forKey: "Event \(count)")
-            appDelegate.count.set(count, forKey: "count")
+//            appDelegate.events.set(event, forKey: "Event \(count)")
+//            appDelegate.count.set(count, forKey: "count")
         }
     }
     @IBAction func back(_ sender: Any) {
