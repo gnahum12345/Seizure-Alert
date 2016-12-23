@@ -29,13 +29,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     @IBOutlet var history: UIView!
     @IBOutlet var careGiver: UIView!
 
+    @IBAction func call(_ sender: Any) {
+        callCareGiver()
+        
+    }
     @IBAction func name(_ sender: UIButton) {
         let change = UIAlertController(title: "Change Primary Caregiver", message: "Change your primary caregiver", preferredStyle: UIAlertControllerStyle.actionSheet)
         let defaults = self.appDelegate.careGiverFile
-        if (defaults.array(forKey: "CareGiverNames") != nil && defaults.array(forKey: "CareGiverNumbers") != nil ){
+        if (defaults.array(forKey: "CareGiverNames") != nil && defaults.array(forKey: "CareGiverNumbers") != nil){
+            
             let careGiverNames = defaults.array(forKey: "CareGiverNames") as? [String]
             let careGiverNumbers = defaults.array(forKey: "CareGiverNumbers") as? [String]
-            let care = getCareGivers(names: careGiverNames,numbers: careGiverNumbers)
+            let careGiverData = defaults.object(forKey: "CareGiverData") as? [String: Any]
+            let care = getCareGivers(names: careGiverNames,numbers: careGiverNumbers, data: careGiverData)
             
 //        if app.careGiversArray == nil {
 //            app.careGiversArray = [CareGiver]()
@@ -51,7 +57,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         })
 
     }
-    func getCareGivers(names: [String]?, numbers: [String]?) -> [CareGiver]{
+    func getCareGivers(names: [String]?, numbers: [String]?, data:[String:Any]?) -> [CareGiver]{
         var careGiverArray  = [CareGiver]()
         if names == nil && numbers == nil {
             return careGiverArray
@@ -63,6 +69,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         for i in 0...length-1 {
             careGiverArray.append(CareGiver(name: names![i], number: numbers![i]))
         }
+        for i in careGiverArray {
+            if data?[i.getName()!] != nil {
+                i.setImageData(data?[i.getName()!] as! Data?)
+            }
+        }
+        
         return careGiverArray
     }
         
@@ -72,7 +84,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     }
     func callCareGiver(){
         if self.phone.currentTitle! == "Number" {
-            return
+            return 
         }
         let urlString = "tel:" + self.phone.currentTitle!
         print("Phone number: " + urlString)
@@ -86,6 +98,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     func careGiverSelected( _ sender: CareGiver){
         let name = sender.getName()
         let phone = sender.getNumber()
+        let data = sender.getImageData()
+        if data == nil {
+        }else {
+            self.emergencyContactImage.image = UIImage(data: data!)
+            self.appDelegate.careGiver.set(data, forKey: "Image of CareGiverSelected")
+        }
         self.phone.setTitle(phone, for: UIControlState(rawValue: UInt(0)))
         self.name.setTitle(name, for: UIControlState(rawValue: UInt(0)))
         self.appDelegate.careGiver.set(name, forKey: "Name of CareGiverSelected")
@@ -94,11 +112,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         
         
     }
+    @IBOutlet weak var emergencyContactImage: UIImageView!
     func updateCareGiverButton(){
         let name = self.appDelegate.careGiver.object(forKey: "Name of CareGiverSelected") as? String
         let number = self.appDelegate.careGiver.object(forKey: "Phone of CareGiverSelected") as? String
         let names = self.appDelegate.careGiverFile.array(forKey: "CareGiverNames") as? [String]
         let numbers = self.appDelegate.careGiverFile.array(forKey: "CareGiverNumbers") as? [String]
+        let image = self.appDelegate.careGiver.data(forKey: "Image of CareGiverSelected")
+        if image != nil{
+            self.emergencyContactImage.image = UIImage(data: image!)
+        }
 //        self.phone.setTitle(number!, for: UIControlState(rawValue: UInt(0)))
 //        self.name.setTitle(name!, for: UIControlState(rawValue: UInt(0)))
 //        if self.name.currentTitle == "" {
@@ -122,6 +145,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
                     if !cont {
                         self.name.setTitle(names?[0], for: UIControlState(rawValue: UInt(0)))
                         self.phone.setTitle(numbers?[0], for: UIControlState(rawValue: UInt(0)))
+                       
                     }else{
                         self.name.setTitle(name!, for: UIControlState(rawValue: UInt(0)))
                         self.phone.setTitle(number!, for: UIControlState(rawValue: UInt(0)))
@@ -219,7 +243,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //        let numSeizures = getNumPerDa
         if appDelegate.events.object(forKey: "count") != nil {
             let dates = getNumDates()
-            let numSeizures = getNumSeizures(dates)
+            let numSeizures = getNumSeizures()
             setChart(dataPoints: dates, values: numSeizures)
         }
         
@@ -297,66 +321,81 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     }
   
     
-    func getNumSeizures(_ dates: [String])->[Double]{
+    func getNumSeizures()->[Double]{
         let count = appDelegate.count.integer(forKey: "count")
 //        print("Events in NumDates \(count)")
-        print("Dates: \(dates)")
+
         var numSeizures = [Double]()
         let dateFormatterTwo = DateFormatter()
         dateFormatterTwo.dateFormat = "yyyy-MM-dd"
         let cal = NSCalendar.current
         
-        
-        for i in 0..<dates.count {
+
+        var days = [String]()
+        for i in 0..<count {
+            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
+            let startTime = event?["StartTime"] as! String
+            let timeArr = startTime.characters.split{$0 == " "}.map(String.init)
+            let dateArr = timeArr[0].characters.split{$0 == ","}.map(String.init)
+            
+            if(days.contains(dateArr[0])){
+                for j in 0..<days.count {
+                    if dateArr[0] == days[j] {
+//                        print(numSeizures[j])
+                        numSeizures[j] += 1
+                    }
+                }
+            }else{
+                
+                numSeizures.append(1.0)
+                days.append(dateArr[0])
+            }
+        }
+    
+        if (days.count < 1){/*TODO LATER*/
+            for i in 1..<days.count {
+                let sD = days[i-1]
+                let sDArr = sD.characters.split{$0 == "/"}.map(String.init)
+                let sDFormat = "20\(sDArr[2])-\(sDArr[0])-\(sDArr[1])"
+                let eD = days[i]
+                let eDArr = eD.characters.split{$0 == "/"}.map(String.init)
+                let eDFormat = "20\(eDArr[2])-\(eDArr[0])-\(eDArr[1])"
+                
+                let startDay:Date = dateFormatterTwo.date(from: sDFormat)!
+                let endDay:Date = dateFormatterTwo.date(from: eDFormat)!
+                var dateQuestion = startDay
+                dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
+                
+                while dateQuestion < endDay {
+                    print(dateFormatterTwo.string(from: dateQuestion))
+                    days.insert(dateFormatterTwo.string(from: dateQuestion), at: i)
+                    numSeizures.insert(0.0, at:i)
+                    dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
+                }
+            }
+        }else{
+            let date = days[0]
+            print(date)
+            
+            let dateArr = date.characters.split{$0 == "/"}.map(String.init)
+            var startDay = "20\(dateArr[2])-\(dateArr[0])-\(dateArr[1])"
+            let endDay = dateFormatterTwo.string(from: Date())
+            let startDate:Date = dateFormatterTwo.date(from: startDay)!
+            let endDate:Date = dateFormatterTwo.date(from: endDay)!
+            let c = cal.dateComponents([.day], from: startDate, to: endDate)
+            
+            var dateQuestion = startDate
+            dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
+
+            while dateQuestion <= endDate {
+                print(dateFormatterTwo.string(from: dateQuestion))
+                numSeizures.append(0.0)
+                dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
+            }
             
         }
-        
-//
-//        var days = [String]()
-//        for i in 0..<count {
-//            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
-//            let startTime = event?["StartTime"] as! String
-//            let timeArr = startTime.characters.split{$0 == " "}.map(String.init)
-//            let dateArr = timeArr[0].characters.split{$0 == ","}.map(String.init)
-//            
-//            if(days.contains(dateArr[0])){
-//                for j in 0..<days.count {
-//                    if dateArr[0] == days[j] {
-////                        print(numSeizures[j])
-//                        numSeizures[j] += 1
-//                    }
-//                }
-//            }else{
-//                
-//                numSeizures.append(1.0)
-//                days.append(dateArr[0])
-//            }
-//        }
-//    
-//        if (days.count < 1){/*TODO LATER*/
-//        
-//        }else{
-//            let date = dates[0]
-//            print(date)
-//            
-//            let dateArr = date.characters.split{$0 == "/"}.map(String.init)
-//            var startDay = "20\(dateArr[2])-\(dateArr[0])-\(dateArr[1])"
-//            let endDay = dateFormatterTwo.string(from: Date())
-//            let startDate:Date = dateFormatterTwo.date(from: startDay)!
-//            let endDate:Date = dateFormatterTwo.date(from: endDay)!
-//            let c = cal.dateComponents([.day], from: startDate, to: endDate)
-//            
-//            var dateQuestion = startDate
-//            
-//            while dateQuestion < endDate {
-//                print(dateFormatterTwo.string(from: dateQuestion))
-//                dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
-//                numSeizures.append(0.0)
-//            }
-//            
-//        }
-//
-        print(dates)
+
+        print(days)
         print(numSeizures)
         
       

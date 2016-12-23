@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -32,7 +32,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WYu-Oc-Rmc">
                                 <rect key="frame" x="0.0" y="403" width="375" height="171"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y6a-n1-7pD">
+                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y6a-n1-7pD">
                                         <rect key="frame" x="166" y="133" width="201" height="30"/>
                                         <state key="normal" title="Phone"/>
                                         <connections>
@@ -58,6 +58,13 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JcL-gR-TrU">
+                                        <rect key="frame" x="237" y="93" width="58" height="23"/>
+                                        <state key="normal" image="Phone"/>
+                                        <connections>
+                                            <action selector="call:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Q5y-2P-hhr"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.79049030172413792" blue="0.64520474137931039" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -65,11 +72,15 @@
                                     <constraint firstItem="w50-k6-kf0" firstAttribute="leading" secondItem="0Q3-2G-Gm6" secondAttribute="trailing" constant="40" id="4Qd-u6-8jN"/>
                                     <constraint firstItem="HG8-DN-sbQ" firstAttribute="top" secondItem="WYu-Oc-Rmc" secondAttribute="top" constant="17" id="6U9-HA-88e"/>
                                     <constraint firstItem="Y6a-n1-7pD" firstAttribute="leading" secondItem="w50-k6-kf0" secondAttribute="leading" id="6iW-hC-MgH"/>
+                                    <constraint firstItem="Y6a-n1-7pD" firstAttribute="top" secondItem="JcL-gR-TrU" secondAttribute="bottom" constant="17" id="A9v-hT-Nts"/>
                                     <constraint firstItem="w50-k6-kf0" firstAttribute="top" secondItem="HG8-DN-sbQ" secondAttribute="bottom" constant="8" id="DDP-Lo-hk5"/>
                                     <constraint firstItem="w50-k6-kf0" firstAttribute="top" secondItem="WYu-Oc-Rmc" secondAttribute="top" constant="46" id="JM3-xQ-XiH"/>
                                     <constraint firstItem="HG8-DN-sbQ" firstAttribute="leading" secondItem="WYu-Oc-Rmc" secondAttribute="leading" constant="8" id="JSO-YQ-XpA"/>
+                                    <constraint firstAttribute="trailing" secondItem="JcL-gR-TrU" secondAttribute="trailing" constant="80" id="Jj1-uy-Dgc"/>
                                     <constraint firstItem="0Q3-2G-Gm6" firstAttribute="top" secondItem="w50-k6-kf0" secondAttribute="top" id="K8V-Aj-SRl"/>
+                                    <constraint firstItem="JcL-gR-TrU" firstAttribute="leading" secondItem="0Q3-2G-Gm6" secondAttribute="trailing" constant="111" id="LCY-nL-yOo"/>
                                     <constraint firstItem="Y6a-n1-7pD" firstAttribute="bottom" secondItem="WYu-Oc-Rmc" secondAttribute="bottomMargin" id="g1I-LE-1Pf"/>
+                                    <constraint firstItem="JcL-gR-TrU" firstAttribute="top" secondItem="w50-k6-kf0" secondAttribute="bottom" constant="17" id="keg-9y-0R6"/>
                                     <constraint firstAttribute="trailing" secondItem="w50-k6-kf0" secondAttribute="trailing" constant="8" id="kmd-eU-LdA"/>
                                     <constraint firstItem="Y6a-n1-7pD" firstAttribute="bottom" secondItem="0Q3-2G-Gm6" secondAttribute="bottom" id="mHH-e8-1Hm"/>
                                     <constraint firstItem="0Q3-2G-Gm6" firstAttribute="leading" secondItem="HG8-DN-sbQ" secondAttribute="leading" id="sup-aD-oYQ"/>
@@ -288,6 +299,7 @@
                         <outlet property="careGiver" destination="WYu-Oc-Rmc" id="PKj-Y7-dd6"/>
                         <outlet property="day" destination="CHf-sb-cIa" id="Dly-6A-d9Q"/>
                         <outlet property="dur" destination="RfQ-Es-to3" id="C0n-jg-uXr"/>
+                        <outlet property="emergencyContactImage" destination="0Q3-2G-Gm6" id="YZU-IC-Pa8"/>
                         <outlet property="endTime" destination="1nr-Dl-xLp" id="zpQ-sw-YpZ"/>
                         <outlet property="history" destination="5Ld-Df-1cU" id="XSP-mv-aIy"/>
                         <outlet property="lastEvent" destination="UPH-Jh-Eb0" id="z3l-1I-crQ"/>
@@ -851,18 +863,18 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aHs-2R-RR5">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aHs-2R-RR5">
                                 <rect key="frame" x="-4" y="64" width="383" height="603"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="0.11887743789999999" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.0" green="0.0" blue="1" alpha="0.12073359929999999" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="wWX-6v-UMy">
-                                        <rect key="frame" x="0.0" y="28" width="383" height="50"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="careGiverCell" rowHeight="100" id="wWX-6v-UMy">
+                                        <rect key="frame" x="0.0" y="28" width="383" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wWX-6v-UMy" id="eBh-rk-lUv">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -893,5 +905,6 @@
     <resources>
         <image name="CareGiver" width="3000" height="3000"/>
         <image name="Heart" width="111" height="105"/>
+        <image name="Phone" width="370" height="150"/>
     </resources>
 </document>

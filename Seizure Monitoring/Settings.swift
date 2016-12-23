@@ -504,11 +504,19 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
                     return
                 }}
             break
+        case .denied:
+            showAlert("Denied")
         default:
             break
             
         }
     }
+    func showAlert(_ message: String){
+        let alert = UIAlertController(title: "Contacts", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil ))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func determineContact(){
         let controller = CNContactPickerViewController()
         
@@ -528,6 +536,9 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
             for i in 0 ..< contact.phoneNumbers.count {
                 let care = (contact.phoneNumbers[i].value ).stringValue
                 self.careGivers.append(CareGiver(name: contact.givenName, number: care))
+                if contact.imageDataAvailable{
+                    self.careGivers.last?.setImageData(contact.imageData)
+                }
             }
         }
         self.myTableView.reloadData()
@@ -562,11 +573,12 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         
         //appDelegate.careGiversArray = careGivers
         let d = appDelegate.careGiverFile
-        //let data = setDataCareGiver()
+        let data = getDataCareGiver()
         let names = getCareGiverNames()
         let numbers = getCareGiverNumbers()
         d.setValue(names, forKey: "CareGiverNames")
         d.setValue(numbers, forKey: "CareGiverNumbers")
+        d.setValue(data, forKey: "CareGiverData")
      //   d.setPersistentDomain(data, forName: "CareGiverData")
         print(d.dictionaryRepresentation())
         
@@ -593,16 +605,12 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         return name
     }
     
-//    func setDataCareGiver()->[String:AnyObject]{
-//        var data:[String:AnyObject] = [:]
-//        var count = 0
-//        for i in careGivers{
-//            let keyName = String(count) + "Name"
-//            let keyNumber = String(count) + "Number"
-//            data.updateValue(i.getName()!, forKey: keyName)
-//            data.updateValue(i.getNumber()!, forKey: keyNumber)
-//            count += 1
-//        }
-//        return data
-//    }
+    func getDataCareGiver()->[String: Any]{
+        var data:[String:Any] = [:]
+        
+        for i in careGivers{
+            data[i.getName()!] = i.getImageData()
+        }
+        return data
+    }
 }
