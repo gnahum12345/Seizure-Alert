@@ -21,7 +21,7 @@ import MessageUI
 import AddressBook
 import Contacts
 import ContactsUI
-class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate/*, CLLocationManagerDelegate */, CNContactPickerDelegate{
+class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource/*MFMessageComposeViewControllerDelegate/*, CLLocationManagerDelegate */*/, CNContactPickerDelegate{
     //let manager = CLLocationManager()
     var careGivers  = [CareGiver]()
     var askedUserFinish = false
@@ -41,24 +41,24 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
     //    print("Not handled")
     //    }
     
-    
-    func askUserMessage(){
-        let alert = UIAlertController(title: "Text Message", message: nil, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addTextField(configurationHandler: configurationTextMessageField)
-        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.cancel, handler:{(UIAlertAction) in self.text.setOn(false, animated: true)}))
-        alert.addAction(UIAlertAction(title: "Update", style: UIAlertActionStyle.default, handler: {(UIAlertAction)in self.usersMessage()}))
-        self.present(alert, animated: true, completion: {print("hello")})
-        print("View should be up")
-        
-    }
-    
-    
-    func usersMessage(){
-        let app = UIApplication.shared.delegate as! AppDelegate
-        app.textMessage = textMessageField.text
-        askedUserFinish = true
-        print(askedUserFinish)
-    }
+    //FIX: Possibly uncomment.
+//    func askUserMessage(){
+//        let alert = UIAlertController(title: "Text Message", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+//        alert.addTextField(configurationHandler: configurationTextMessageField)
+//        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.cancel, handler:{(UIAlertAction) in self.text.setOn(false, animated: true)}))
+//        alert.addAction(UIAlertAction(title: "Update", style: UIAlertActionStyle.default, handler: {(UIAlertAction)in self.usersMessage()}))
+//        self.present(alert, animated: true, completion: {print("hello")})
+//        print("View should be up")
+//        
+//    }
+//    
+//    
+//    func usersMessage(){
+//        let app = UIApplication.shared.delegate as! AppDelegate
+//        app.textMessage = textMessageField.text
+//        askedUserFinish = true
+//        print(askedUserFinish)
+//    }
     var textMessageField: UITextField!
     
     func configurationTextMessageField(_ textField: UITextField!){
@@ -189,7 +189,18 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         // The expected data appear in the console, but not in the iOS simulator's table view cell.
         print(cell.detailTextLabel?.text)
         return cell
+        
+//        let cell = self.myTableView.dequeueReusableCell(withIdentifier: "CareGiverCell") as! CareGiverCell
+//        cell.phone.text = self.careGivers[indexPath.row].getNumber()!
+//        cell.name.text = self.careGivers[indexPath.row].getName()!
+////        if careGivers[indexPath.row].getImageData() != nil {
+////            cell.photo.image = UIImage(data: careGivers[indexPath.row].getImageData()!)
+////        }
+//        cell.name.font = UIFont.boldSystemFont(ofSize: 18.0)
+//        cell.phone.font = UIFont.boldSystemFont(ofSize: 16.0)
+//        return cell
     }
+    
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         return .delete
         
@@ -217,7 +228,6 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         
         
         change.addAction(UIAlertAction(title: "Call", style: UIAlertActionStyle.default, handler: {(UIAlertAction)in self.callCareGiver((indexPath as NSIndexPath).row)}))
-        change.addAction(UIAlertAction(title: "Text", style: UIAlertActionStyle.default, handler: {(UIAlertAction)in self.textCareGiver((indexPath as NSIndexPath).row)}))
         change.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.default, handler:{ (UIAlertAction)in
             self.editCareGiver((indexPath as NSIndexPath).row)
             
@@ -232,46 +242,46 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         
         
     }
-    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-        //... handle sms screen actions
-        controller.dismiss(animated: true, completion: nil)
-    }
-    
-    func textCareGiver(_ indexPath: Int){
-        let app = UIApplication.shared.delegate as! AppDelegate
-        var message: String?
-        print( "text: " + String(text.isOn))
-        
-        if !text.isOn{
-            askUserMessage()
-            self.text.setOn(true, animated: true)
-            
-        }
-        
-        
-        var count = 0
-        repeat{
-            if askedUserFinish {
-                message = app.textMessage
-                self.sendText(message, indexPath: indexPath)
-                count = 2
-            }
-        }while(count < 1)
-        
-        
-    }
-    
-    func sendText(_ message: String?, indexPath: Int){
-        
-        if MFMessageComposeViewController.canSendText() {
-            let controller = MFMessageComposeViewController()
-            controller.body = message //+ "\n the users location is at: \(loc!.description)"
-            controller.recipients = [careGivers[indexPath].getNumber()!]
-            controller.messageComposeDelegate = self
-            self.present(controller, animated: true, completion: nil)
-        }
-        
-    }
+//    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+//        //... handle sms screen actions
+//        controller.dismiss(animated: true, completion: nil)
+//    }
+////    
+//    func textCareGiver(_ indexPath: Int){
+//        let app = UIApplication.shared.delegate as! AppDelegate
+//        var message: String?
+//        print( "text: " + String(text.isOn))
+//        
+//        if !text.isOn{
+//            askUserMessage()
+//            self.text.setOn(true, animated: true)
+//            
+//        }
+//        
+//        
+//        var count = 0
+//        repeat{
+//            if askedUserFinish {
+//                message = app.textMessage
+//                self.sendText(message, indexPath: indexPath)
+//                count = 2
+//            }
+//        }while(count < 1)
+//        
+//        
+//    }
+//    
+//    func sendText(_ message: String?, indexPath: Int){
+//        
+//        if MFMessageComposeViewController.canSendText() {
+//            let controller = MFMessageComposeViewController()
+//            controller.body = message //+ "\n the users location is at: \(loc!.description)"
+//            controller.recipients = [careGivers[indexPath].getNumber()!]
+//            controller.messageComposeDelegate = self
+//            self.present(controller, animated: true, completion: nil)
+//        }
+//        
+//    }
     
     func deleteCareGiver(_ indexPath: Int){
         careGivers.remove(at: indexPath)
@@ -536,9 +546,9 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
             for i in 0 ..< contact.phoneNumbers.count {
                 let care = (contact.phoneNumbers[i].value ).stringValue
                 self.careGivers.append(CareGiver(name: contact.givenName, number: care))
-                if contact.imageDataAvailable{
-                    self.careGivers.last?.setImageData(contact.imageData)
-                }
+//                if contact.imageDataAvailable{
+//                    self.careGivers.last?.setImageData(contact.imageData)
+//                }
             }
         }
         self.myTableView.reloadData()
@@ -573,12 +583,12 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         
         //appDelegate.careGiversArray = careGivers
         let d = appDelegate.careGiverFile
-        let data = getDataCareGiver()
+   //     let data = getDataCareGiver()
         let names = getCareGiverNames()
         let numbers = getCareGiverNumbers()
         d.setValue(names, forKey: "CareGiverNames")
         d.setValue(numbers, forKey: "CareGiverNumbers")
-        d.setValue(data, forKey: "CareGiverData")
+       // d.setValue(data, forKey: "CareGiverData")
      //   d.setPersistentDomain(data, forName: "CareGiverData")
         print(d.dictionaryRepresentation())
         
@@ -605,12 +615,12 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource, MF
         return name
     }
     
-    func getDataCareGiver()->[String: Any]{
-        var data:[String:Any] = [:]
-        
-        for i in careGivers{
-            data[i.getName()!] = i.getImageData()
-        }
-        return data
-    }
+//    func getDataCareGiver()->[String: Any]{
+//        var data:[String:Any] = [:]
+//        
+//        for i in careGivers{
+//            data[i.getName()!] = i.getImageData()
+//        }
+//        return data
+//    }
 }

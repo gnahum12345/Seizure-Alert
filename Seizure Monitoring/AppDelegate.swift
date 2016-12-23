@@ -9,7 +9,7 @@
 import UIKit
 import HealthKit
 //import ResearchKit
-
+ 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate  {
     
@@ -20,12 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
     var window: UIWindow?
     var snooze = false
     var careGiversArray: [CareGiver]?
-    var textMessage: String?
     let careGiverFile = UserDefaults.standard
     let events = UserDefaults.standard
     let careGiver = UserDefaults.standard
     var latitude: Double?
     var longitude: Double?
+ 
     func getLatitude()-> Double? {
         return latitude
     }

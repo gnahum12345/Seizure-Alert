@@ -40,8 +40,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             
             let careGiverNames = defaults.array(forKey: "CareGiverNames") as? [String]
             let careGiverNumbers = defaults.array(forKey: "CareGiverNumbers") as? [String]
-            let careGiverData = defaults.object(forKey: "CareGiverData") as? [String: Any]
-            let care = getCareGivers(names: careGiverNames,numbers: careGiverNumbers, data: careGiverData)
+//            let careGiverData = defaults.object(forKey: "CareGiverData") as? [String: Any]
+            let care = getCareGivers(names: careGiverNames,numbers: careGiverNumbers)
             
 //        if app.careGiversArray == nil {
 //            app.careGiversArray = [CareGiver]()
@@ -57,7 +57,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         })
 
     }
-    func getCareGivers(names: [String]?, numbers: [String]?, data:[String:Any]?) -> [CareGiver]{
+    func getCareGivers(names: [String]?, numbers: [String]?) -> [CareGiver]{
         var careGiverArray  = [CareGiver]()
         if names == nil && numbers == nil {
             return careGiverArray
@@ -69,11 +69,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         for i in 0...length-1 {
             careGiverArray.append(CareGiver(name: names![i], number: numbers![i]))
         }
-        for i in careGiverArray {
-            if data?[i.getName()!] != nil {
-                i.setImageData(data?[i.getName()!] as! Data?)
-            }
-        }
+//        for i in careGiverArray {
+//            if data?[i.getName()!] != nil {
+//                i.setImageData(data?[i.getName()!] as! Data?)
+//            }
+//        }
         
         return careGiverArray
     }
@@ -98,30 +98,35 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     func careGiverSelected( _ sender: CareGiver){
         let name = sender.getName()
         let phone = sender.getNumber()
-        let data = sender.getImageData()
-        if data == nil {
-        }else {
-            self.emergencyContactImage.image = UIImage(data: data!)
-            self.appDelegate.careGiver.set(data, forKey: "Image of CareGiverSelected")
-        }
+//        let data = sender.getImageData()
+//        if data == nil {
+//            
+//        }else {
+//            self.emergencyContactImage.image = UIImage(data: data!)
+//            self.appDelegate.careGiver.set(data, forKey: "Image of CareGiverSelected")
+//        }
         self.phone.setTitle(phone, for: UIControlState(rawValue: UInt(0)))
         self.name.setTitle(name, for: UIControlState(rawValue: UInt(0)))
         self.appDelegate.careGiver.set(name, forKey: "Name of CareGiverSelected")
         self.appDelegate.careGiver.set(phone, forKey: "Phone of CareGiverSelected")
         
-        
-        
     }
+    
     @IBOutlet weak var emergencyContactImage: UIImageView!
     func updateCareGiverButton(){
         let name = self.appDelegate.careGiver.object(forKey: "Name of CareGiverSelected") as? String
         let number = self.appDelegate.careGiver.object(forKey: "Phone of CareGiverSelected") as? String
         let names = self.appDelegate.careGiverFile.array(forKey: "CareGiverNames") as? [String]
         let numbers = self.appDelegate.careGiverFile.array(forKey: "CareGiverNumbers") as? [String]
-        let image = self.appDelegate.careGiver.data(forKey: "Image of CareGiverSelected")
-        if image != nil{
-            self.emergencyContactImage.image = UIImage(data: image!)
-        }
+//        let image = self.appDelegate.careGiver.data(forKey: "Image of CareGiverSelected")
+//      
+//        if image != nil {
+//            self.emergencyContactImage.image = UIImage(data: image!)
+//        }
+        
+        
+        
+        
 //        self.phone.setTitle(number!, for: UIControlState(rawValue: UInt(0)))
 //        self.name.setTitle(name!, for: UIControlState(rawValue: UInt(0)))
 //        if self.name.currentTitle == "" {

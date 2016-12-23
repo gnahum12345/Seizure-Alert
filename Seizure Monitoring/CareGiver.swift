@@ -22,7 +22,7 @@ class CareGiver {
     private var number : String?
     private var fullInfo: String?
     private var trimedName: String?
-    private var imageData: Data?
+ //   private var imageData: Data?
     init(name: String, number:String){
         self.name = name.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         self.number = number.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -84,10 +84,10 @@ class CareGiver {
     func setInfo(_ info: String){
         self.fullInfo = info
     }
-    func setImageData(_ data:Data?){
-        self.imageData = data
-    }
-    func getImageData()->Data?{
-        return self.imageData
-    }
+//    func setImageData(_ data:Data?){
+//        self.imageData = data
+//    }
+//    func getImageData()->Data?{
+//        return self.imageData
+//    }
 }
