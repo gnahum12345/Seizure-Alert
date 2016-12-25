@@ -8,16 +8,25 @@
 
 import UIKit
 
-class AddEventController: UIViewController, UIPickerViewDelegate {
+class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource{
     
+    
+    @IBOutlet weak var dateButton: UIButton!
+    @IBOutlet weak var startTimeButton: UIButton!
+    @IBOutlet weak var durationButton: UIButton!
+    @IBOutlet weak var typeButton: UIButton!
     @IBAction func date(_ sender: Any) {
         
     }
     @IBAction func startTimeAction(_ sender: Any) {
     }
-    @IBAction func endTimeAction(_ sender: Any) {
+   
+    @IBAction func durationAction(_ sender: Any) {
     }
+    
     @IBAction func enterTypeAction(_ sender: Any) {
+        showPickerInActionSheet(sentBy: "Seizures", title: "Seizure Type", message: "Please select the type of seizure" )
+        
     }
     
     override func viewDidLoad() {
@@ -29,17 +38,63 @@ class AddEventController: UIViewController, UIPickerViewDelegate {
     }
     let seizureTypes = ["Other", "Tonic Seizure", "Clonic Seizure","Tonic-Clonic Seizure", "Absence Seizures", "Myoclonic Seizure", "Simple Partial Seizure", "Complex Partial Seizure","Atonic Seizure", "Infantile Spasms", "Psychogenic Non-epileptic Seizures"]
 
-    func pickType(){
-        let alert = UIAlertController(title: "Pick Date", message: "Please pick the date of the event", preferredStyle: UIAlertControllerStyle.alert)
-        let pickerFrame: CGRect = CGRect(x: 17, y: 52, width: 270, height: 100)
-        let picker: UIPickerView = UIPickerView(frame: pickerFrame)
-        picker.delegate = self
-        alert.view.addSubview(picker)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.handleSeizure()}))
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {(UIAlertAction) in self.doNothing()}))
-        self.present(alert, animated: true, completion: {})
-        print("Hello world")
+    
+    func cancelSelection(){
+        print("Cancel");
+        self.dismiss(animated: true, completion: nil);
+        self.typeButton.setTitle("Enter Type", for: UIControlState.normal)
+        // We dismiss the alert. Here you can add your additional code to execute when cancel is pressed
     }
+    func showPickerInActionSheet(sentBy: String, title: String, message: String) {
+        let alert = UIAlertController(title: title, message: "\(message)\n\n\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.actionSheet);
+        alert.isModalInPopover = true;
+        
+        
+        //Create a frame (placeholder/wrapper) for the picker and then create the picker
+        let pickerFrame: CGRect = CGRect(x: 40 , y: 30, width: 270, height: 250) // CGRectMake(left), top, width, height) - left and top are like margins
+        let picker: UIPickerView = UIPickerView(frame: pickerFrame);
+        /* If there will be 2 or 3 pickers on this view, I am going to use the tag as a way
+         to identify them in the delegate and datasource. /* This part with the tags is not required.
+         I am doing it this way, because I have a variable, witch knows where the Alert has been invoked from.*/ */
+        
+        if(sentBy == "Seizures"){
+            picker.tag = 1;
+        } else if (sentBy == "Date"){
+            picker.tag = 2;
+        } else {
+            picker.tag = 0;
+        }
+ 
+        //set the pickers datasource and delegate
+        picker.delegate = self;
+        picker.dataSource = self;
+        alert.view.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+//        alert.view.alignmentRect(forFrame: CGRect(x: 0, y: 10, width: 270, height: 100))
+        //Add the picker to the alert controller
+        alert.view.addSubview(picker)
+//        alert.view.alignmentRect(forFrame: CGRect(x: 0, y: 10, width: 270, height: 100))
+
+     
+        alert.addAction(UIAlertAction(title: "Select", style: UIAlertActionStyle.default, handler: {(UIAlertAction)in self.saveSeizures()}))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.cancelSelection()}))
+     self.present(alert, animated: true, completion: nil);
+    }
+    func saveSeizures(){
+        //do nothing
+    }
+    
+    //
+//    func pickType(){
+//        let alert = UIAlertController(title: "Pick Date", message: "Please pick the date of the event", preferredStyle: UIAlertControllerStyle.alert)
+//        let pickerFrame: CGRect = CGRect(x: 17, y: 52, width: 270, height: 100)
+//        let picker: UIPickerView = UIPickerView(frame: pickerFrame)
+//        picker.delegate = self
+//        alert.view.addSubview(picker)
+//        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.handleSeizure()}))
+//        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {(UIAlertAction) in self.doNothing()}))
+//        self.present(alert, animated: true, completion: {})
+//        print("Hello world")
+//    }
     
     func pickEndTime(){
         print("Hi")
@@ -54,16 +109,53 @@ class AddEventController: UIViewController, UIPickerViewDelegate {
         
     }
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    @available(iOS 2.0, *)
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        if(pickerView.tag == 1){
+            return 1
+        }else if(pickerView.tag == 2){
+            return 2
+        }
         return 1
     }
+
+    // returns number of rows in each component..
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
+        if(pickerView.tag == 1){
+            return self.seizureTypes.count;
+        } else if(pickerView.tag == 2){
+            return 10
+        } else  {
+            return 0;
+        }
+    }
+    
+    // Return the title of each row in your picker ... In my case that will be the profile name or the username string
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        if(pickerView.tag == 1){
+            return seizureTypes[row]
+        } else if(pickerView.tag == 2){
+            return "hello"
+        } else  {
+            
+            return "";
+            
+        }
+        
+    }
+   
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.type.text = seizureTypes[row]
+        if(pickerView.tag == 1){
+            let chosenSeizure = seizureTypes[row]
+            self.typeButton.setTitle(chosenSeizure, for: UIControlState.normal)
+        } else if (pickerView.tag == 2){
+            _ = row
+            
+        }
+        
     }
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return seizureTypes[row]
-    }
+    
     
    //Doesn't do anything
     func doNothing(){}
