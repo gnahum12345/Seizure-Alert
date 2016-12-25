@@ -419,7 +419,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         }
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "No. Seizures")
-        chartDataSet.colors = ChartColorTemplates.colorful()
+//        chartDataSet.colors = ChartColorTemplates.joyful()
+        chartDataSet.colors = [UIColor(red: 50/255, green: 50/255, blue: 200/255, alpha: 1)]
         let chartData = BarChartData(dataSet: chartDataSet)
         barChartView.data = chartData
 //        barChartView.xAxis.accessibilityElementsHidden = true
