@@ -248,7 +248,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //        let numSeizures = getNumPerDa
         if appDelegate.events.object(forKey: "count") != nil {
             let dates = getNumDates()
-            let numSeizures = getNumSeizures()
+            let numSeizures = getNumSeizures(dates)
             setChart(dataPoints: dates, values: numSeizures)
         }
         
@@ -257,148 +257,174 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //        setChart(dataPoints: months, values: unitsSold)
     }
     func getNumDates() -> [String] {
-       let count = appDelegate.count.integer(forKey: "count")
-//        print("Events in NumDates \(count)")
-        
+//       let count = appDelegate.count.integer(forKey: "count")
+////        print("Events in NumDates \(count)")
+//        
+//        var dates = [String]()
+//        
+//        for i in 0..<count {
+//            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
+//            let startTime = event?["StartTime"] as! String
+//            let dateArr = startTime.characters.split{$0 == ","}.map(String.init)
+//            
+//            if(dates.contains(dateArr[0])){}else{
+//                dates.append(dateArr[0])
+//            }
+//        
+//        }
+//        print(dates)
         var dates = [String]()
+        let event = appDelegate.events.dictionary(forKey: "Event 1")
+        let startTime = event?["StartTime"] as! String
+        let dateArr = startTime.characters.split{$0 == ","}.map(String.init)
         
-        for i in 0..<count {
-            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
-            let startTime = event?["StartTime"] as! String
-            let dateArr = startTime.characters.split{$0 == ","}.map(String.init)
-            
-            if(dates.contains(dateArr[0])){}else{
-                dates.append(dateArr[0])
-            }
         
-        }
-        print(dates)
-        
-        let dateFormatterTwo = DateFormatter()
-        dateFormatterTwo.dateFormat = "yyyy-MM-dd"
+//        let dateFormatterTwo = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yy"
         let cal = NSCalendar.current
-    
-        if (dates.count < 1){/*TODO LATER*/
-            for i in 1..<dates.count {
-                let sD = dates[i-1]
-                let sDArr = sD.characters.split{$0 == "/"}.map(String.init)
-                let sDFormat = "20\(sDArr[2])-\(sDArr[0])-\(sDArr[1])"
-                let eD = dates[i]
-                let eDArr = eD.characters.split{$0 == "/"}.map(String.init)
-                let eDFormat = "20\(eDArr[2])-\(eDArr[0])-\(eDArr[1])"
-              
-                let startDay:Date = dateFormatterTwo.date(from: sDFormat)!
-                let endDay:Date = dateFormatterTwo.date(from: eDFormat)!
-                var dateQuestion = startDay
-                dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
         
-                while dateQuestion < endDay {
-                    print(dateFormatterTwo.string(from: dateQuestion))
-                    dates.insert(dateFormatterTwo.string(from: dateQuestion), at: i)
-                    dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
-
-                }
-
-            }
-            
-        }else{
-            let date = dates[0]
-            print(date)
-            let dateArr = date.characters.split{$0 == "/"}.map(String.init)
-            let startDay = "20\(dateArr[2])-\(dateArr[0])-\(dateArr[1])"  //TODO: Update so that in 100 years app still works.
-            let endDay = dateFormatterTwo.string(from: Date())
-            let startDate:Date = dateFormatterTwo.date(from: startDay)!
-            let endDate:Date = dateFormatterTwo.date(from: endDay)!
-//            let c = cal.dateComponents([.day], from: startDate, to: endDate)
-            
-            var dateQuestion = startDate
+        let date = dateArr[0]
+        print(date)
+        let endDay = dateFormatter.string(from: Date())
+        let startDate:Date = dateFormatter.date(from: date)!
+        let endDate:Date = dateFormatter.date(from: endDay)!
+    
+        var dateQuestion = startDate
+        
+        while dateQuestion <= endDate {
+            print(dateFormatter.string(from: dateQuestion))
+            dates.append(dateFormatter.string(from: dateQuestion))
             dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
-
-            while dateQuestion <= endDate {
-                print(dateFormatterTwo.string(from: dateQuestion))
-                dates.append(dateFormatter.string(from: dateQuestion))
-                dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
-            }
-            
         }
+//
+//        if (dates.count < 1){/*TODO LATER*/
+//            for i in 1..<dates.count {
+//                let sD = dates[i-1]
+//                let sDArr = sD.characters.split{$0 == "/"}.map(String.init)
+//                let sDFormat = "20\(sDArr[2])-\(sDArr[0])-\(sDArr[1])"
+//                let eD = dates[i]
+//                let eDArr = eD.characters.split{$0 == "/"}.map(String.init)
+//                let eDFormat = "20\(eDArr[2])-\(eDArr[0])-\(eDArr[1])"
+//              
+//                let startDay:Date = dateFormatterTwo.date(from: sDFormat)!
+//                let endDay:Date = dateFormatterTwo.date(from: eDFormat)!
+//                var dateQuestion = startDay
+//                dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
+//        
+//                while dateQuestion < endDay {
+//                    print(dateFormatterTwo.string(from: dateQuestion))
+//                    dates.insert(dateFormatterTwo.string(from: dateQuestion), at: i)
+//                    dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
+//
+//                }
+//
+//            }
+//            
+//        }else{
+//            let date = dates[0]
+//            print(date)
+//            let dateArr = date.characters.split{$0 == "/"}.map(String.init)
+//            let startDay = "20\(dateArr[2])-\(dateArr[0])-\(dateArr[1])"  //TODO: Update so that in 100 years app still works.
+//            let endDay = dateFormatterTwo.string(from: Date())
+//            let startDate:Date = dateFormatterTwo.date(from: startDay)!
+//            let endDate:Date = dateFormatterTwo.date(from: endDay)!
+////            let c = cal.dateComponents([.day], from: startDate, to: endDate)
+//            
+//            var dateQuestion = startDate
+//            dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
+//
+//            while dateQuestion <= endDate {
+//                print(dateFormatterTwo.string(from: dateQuestion))
+//                dates.append(dateFormatter.string(from: dateQuestion))
+//                dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
+//            }
+//            
+//        }
         print(dates)
         return dates
     }
   
     
-    func getNumSeizures()->[Double]{
-        let count = appDelegate.count.integer(forKey: "count")
+    func getNumSeizures(_ dates: [String])->[Double]{
 //        print("Events in NumDates \(count)")
 
         var numSeizures = [Double]()
-        let dateFormatterTwo = DateFormatter()
-        dateFormatterTwo.dateFormat = "yyyy-MM-dd"
+//        let dateFormatterTwo = DateFormatter()
+//        dateFormatterTwo.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = "MM/dd/yy"
         let cal = NSCalendar.current
         
 
         var days = [String]()
+        let count = dates.count + 1
         for i in 0..<count {
             let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
-            let startTime = event?["StartTime"] as! String
-            let timeArr = startTime.characters.split{$0 == " "}.map(String.init)
-            let dateArr = timeArr[0].characters.split{$0 == ","}.map(String.init)
-            
-            if(days.contains(dateArr[0])){
-                for j in 0..<days.count {
-                    if dateArr[0] == days[j] {
-//                        print(numSeizures[j])
-                        numSeizures[j] += 1
-                    }
-                }
+            let startTime = event?["StartTime"] as? String
+            if startTime == nil {
+                numSeizures.append(0.0)
             }else{
-                
-                numSeizures.append(1.0)
-                days.append(dateArr[0])
+                let dateArr = startTime?.characters.split{$0 == ","}.map(String.init)
+            
+                if(days.contains((dateArr?[0])!)){
+                    let durString = event?["Duration"] as! String
+                    let dur = Int(durString)!
+                    for j in 0..<days.count {
+                        if dateArr?[0] == days[j]{
+                            numSeizures[j] += Double(dur)
+                        }
+                    }
+                    
+                }else{
+                    let durString = event?["Duration"] as! String
+                    let dur = Int(durString)!
+                    numSeizures.append(Double(dur))
+                    days.append((dateArr?[0])!)
+                }
             }
         }
     
-        if (days.count < 1){/*TODO LATER*/
-            for i in 1..<days.count {
-                let sD = days[i-1]
-                let sDArr = sD.characters.split{$0 == "/"}.map(String.init)
-                let sDFormat = "20\(sDArr[2])-\(sDArr[0])-\(sDArr[1])"
-                let eD = days[i]
-                let eDArr = eD.characters.split{$0 == "/"}.map(String.init)
-                let eDFormat = "20\(eDArr[2])-\(eDArr[0])-\(eDArr[1])"
-                
-                let startDay:Date = dateFormatterTwo.date(from: sDFormat)!
-                let endDay:Date = dateFormatterTwo.date(from: eDFormat)!
-                var dateQuestion = startDay
-                dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
-                
-                while dateQuestion < endDay {
-                    print(dateFormatterTwo.string(from: dateQuestion))
-                    days.insert(dateFormatterTwo.string(from: dateQuestion), at: i)
-                    numSeizures.insert(0.0, at:i)
-                    dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
-                }
-            }
-        }else{
-            let date = days[0]
-            print(date)
-            
-            let dateArr = date.characters.split{$0 == "/"}.map(String.init)
-            var startDay = "20\(dateArr[2])-\(dateArr[0])-\(dateArr[1])"
-            let endDay = dateFormatterTwo.string(from: Date())
-            let startDate:Date = dateFormatterTwo.date(from: startDay)!
-            let endDate:Date = dateFormatterTwo.date(from: endDay)!
-            let c = cal.dateComponents([.day], from: startDate, to: endDate)
-            
-            var dateQuestion = startDate
-            dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
-
-            while dateQuestion <= endDate {
-                print(dateFormatterTwo.string(from: dateQuestion))
-                numSeizures.append(0.0)
-                dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
-            }
-            
-        }
+//        if (days.count < 1){/*TODO LATER*/
+//            for i in 1..<days.count {
+//                let sD = days[i-1]
+//                let sDArr = sD.characters.split{$0 == "/"}.map(String.init)
+//                let sDFormat = "20\(sDArr[2])-\(sDArr[0])-\(sDArr[1])"
+//                let eD = days[i]
+//                let eDArr = eD.characters.split{$0 == "/"}.map(String.init)
+//                let eDFormat = "20\(eDArr[2])-\(eDArr[0])-\(eDArr[1])"
+//                
+//                let startDay:Date = dateFormatterTwo.date(from: sDFormat)!
+//                let endDay:Date = dateFormatterTwo.date(from: eDFormat)!
+//                var dateQuestion = startDay
+//                dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
+//                
+//                while dateQuestion < endDay {
+//                    print(dateFormatterTwo.string(from: dateQuestion))
+//                    days.insert(dateFormatterTwo.string(from: dateQuestion), at: i)
+//                    numSeizures.insert(0.0, at:i)
+//                    dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
+//                }
+//            }
+//        }else{
+//            let date = days[0]
+//            print(date)
+//            
+//            let dateArr = date.characters.split{$0 == "/"}.map(String.init)
+//            var startDay = "20\(dateArr[2])-\(dateArr[0])-\(dateArr[1])"
+//            let endDay = dateFormatterTwo.string(from: Date())
+//            let startDate:Date = dateFormatterTwo.date(from: startDay)!
+//            let endDate:Date = dateFormatterTwo.date(from: endDay)!
+//            let c = cal.dateComponents([.day], from: startDate, to: endDate)
+//            
+//            var dateQuestion = startDate
+//            dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
+//
+//            while dateQuestion <= endDate {
+//                print(dateFormatterTwo.string(from: dateQuestion))
+//                numSeizures.append(0.0)
+//                dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
+//            }
+//            
+//        }
 
         print(days)
         print(numSeizures)
