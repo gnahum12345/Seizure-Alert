@@ -15,9 +15,49 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     @IBOutlet weak var startTimeButton: UIButton!
     @IBOutlet weak var durationButton: UIButton!
     @IBOutlet weak var typeButton: UIButton!
-    @IBAction func date(_ sender: Any) {
-        
+  
+    func onDidChangeDate(sender: UIDatePicker){
+       
+        dateButton.setTitle(dateFormatter.string(from: sender.date), for: UIControlState.normal)
+    
     }
+    var previousDateTitle = ""
+    var previousSeizure = ""
+    @IBAction func date(_ sender: Any) {
+        previousDateTitle = dateButton.currentTitle!
+        let alert = UIAlertController(title: "Date", message: "Please enter the date of the seizure. \n\n\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.actionSheet);
+        alert.isModalInPopover = true;
+        
+        
+        //Create a frame (placeholder/wrapper) for the picker and then create the picker
+        let pickerFrame: CGRect = CGRect(x: 40 , y: 30, width: 270, height: 250) // CGRectMake(left), top, width, height) - left and top are like margins
+        let datePicker = UIDatePicker(frame: pickerFrame)
+        
+        datePicker.datePickerMode = UIDatePickerMode.date
+        datePicker.timeZone = TimeZone.current
+        datePicker.addTarget(self, action: #selector(AddEventController.onDidChangeDate(sender:)), for: UIControlEvents.valueChanged)
+       
+        datePicker.tag = 2
+        alert.view.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+        alert.view.addSubview(datePicker)
+        alert.addAction(UIAlertAction(title: "Select", style: UIAlertActionStyle.default, handler: {(UIAlertAction)in self.saveDate()}))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.cancelSelection("Date")}))
+        
+        if dateButton.currentTitle != "Enter date" {
+            datePicker.setDate(self.dateFormatter.date(from: dateButton.currentTitle!)!, animated: true)
+        }
+        self.present(alert, animated: true, completion: nil);
+    }
+    func saveDate(){
+        if dateButton.currentTitle == "Enter date" {
+            dateButton.setTitle( dateFormatter.string(from: Date()), for: UIControlState.normal)
+        }
+
+    }
+    @IBAction func onDidChangeDateByOnStoryBoard(sender: UIDatePicker){
+        self.onDidChangeDate(sender: sender)
+    }
+    
     @IBAction func startTimeAction(_ sender: Any) {
     }
    
@@ -25,24 +65,70 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     }
     
     @IBAction func enterTypeAction(_ sender: Any) {
-        showPickerInActionSheet(sentBy: "Seizures", title: "Seizure Type", message: "Please select the type of seizure" )
+//        showPickerInActionSheet(sentBy: "Seizures", title: "Seizure Type", message: "Please select the type of seizure" )
+        previousSeizure = typeButton.currentTitle!
+        let alert = UIAlertController(title: "Seizures Type", message: "Please seleect the type of seizure. \n\n\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.actionSheet);
+        alert.isModalInPopover = true;
         
+        
+        //Create a frame (placeholder/wrapper) for the picker and then create the picker
+        let pickerFrame: CGRect = CGRect(x: 40 , y: 30, width: 270, height: 250) // CGRectMake(left), top, width, height) - left and top are like margins
+        let picker: UIPickerView = UIPickerView(frame: pickerFrame);
+                //set the pickers datasource and delegate
+        picker.delegate = self;
+        picker.dataSource = self;
+        picker.tag = 1
+        alert.view.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+        //        alert.view.alignmentRect(forFrame: CGRect(x: 0, y: 10, width: 270, height: 100))
+        //Add the picker to the alert controller
+        alert.view.addSubview(picker)
+        //        alert.view.alignmentRect(forFrame: CGRect(x: 0, y: 10, width: 270, height: 100))
+        
+        
+        alert.addAction(UIAlertAction(title: "Select", style: UIAlertActionStyle.default, handler: {(UIAlertAction)in self.saveSeizures()}))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.cancelSelection("Seizure")}))
+      
+
+        self.present(alert, animated: true, completion: nil);
+
     }
+    
+    let dateFormatter = DateFormatter()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
       //        // Do any additional setup after loading the view.
-        
+        dateFormatter.dateFormat = "MM/dd/yyyy"
 
         print("Im in addEvent")
     }
     let seizureTypes = ["Other", "Tonic Seizure", "Clonic Seizure","Tonic-Clonic Seizure", "Absence Seizures", "Myoclonic Seizure", "Simple Partial Seizure", "Complex Partial Seizure","Atonic Seizure", "Infantile Spasms", "Psychogenic Non-epileptic Seizures"]
 
     
-    func cancelSelection(){
+    func cancelSelection(_ type: String){
         print("Cancel");
-        self.dismiss(animated: true, completion: nil);
-        self.typeButton.setTitle("Enter Type", for: UIControlState.normal)
+        switch type {
+            case "Date":
+                if(previousDateTitle == "Enter date"){
+                    self.dateButton.setTitle("Enter date", for: UIControlState.normal)
+                }else{
+                    self.dateButton.setTitle(previousDateTitle, for: UIControlState.normal)
+                }
+                break
+            case "Seizure":
+                if(previousSeizure == "Enter type"){
+                    self.typeButton.setTitle("Enter type", for: UIControlState.normal)
+                }else{
+                    self.typeButton.setTitle(previousSeizure, for: UIControlState.normal)
+                }
+                break
+            case "Start Time":
+                self.startTimeButton.setTitle("Enter Start Time", for: UIControlState.normal)
+                break
+        default:
+            break
+        }
         // We dismiss the alert. Here you can add your additional code to execute when cancel is pressed
     }
     func showPickerInActionSheet(sentBy: String, title: String, message: String) {
@@ -76,7 +162,7 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
 
      
         alert.addAction(UIAlertAction(title: "Select", style: UIAlertActionStyle.default, handler: {(UIAlertAction)in self.saveSeizures()}))
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.cancelSelection()}))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.cancelSelection("Seizure")}))
      self.present(alert, animated: true, completion: nil);
     }
     func saveSeizures(){
@@ -124,7 +210,7 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         if(pickerView.tag == 1){
             return self.seizureTypes.count;
         } else if(pickerView.tag == 2){
-            return 10
+            return 100
         } else  {
             return 0;
         }
@@ -150,11 +236,12 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             let chosenSeizure = seizureTypes[row]
             self.typeButton.setTitle(chosenSeizure, for: UIControlState.normal)
         } else if (pickerView.tag == 2){
-            _ = row
+            print("hello world")
             
         }
         
     }
+    
     
     
    //Doesn't do anything
