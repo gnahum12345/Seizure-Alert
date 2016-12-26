@@ -444,7 +444,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             dataEntries.append(dataEntry)
         }
         
-        let chartDataSet = BarChartDataSet(values: dataEntries, label: "No. Seizures")
+        let chartDataSet = BarChartDataSet(values: dataEntries, label: "Seconds of Seizures")
 //        chartDataSet.colors = ChartColorTemplates.joyful()
         chartDataSet.colors = [UIColor(red: 50/255, green: 50/255, blue: 200/255, alpha: 1)]
         let chartData = BarChartData(dataSet: chartDataSet)
