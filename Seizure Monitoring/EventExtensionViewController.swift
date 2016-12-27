@@ -10,6 +10,12 @@ import UIKit
 
 class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
    
+    func getDurationButton(_ title: String?)-> String{
+        var titleArr = title?.characters.split{$0 == " "}.map(String.init)
+        return "" 
+    }
+
+
     @IBAction func back(_ sender: Any) {
         //Save everything
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -17,6 +23,7 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         event?["Notes"] = self.notes.text
         event?["False Alarm"] = self.falseAlarmValue.isOn
         event?["Type of Seizure"] = seizure
+        event?["Duration"] = getDurationButton(durationButton.currentTitle)
         print("event: \(event)")
         
         appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")  //Uncomment this line.
@@ -49,28 +56,71 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         
     }
     var seizure = "other"
-    let seizureTypes = ["Other", "Tonic Seizure", "Clonic Seizure","Tonic-Clonic Seizure", "Absence Seizures", "Myoclonic Seizure", "Simple Partial Seizure", "Complex Partial Seizure","Atonic Seizure", "Infantile Spasms", "Psychogenic Non-epileptic Seizures"]
+    let seizureTypes = ["Other", "Tonic Seizure", "Clonic Seizure","Tonic-Clonic Seizure", "Absence Seizures", "Myoclonic Seizure", "Simple Partial Seizure", "Complex Partial Seizure","Atonic Seizure", "Infantile Spasms", "PNES"]
     override func viewDidLoad() {
         super.viewDidLoad()
         self.typeOfSeizure.dataSource = self
         self.typeOfSeizure.delegate = self
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         loadEvent(appDelegate.events, appDelegate.eventSelected, appDelegate.eventCount)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(EventExtensionViewController.setNotes as (EventExtensionViewController) -> () -> ()))
-        notes.addGestureRecognizer(tapGesture)
+        let noteTapGesture = UITapGestureRecognizer(target: self, action: #selector(EventExtensionViewController.setNotes as (EventExtensionViewController) -> () -> ()))
+               notes.addGestureRecognizer(noteTapGesture)
         // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func setDurationAction(_ sender: Any) {
+        let alert = UIAlertController(title: "Duration", message: "Please enter the information", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addTextField(configurationHandler: configurationTextFieldNumber)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: {(UIAlertAction) in self.cancelUpdate()}))
+        alert.addAction(UIAlertAction(title: "Update", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.completeDuration()}))
+        self.present(alert, animated: true, completion: {})
+
+    }
+    @IBAction func setMaxHRAction(_ sender: Any) {
+    
+    }
+   
+    func completeDuration(){
+        var duration = Int((numFromAlert?.text)!)!
+        
+        if (duration >= 3600){
+            let seconds = duration % 3600
+            let minutes = duration % 60
+            duration = duration/3600
+            self.duration.text =  ("Duration: \(duration) Hours   \(minutes) Minutes   \(seconds) Seconds")
+        }else if (duration >= 60){
+            let seconds = duration % 60
+            duration = duration/60
+            self.duration.text = ("Duration: \(duration) Minutes    \(seconds)   Seconds")
+        }else{
+            self.duration.text =  ("Duration: \(duration) Seconds")
+        }
+    }
+    func cancelUpdate(){
+        numFromAlert = nil
+        notesFromAlert = nil
     }
     func setNotes() {
         
         let alert = UIAlertController(title: "Notes", message: "Please edit seizure information", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addTextField(configurationHandler: configurationTextField)
+        alert.addTextField(configurationHandler: configurationTextFieldNotes)
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: {(UIAlertAction) in self.cancelUpdate()})
+        alert.addAction(cancelAction)
         alert.addAction(UIAlertAction(title: "Update", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.completeNotes()}))
         self.present(alert, animated: true, completion: {})
 
         
     }
     var notesFromAlert: UITextField? = nil
-    func configurationTextField(_ textField:UITextField!){
+    var numFromAlert: UITextField? = nil
+    func configurationTextFieldNumber(_ textField:UITextField!){
+        // print("Configurate here the textfield")
+        textField.keyboardType = UIKeyboardType.numberPad
+        //        inputTextField?.keyboardType = UIKeyboardType.Default
+        numFromAlert = textField
+    }
+
+    func configurationTextFieldNotes(_ textField:UITextField!){
         // print("Configurate here the textfield")
         textField.keyboardType = UIKeyboardType.default
         textField.text = notesFromStorage
@@ -133,14 +183,14 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         notes.text = getNotes(event! )
         self.notesFromStorage = notes.text
-        maxHR.text = getMaxHr(event! )
-        duration.text = getDuration(event! )
+        maxHRbutton.setTitle(getMaxHr(event! ), for: UIControlState.normal)
+        durationButton.setTitle(getDuration(event!), for: UIControlState.normal)
         date.text = getDate(event!)
         eventTitle.topItem?.title = getEventTitle(selected, count)
         print("getIsOn(): \(getIsOn(event!))")
         falseAlarmValue.setOn(getIsOn(event!), animated: false)
         seizure = event?["Type of Seizure"] as! String
-       
+        methodDetection.text = getMethod(event!)
         var i = 0
         while(i<seizureTypes.count){
             if (seizureTypes[i] == seizure){
@@ -151,6 +201,13 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         self.typeOfSeizure.selectRow(i, inComponent: 0, animated: true)
     
+    }
+    func getMethod(_ event: [String: Any]) -> String{
+        if(event["DateCreated"] != nil){
+            return "M"
+        }else{
+            return "A"
+        }
     }
     func getIsOn(_ event: [String: Any])-> Bool {
        // print(event.description)
@@ -164,14 +221,15 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         }
     }
     func getEventTitle(_ selected: Int, _ count: Int)-> String {
-        if (selected == 1) {
+       
+        if (selected == count){
+            return "Latest Event"
+        }else if (selected == 1) {
             return "1st Event"
         }else if (selected == 2){
             return "2nd Event"
-        }else if (selected == 3){
+        }else if(selected == 3) {
             return "3rd Event"
-        }else if(selected == count) {
-            return "Latest Event"
         }else{
             return "\(selected)th Event"
         }
@@ -179,18 +237,18 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
     func getDate(_ event: [String: Any])-> String{
         let date = event["StartTime"] as! String
         //        print("\n\n \(date)")
-        let arr = date.characters.split{$0 == " "}.map(String.init)
-        let correctDate = arr[0].characters.split{$0 == ","}.map(String.init)
+//        let arr = date.characters.split{$0 == " "}.map(String.init)
+//        let correctDate = arr[0].characters.split{$0 == ","}.map(String.init)
 //        print(arr)
 //        print(correctDate)
-        return "Date: \(correctDate[0])"
+        return "Date: \(date)"
     }
    
     func getMaxHr(_ event: [String:Any])-> String{
         if (event["MaxHR"] as! String) == "---" {
-            return "Max heart rate cannot be determined"
+            return "cannot be determined"
         }else{
-            return "Max heart rate: \(event["MaxHR"] as! String)"
+            return "\(event["MaxHR"] as! String)"
 
         }
     }
@@ -239,6 +297,9 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet var duration: UILabel!
     @IBOutlet var date: UILabel!
     @IBOutlet var eventTitle: UINavigationBar!
+    @IBOutlet weak var methodDetection: UILabel!
+    @IBOutlet weak var durationButton: UIButton!
+    @IBOutlet weak var maxHRbutton: UIButton!
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

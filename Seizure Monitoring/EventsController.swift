@@ -97,7 +97,11 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     func getTypeSeizure(_ event: [String: Any])-> String{
         if (event["Type of Seizure"] != nil){
-            return (event["Type of Seizure"] as! String)
+            if ((event["Type of Seizure"] as! String) == "PNES"){
+                return "Psychogenic Non-Epileptic Seizures"
+            }else{
+                return (event["Type of Seizure"] as! String)
+            }
         }else{
             return ""
         }
