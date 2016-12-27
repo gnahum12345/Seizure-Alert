@@ -549,8 +549,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         if (self.appDelegate.count.object(forKey: "count") == nil){}else{
          //   print("Count \(self.appDelegate.count.integer(forKey: "count"))")
             let count = self.appDelegate.count.integer(forKey: "count")
-            self.appDelegate.eventCount = count
-            self.appDelegate.eventSelected = count
+            self.appDelegate.eventCount = count - 1
+            self.appDelegate.eventSelected = count - 1 
             self.appDelegate.fromViewController = true
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let resultViewController = storyBoard.instantiateViewController(withIdentifier: "EventExtensionViewController") as! EventExtensionViewController
