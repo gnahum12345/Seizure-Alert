@@ -730,11 +730,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring/EventExtensionViewController.swift"
-            timestampString = "504564984.398026"
+            timestampString = "504570272.521523"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -746,11 +746,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring/EventExtensionViewController.swift"
-            timestampString = "504566990.396758"
+            timestampString = "504570272.521523"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
             landmarkName = "loadEvent(_:_:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -762,11 +762,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring/EventExtensionViewController.swift"
-            timestampString = "504566990.396758"
+            timestampString = "504570272.521523"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
             landmarkName = "EventExtensionViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -778,11 +778,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring/EventExtensionViewController.swift"
-            timestampString = "504564984.398026"
+            timestampString = "504570272.521523"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
             landmarkName = "back(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -854,15 +854,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring/EventExtensionViewController.swift"
-            timestampString = "504564984.398026"
+            timestampString = "504570272.521523"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
             landmarkName = "back(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -870,15 +870,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring/EventExtensionViewController.swift"
-            timestampString = "504564984.398026"
+            timestampString = "504570272.521523"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "back(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1290,7 +1290,7 @@
                   moduleName = "Seizure Monitoring"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Gabriel/XcodeProject/Seizure%20Monitoring/Seizure%20Monitoring/AddEventController.swift"
-                  timestampString = "504566340.590025"
+                  timestampString = "504570250.023549"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "321"
@@ -1305,7 +1305,7 @@
                   moduleName = "Seizure Monitoring"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Gabriel/XcodeProject/Seizure%20Monitoring/Seizure%20Monitoring/AddEventController.swift"
-                  timestampString = "504566340.591721"
+                  timestampString = "504570250.025497"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "321"
@@ -1706,12 +1706,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring/EventExtensionViewController.swift"
-            timestampString = "504566990.396758"
+            timestampString = "504570272.521523"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Seizure Monitoring/EventExtensionViewController.swift"
+            timestampString = "504570239.109002"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "back(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

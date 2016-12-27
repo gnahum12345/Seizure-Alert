@@ -11,8 +11,20 @@ import UIKit
 class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
    
     func getDurationButton(_ title: String?)-> String{
-        var titleArr = title?.characters.split{$0 == " "}.map(String.init)
-        return "" 
+        var titleArr = title!.characters.split{$0 == " "}.map(String.init)
+        print(titleArr)
+        switch titleArr.count {
+        case 2:
+            return titleArr[0]
+        case 4:
+            let duration = String(Int(titleArr[0])! * 60 + Int(titleArr[2])!)
+            return duration
+        case 6:
+             let duration = String(Int(titleArr[0])!*60*60 + Int(titleArr[2])! * 60 + Int(titleArr[4])!)
+             return duration
+        default:
+            return ""
+        }
     }
 
 
@@ -26,7 +38,7 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         event?["Duration"] = getDurationButton(durationButton.currentTitle)
         print("event: \(event)")
         
-        appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")  //Uncomment this line.
+//        appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")  //Uncomment this line.
         if( appDelegate.events.synchronize()){ //uncomment this line too.
             //do nothing
         }else {
@@ -87,13 +99,13 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
             let seconds = duration % 3600
             let minutes = duration % 60
             duration = duration/3600
-            self.duration.text =  ("Duration: \(duration) Hours   \(minutes) Minutes   \(seconds) Seconds")
+            self.durationButton.setTitle(("\(duration) Hours   \(minutes) Minutes   \(seconds) Seconds"), for: UIControlState.normal)
         }else if (duration >= 60){
             let seconds = duration % 60
             duration = duration/60
-            self.duration.text = ("Duration: \(duration) Minutes    \(seconds)   Seconds")
+            self.durationButton.setTitle(("\(duration) Minutes   \(seconds)   Seconds"), for: UIControlState.normal)
         }else{
-            self.duration.text =  ("Duration: \(duration) Seconds")
+            self.durationButton.setTitle(("\(duration) Seconds"), for: UIControlState.normal)
         }
     }
     func cancelUpdate(){
