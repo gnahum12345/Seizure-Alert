@@ -239,63 +239,82 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             let lastEvent = getLastEvent(events: self.appDelegate.events)
             self.updateLastEvent(arr: lastEvent as! [String : Any] )
         }else {
-//            self.updateLastEvent(arr: )
         }
         commonInit()
         startUpdatingLocationAllowingBackground(commandedFromPhone: true)
         print("I'm in viewcontroller")
         barChartView.noDataText = "No Seizures!!"
 //        let numSeizures = getNumPerDa
-        if appDelegate.events.object(forKey: "count") != nil {
+        if appDelegate.count.object(forKey: "count") != nil {
             let dates = getNumDates()
             let numSeizures = getNumSeizures(dates)
             setChart(dataPoints: dates, values: numSeizures)
         }
+        fixOrderOfEvents()
         
 //        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 //        let unitsSold = [20.0, 4.0, 6.0, 3.0, 12.0, 16.0, 4.0, 18.0, 2.0, 4.0, 5.0, 4.0]
 //        setChart(dataPoints: months, values: unitsSold)
     }
     func getNumDates() -> [String] {
-//       let count = appDelegate.count.integer(forKey: "count")
-////        print("Events in NumDates \(count)")
-//        
-//        var dates = [String]()
-//        
-//        for i in 0..<count {
-//            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
-//            let startTime = event?["StartTime"] as! String
-//            let dateArr = startTime.characters.split{$0 == ","}.map(String.init)
-//            
-//            if(dates.contains(dateArr[0])){}else{
-//                dates.append(dateArr[0])
-//            }
-//        
-//        }
+       let count = appDelegate.count.integer(forKey: "count")
+//        print("Events in NumDates \(count)")
+        let dateFormatterTwo = DateFormatter()
+        dateFormatterTwo.dateFormat = "MM/dd/yy, HH:mm:ss"
+        
+        var dates = [Date?]()
+        
+        for i in 0..<count {
+            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
+            let startTime = event?["StartTime"] as! String
+            let startTimeDate = dateFormatterTwo.date(from: startTime)
+            dates.append(startTimeDate)
+        }
+        
+        let end = Date(timeInterval: 20, since: Date())
+        let start = Date()
+        let descend = end.compare(start)
+        var startDateIndex = -1
+        var startDate = Date()
+        print(startDate)
+        for i in 0..<dates.count {
+            if(startDate.compare(dates[i]!) == descend){
+                startDate = dates[i]!
+                startDateIndex = i
+            }
+           print(startDate)
+        }
+//        uncomment later
 //        print(dates)
-        var dates = [String]()
-        let event = appDelegate.events.dictionary(forKey: "Event 1")
+      //  var dates = [String]()
+        let event = appDelegate.events.dictionary(forKey: "Event \(startDateIndex + 1)")
         let startTime = event?["StartTime"] as! String
         let dateArr = startTime.characters.split{$0 == ","}.map(String.init)
-        
+//        
         
 //        let dateFormatterTwo = DateFormatter()
-        dateFormatter.dateFormat = "MM-dd-yy"
+//        dateFormatter.dateFormat = "MM-dd-yy"
         let cal = NSCalendar.current
-        
+        var events = [String]()
         let date = dateArr[0]
         print(date)
-        let endDay = dateFormatter.string(from: Date())
-        let startDate:Date = dateFormatter.date(from: date)!
-        let endDate:Date = dateFormatter.date(from: endDay)!
+        let endDay = dateFormatterTwo.string(from: Date())
+//        let startDate:Date = dateFormatter.date(from: date)!
+        let endDate:Date = dateFormatterTwo.date(from: endDay)!
     
         var dateQuestion = startDate
         
         while dateQuestion <= endDate {
             print(dateFormatter.string(from: dateQuestion))
-            dates.append(dateFormatter.string(from: dateQuestion))
+            events.append(dateFormatter.string(from: dateQuestion))
             dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
         }
+        
+        print(events)
+        
+        return events
+
+        
 //
 //        if (dates.count < 1){/*TODO LATER*/
 //            for i in 1..<dates.count {
@@ -340,48 +359,85 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //            }
 //            
 //        }
-        print(dates)
-        return dates
+        
+ 
     }
   
     
-    func getNumSeizures(_ dates: [String])->[Double]{
+    func getNumSeizures(_ events: [String])->[Double]{
 //        print("Events in NumDates \(count)")
 
         var numSeizures = [Double]()
+        for i in 0..<events.count {
+            numSeizures.append(0.0)
+        }
 //        let dateFormatterTwo = DateFormatter()
 //        dateFormatterTwo.dateFormat = "yyyy-MM-dd"
-        dateFormatter.dateFormat = "MM/dd/yy"
+        let dateFormatterTwo = DateFormatter()
+        dateFormatterTwo.dateFormat = "MM/dd/yy, HH:mm:ss"
         let cal = NSCalendar.current
         
 
         var days = [String]()
-        let count = dates.count + 1
+        let count = appDelegate.count.integer(forKey: "count")
+        var dates = [Date?]()
+        for i in 0..<count {
+            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
+            let startTime = event?["StartTime"] as! String
+            let startTimeDate = dateFormatterTwo.date(from: startTime)
+            dates.append(startTimeDate!)
+        }
+        print(dates)
+        
         for i in 0..<count {
             let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
             let startTime = event?["StartTime"] as? String
-            if startTime == nil {
-                numSeizures.append(0.0)
-            }else{
-                let dateArr = startTime?.characters.split{$0 == ","}.map(String.init)
-            
-                if(days.contains((dateArr?[0])!)){
+            let dateArr = startTime?.characters.split{$0 == ","}.map(String.init)
+            for j in 0..<events.count{
+                let day = events[j].characters.split{$0 == ","}.map(String.init)
+                if dateArr?[0] == day[0] {
                     let durString = event?["Duration"] as! String
-                    let dur = Int(durString)!
-                    for j in 0..<days.count {
-                        if dateArr?[0] == days[j]{
-                            numSeizures[j] += Double(dur)
-                        }
-                    }
-                    
-                }else{
-                    let durString = event?["Duration"] as! String
-                    let dur = Int(durString)!
-                    numSeizures.append(Double(dur))
-                    days.append((dateArr?[0])!)
+                    let dur = Double(durString)!
+                     numSeizures[j] += dur
                 }
             }
         }
+        
+//        
+//        let countDays = events.count + 1
+//        for i in 0..<countDays {
+//            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
+//            let startTime = event?["StartTime"] as? String
+//            
+//            if startTime == nil {
+//                numSeizures.append(0.0)
+//            }else{
+//                let dateArr = startTime?.characters.split{$0 == ","}.map(String.init)
+//                
+//                for j in 0..<events.count {
+//                    let day = events[j].characters.split{$0 == ","}.map(String.init)
+//                    if dateArr?[0] == day[0] {
+//                        print(events[j])
+//                    }
+//                }
+//                
+//                if(days.contains((dateArr?[0])!)){
+//                    let durString = event?["Duration"] as! String
+//                    let dur = Int(durString)!
+//                    for j in 0..<days.count {
+//                        if dateArr?[0] == days[j]{
+//                            numSeizures[j] += Double(dur)
+//                        }
+//                    }
+//                    
+//                }else{
+//                    let durString = event?["Duration"] as! String
+//                    let dur = Double(durString)
+//                    numSeizures.append(dur!)
+//                    days.append((dateArr?[0])!)
+//                }
+//            }
+//        }
     
 //        if (days.count < 1){/*TODO LATER*/
 //            for i in 1..<days.count {
@@ -426,7 +482,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //            
 //        }
 
-        print(days)
+//        print(days)
         print(numSeizures)
         
       
@@ -446,7 +502,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Seconds of Seizures")
 //        chartDataSet.colors = ChartColorTemplates.joyful()
-        chartDataSet.colors = [UIColor(red: 50/255, green: 50/255, blue: 200/255, alpha: 1)]
+        chartDataSet.colors = [UIColor(red: 243/255, green: 132/255, blue: 54/255, alpha: 1)]
         let chartData = BarChartData(dataSet: chartDataSet)
         barChartView.data = chartData
 //        barChartView.xAxis.accessibilityElementsHidden = true
@@ -696,10 +752,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             month = "Feb"
             break
         case "3":
-            month = "Apr"
+            month = "Mar"
             break
         case "4":
-            month = "Mar"
+            month = "Apr"
             break
         case "5":
             month = "May"
@@ -738,8 +794,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         self.startTime.text = sTime
         self.endTime.text = eTime
         self.dur.text = duration
-        if(arr["Type Of Seizure"] != nil){
-            self.type.text = arr["Type Of Seizure"] as! String
+        if(arr["Type of Seizure"] != nil){
+            self.type.text = arr["Type of Seizure"] as! String
         }
         
     }
@@ -779,6 +835,34 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         return String(max)
     }
     
+    func fixOrderOfEvents(){
+        let count = appDelegate.count.integer(forKey: "count")
+        var dateString  = [String]()
+
+        for i in 0..<count {
+            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
+            print(event)
+       
+            let startDate = event?["StartTime"] as! String
+            dateString.append(startDate)
+//            dateString.append((events["Event \(i+1)"]["StartTime"] as! String))
+        }
+        var dateFormatterTwo = DateFormatter()
+        dateFormatterTwo.dateFormat  = "MM/dd/yy, HH:mm:ss"
+        
+        var day = [Date]()
+        for i in dateString {
+            print(i)
+            let d = dateFormatterTwo.date(from: i)!
+            day.append(d)
+        }
+        
+        day = reOrderDate(day)
+        print(day)
+    }
+    func reOrderDate(_ dates:[Date])->[Date]{
+        return dates.sorted(by: { $0.compare($1) == ComparisonResult.orderedAscending})
+    }
     
     
 }

@@ -16,7 +16,7 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         var event = appDelegate.events.dictionary(forKey: "Event \(appDelegate.eventSelected)")
         event?["Notes"] = self.notes.text
         event?["False Alarm"] = self.falseAlarmValue.isOn
-        event?["Type Of Seizure"] = seizure
+        event?["Type of Seizure"] = seizure
         print("event: \(event)")
         
         appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")  //Uncomment this line.
@@ -108,7 +108,7 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         seizure = seizureTypes[row]
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         var event = appDelegate.events.dictionary(forKey: "Event \(appDelegate.eventSelected)")
-        event?["Type Of Seizure"] = seizure
+        event?["Type of Seizure"] = seizure
         appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")
         if (appDelegate.events.synchronize()){
             //Do nothing
@@ -139,7 +139,7 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         eventTitle.topItem?.title = getEventTitle(selected, count)
         print("getIsOn(): \(getIsOn(event!))")
         falseAlarmValue.setOn(getIsOn(event!), animated: false)
-        seizure = event?["Type Of Seizure"] as! String
+        seizure = event?["Type of Seizure"] as! String
        
         var i = 0
         while(i<seizureTypes.count){
