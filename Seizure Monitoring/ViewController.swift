@@ -236,6 +236,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //        print("\n\n\n\n\nEvents file \n\n\nEvents\n\n\nEvents Now\n\n\n\n")
 //        print(self.appDelegate.events.dictionaryRepresentation())
         if hasEvent(defaults: self.appDelegate.events.dictionaryRepresentation()) {
+            fixOrderOfEvents()
             let lastEvent = getLastEvent(events: self.appDelegate.events)
             self.updateLastEvent(arr: lastEvent as! [String : Any] )
         }else {
@@ -243,6 +244,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         commonInit()
         startUpdatingLocationAllowingBackground(commandedFromPhone: true)
         print("I'm in viewcontroller")
+
         barChartView.noDataText = "No Seizures!!"
 //        let numSeizures = getNumPerDa
         if appDelegate.count.object(forKey: "count") != nil {
@@ -250,7 +252,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             let numSeizures = getNumSeizures(dates)
             setChart(dataPoints: dates, values: numSeizures)
         }
-        fixOrderOfEvents()
         
 //        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 //        let unitsSold = [20.0, 4.0, 6.0, 3.0, 12.0, 16.0, 4.0, 18.0, 2.0, 4.0, 5.0, 4.0]
@@ -266,9 +267,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         
         for i in 0..<count {
             let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
-            let startTime = event?["StartTime"] as! String
-            let startTimeDate = dateFormatterTwo.date(from: startTime)
+            let startTime = event?["StartTime"] as? String
+            if startTime == nil {}else{
+            let startTimeDate = dateFormatterTwo.date(from: startTime!)
             dates.append(startTimeDate)
+            }
         }
         
         let end = Date(timeInterval: 20, since: Date())
@@ -383,9 +386,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         var dates = [Date?]()
         for i in 0..<count {
             let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
-            let startTime = event?["StartTime"] as! String
-            let startTimeDate = dateFormatterTwo.date(from: startTime)
-            dates.append(startTimeDate!)
+            let startTime = event?["StartTime"] as? String
+            if startTime == nil {}else{
+                let startTimeDate = dateFormatterTwo.date(from: startTime!)
+                dates.append(startTimeDate)
+            }
         }
         print(dates)
         
@@ -519,15 +524,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //        print(appDelegate.count.integer(forKey: "count"))
 //        print("Event \(appDelegate.count.integer(forKey: "count"))")
 //        print("\n\n\n\n description \n\n\n\n\n \(defaults.description)")
-        if(defaults.description.contains("Event \(appDelegate.count.integer(forKey: "count"))")){
+        
+        
+        if defaults["Event 0"] != nil {
             return true
         }
-        
 //        print(defaults.index(forKey: "Event \(appDelegate.count)"))
         return false
     }
     func getLastEvent( events: UserDefaults) ->[String:Any] {
-        return events.dictionary(forKey: "Event \(appDelegate.count.integer(forKey: "count"))")!
+        return events.dictionary(forKey: "Event \(appDelegate.count.integer(forKey: "count")-1)")!
     }
     
     @IBOutlet var maxHR: UILabel!
@@ -840,7 +846,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         var dateString  = [String]()
 
         for i in 0..<count {
-            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
+            let event = appDelegate.events.dictionary(forKey: "Event \(i)")
             print(event)
        
             let startDate = event?["StartTime"] as! String
@@ -859,6 +865,29 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         
         day = reOrderDate(day)
         print(day)
+        var order = [Int]()
+        for i in 0..<day.count {
+            order.append(i)
+        }
+        var e = [String: Any]()
+        for i in 0..<count {
+            let event = appDelegate.events.dictionary(forKey: "Event \(i)")
+            let startDate = event?["StartTime"] as! String
+            for j in 0..<day.count {
+                if (dateFormatterTwo.date(from: startDate)?.compare(day[j]) == ComparisonResult.orderedSame){
+                    order[j] = i
+                    e[String(j)] = event
+                }
+            }
+        }
+        print(appDelegate.events.dictionaryRepresentation())
+        
+        for i in 0..<order.count{
+            appDelegate.events.set(e["\(order[i])"], forKey: "Event \(order[i])")
+            
+        }
+        print(appDelegate.events.dictionaryRepresentation())
+      
     }
     func reOrderDate(_ dates:[Date])->[Date]{
         return dates.sorted(by: { $0.compare($1) == ComparisonResult.orderedAscending})
