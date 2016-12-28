@@ -331,7 +331,7 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
    
     func getMaxHr(_ event: [String:Any])-> String{
         if (event["MaxHR"] as! String) == "---" {
-            return "cannot be determined"
+            return "---"
         }else{
             return "\(event["MaxHR"] as! String)"
 

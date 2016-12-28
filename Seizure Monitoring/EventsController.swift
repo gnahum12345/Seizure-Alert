@@ -21,14 +21,25 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
         var count = appDelegate.count.integer(forKey: "count")
         print("Count: \(count)")
 //        print("\nEvents\n")
-        
-        while (count>=1){
-//            print("Hello world")
-//            print(appDelegate.events.dictionary(forKey: "Event \(count)"))
-            events["Event \(count)"]  = appDelegate.events.dictionary(forKey: "Event \(count)")
-            count -= 1
+//        var tries = 1
+//        while (count>=1){
+////            print("Hello world")
+////            print(appDelegate.events.dictionary(forKey: "Event \(count)"))
+//            
+//            if appDelegate.events.dictionary(forKey: "Event \(count)") != nil {
+//                events["Event \(tries)"]  = appDelegate.events.dictionary(forKey: "Event \(count)")
+//                tries += 1
+//            }
+//
+//            count -= 1
+//            print(appDelegate.events.dictionaryRepresentation())
+//        }
+
+        for i in 0..<count{
+            if appDelegate.events.dictionary(forKey: "Event \(i+1)") != nil {
+                events["Event \(i+1)"]  = appDelegate.events.dictionary(forKey: "Event \(i+1)")
+            }
         }
-        count = appDelegate.count.integer(forKey: "count")
         
         print("\n\nEvents\n")
         print(events)

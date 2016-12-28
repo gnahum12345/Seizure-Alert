@@ -182,7 +182,9 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                 self.startTimeButton.setTitle("Enter start time", for: UIControlState.normal)
                 break
             case "saved":
-                self.dismiss(animated: true, completion: nil)
+                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                let resultViewController = storyBoard.instantiateViewController(withIdentifier: "Event") as! EventsController
+                self.present(resultViewController, animated:true, completion:nil)
         default:
             break
         }
@@ -254,6 +256,7 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     @available(iOS 2.0, *)
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        
         return 1
     }
 
@@ -355,9 +358,9 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         let count = appDelegate.count.integer(forKey: "count")
         appDelegate.events.set(event, forKey: "Event \(count+1)")
         appDelegate.count.set((count + 1), forKey: "count")
-        fixOrderOfEvents()
+  // NNTEMP      fixOrderOfEvents()
         while !appDelegate.events.synchronize(){
-            
+            print(appDelegate.events.dictionary(forKey: "Event \(count+1)"))
         }
         let savedAlert = UIAlertController(title: "Saved!", message: "Your data has been saved. ", preferredStyle: UIAlertControllerStyle.alert)
         savedAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.cancelSelection("saved")}))
@@ -383,7 +386,7 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         var dateString  = [String]()
         
         for i in 0..<count {
-            let event = appDelegate.events.dictionary(forKey: "Event \(i)")
+            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
             print(event)
             
             let startDate = event?["StartTime"] as! String
@@ -408,11 +411,11 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         }
         var e = [String: Any]()
         for i in 0..<count {
-            let event = appDelegate.events.dictionary(forKey: "Event \(i)")
+            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
             let startDate = event?["StartTime"] as! String
             for j in 0..<day.count {
                 if (dateFormatterTwo.date(from: startDate)?.compare(day[j]) == ComparisonResult.orderedSame){
-                    order[j] = i
+                    order[j] = i+1
                     e[String(j)] = event
                 }
             }
