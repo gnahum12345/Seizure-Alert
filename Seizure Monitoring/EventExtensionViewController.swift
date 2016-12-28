@@ -36,9 +36,11 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         event?["False Alarm"] = self.falseAlarmValue.isOn
         event?["Type of Seizure"] = seizure
         event?["Duration"] = getDurationButton(durationButton.currentTitle)
+        event?["EndTime"] = endTime
+        event?["MaxHR"] = maxHRbutton.currentTitle!
         print("event: \(event)")
         
-//        appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")  //Uncomment this line.
+        appDelegate.events.set(event, forKey: "Event \(appDelegate.eventSelected)")  //Uncomment this line.
         if( appDelegate.events.synchronize()){ //uncomment this line too.
             //do nothing
         }else {
@@ -81,17 +83,39 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     
     @IBAction func setDurationAction(_ sender: Any) {
-        let alert = UIAlertController(title: "Duration", message: "Please enter the information", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Duration", message: "Please enter the information in seconds.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addTextField(configurationHandler: configurationTextFieldNumber)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: {(UIAlertAction) in self.cancelUpdate()}))
-        alert.addAction(UIAlertAction(title: "Update", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.completeDuration()}))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {(UIAlertAction) in self.cancelUpdate()}))
+        alert.addAction(UIAlertAction(title: "Update", style: UIAlertActionStyle.destructive, handler: {(UIAlertAction) in self.completeDuration()}))
         self.present(alert, animated: true, completion: {})
 
     }
     @IBAction func setMaxHRAction(_ sender: Any) {
-    
+        let alert = UIAlertController(title: "Maximum Heart Rate", message: "Please enter the information in beats per minute.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addTextField(configurationHandler: configurationTextFieldNumber)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {(UIAlertAction) in self.cancelUpdateForHR()}))
+        alert.addAction(UIAlertAction(title: "Update", style: UIAlertActionStyle.destructive, handler: {(UIAlertAction) in self.completeHR()}))
+        self.present(alert, animated: true, completion: {})
+
     }
-   
+    func completeHR(){
+        let hr = String(Int((numFromAlert?.text)!)!)
+        maxHRbutton.setTitle(hr, for: UIControlState.normal)
+        let alert = UIAlertController(title: "Success", message: "You have successfully changed the maximum heart rate of the seizure. The new heart rate is \(hr)", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {(UIAlertACtion) in self.cancelUpdateForHR()}))
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: {(UIAlertAction) in self.okUpdate()}))
+        self.present(alert, animated: true, completion: nil)
+
+    }
+    func cancelUpdateForHR(){
+        let app = UIApplication.shared.delegate as! AppDelegate
+        let dictionary = app.events.dictionary(forKey: "Event \(app.eventSelected)")
+        maxHRbutton.setTitle(getMaxHr(dictionary!), for: UIControlState.normal)
+        let alert = UIAlertController(title: "Failure", message: "You have not changed the maximum heart rate of the seizure. The maximum heart is \(maxHRbutton.currentTitle!)", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: {(UIAlertAction) in self.okUpdate()}))
+        self.present(alert, animated: true, completion: nil)
+
+    }
     func completeDuration(){
         var duration = Int((numFromAlert?.text)!)!
         
@@ -107,8 +131,57 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         }else{
             self.durationButton.setTitle(("\(duration) Seconds"), for: UIControlState.normal)
         }
+        let sTime = date.text
+        endTime  = getEndTime(sTime!, durationButton.currentTitle!)
+        let alert = UIAlertController(title: "Success", message: "You have successfully changed the duration of the seizure. The new endTime is \(endTime)", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {(UIAlertACtion) in self.cancelUpdate()}))
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: {(UIAlertAction) in self.okUpdate()}))
+        self.present(alert, animated: true, completion: nil)
     }
     func cancelUpdate(){
+        let app = UIApplication.shared.delegate as! AppDelegate
+        let dictionary = app.events.dictionary(forKey: "Event \(app.eventSelected)")
+        endTime = dictionary?["EndTime"] as! String
+        durationButton.setTitle(getDuration(dictionary?["StartTime"] as! String, endTime), for: UIControlState.normal)
+        let alert = UIAlertController(title: "Failure", message: "You have not changed the duration of the seizure. The endTime is \(endTime)", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: {(UIAlertAction) in self.okUpdate()}))
+        self.present(alert, animated: true, completion: nil)
+    }
+    var endTime = ""
+    func getEndTime(_ sTimeCons: String, _ duration: String)->String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy, HH:mm:ss"
+        let sTimeArr = sTimeCons.characters.split{$0 == " "}.map(String.init)
+        var sTime = ""
+        for i in 1..<sTimeArr.count {
+            sTime += "\(sTimeArr[i]) "
+        }
+        let startTime = dateFormatter.date(from: sTime)
+        let eTime = startTime?.addingTimeInterval(getDurationSeconds(duration))
+        endTime = dateFormatter.string(from: eTime!)
+        return endTime
+        
+    }
+    
+    func getDurationSeconds(_ duration: String)-> Double{
+        let durArr = duration.characters.split{$0 == " "}.map(String.init)
+        switch durArr.count {
+        case 2:
+            return Double(durArr[0])!
+        case 4:
+            let durInt = Int(durArr[0])! * 60 + Int(durArr[2])!
+            return Double(durInt)
+        case 6:
+            let durInt = Int(durArr[0])! * 60 * 60 + Int(durArr[2])! * 60 + Int(durArr[4])!
+            return Double(durInt)
+        default:
+            return 0
+        }
+    }
+    func okUpdate(){
+    //do nothing
+    }
+    func cancelUpdateForNotes(){
         numFromAlert = nil
         notesFromAlert = nil
     }
@@ -116,7 +189,7 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         let alert = UIAlertController(title: "Notes", message: "Please edit seizure information", preferredStyle: UIAlertControllerStyle.alert)
         alert.addTextField(configurationHandler: configurationTextFieldNotes)
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: {(UIAlertAction) in self.cancelUpdate()})
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: {(UIAlertAction) in self.cancelUpdateForNotes()})
         alert.addAction(cancelAction)
         alert.addAction(UIAlertAction(title: "Update", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.completeNotes()}))
         self.present(alert, animated: true, completion: {})
@@ -192,7 +265,7 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         //load entire event
         
-        
+        endTime = event?["EndTime"] as! String
         notes.text = getNotes(event! )
         self.notesFromStorage = notes.text
         maxHRbutton.setTitle(getMaxHr(event! ), for: UIControlState.normal)
@@ -265,10 +338,11 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
         }
     }
     func getDuration( _ event: [String: Any])-> String{
-        let startTime = self.getSeconds(time: event["StartTime"] as! String)
-        let endTime = self.getSeconds(time: event["EndTime"] as! String)
-        var duration =  ((Int(endTime)! - Int(startTime)!))
-        
+//        let startTime = self.getSeconds(time: event["StartTime"] as! String)
+//        let endTime = self.getSeconds(time: event["EndTime"] as! String)
+//        //var duration =  ((Int(endTime)! - Int(startTime)!))
+        let durString = event["Duration"] as! String
+        var duration = Int(Double(durString)!)
         if (duration >= 3600){
             let seconds = duration % 3600
             let minutes = duration % 60
@@ -284,6 +358,27 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
 
         
     }
+    func getDuration( _ sTime: String, _ eTime: String)-> String{
+        let startTime = self.getSeconds(time: sTime)
+        let endTime = self.getSeconds(time: eTime)
+        var duration =  ((Int(endTime)! - Int(startTime)!))
+       
+        if (duration >= 3600){
+            let seconds = duration % 3600
+            let minutes = duration % 60
+            duration = duration/3600
+            return ("\(duration) Hours   \(minutes) Minutes   \(seconds) Seconds")
+        }else if (duration >= 60){
+            let seconds = duration % 60
+            duration = duration/60
+            return ("\(duration) Minutes    \(seconds)   Seconds")
+        }else{
+            return ("\(duration) Seconds")
+        }
+        
+        
+    }
+
     
     func getSeconds(time: String)-> String{
         let arr = time.characters.split{$0 == " "}.map(String.init)
