@@ -773,11 +773,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             let month = self.getMonth(date: sTime!)
             let arr = ["StartTime": sTime!, "EndTime":eTime!, "Duration":dur, "MaxHR":maxHR, "Month":month, "Day": day]
             var con = self.appDelegate.count.integer(forKey: "count")
-            self.appDelegate.events.set(arr, forKey: "Event \(self.appDelegate.count.integer(forKey: "count"))")
             con += 1
             self.appDelegate.count.set(con, forKey: "count")
-
-            
+            self.appDelegate.events.set(arr, forKey: "Event \(self.appDelegate.count.integer(forKey: "count"))")
+        
 //            print("Count: \(self.appDelegate.count.integer(forKey: "count"))")
 //            print(app.events.dictionaryRepresentation())
 

@@ -165,7 +165,7 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         print("Im in addEvent")
         dateOfCreation.text = dateFormatter.string(from: Date())
     }
-    let seizureTypes = ["Other", "Tonic Seizure", "Clonic Seizure","Tonic-Clonic Seizure", "Absence Seizures", "Myoclonic Seizure", "Simple Partial Seizure", "Complex Partial Seizure","Atonic Seizure", "Infantile Spasms", "Psychogenic Non-epileptic Seizures"]
+    let seizureTypes = ["Other", "Tonic Seizure", "Clonic Seizure","Tonic-Clonic Seizure", "Absence Seizures", "Myoclonic Seizure", "Simple Partial Seizure", "Complex Partial Seizure","Atonic Seizure", "Infantile Spasms", "PNES"]
 
     
     func cancelSelection(_ type: String){
@@ -305,6 +305,67 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
 //        // do nothing
 //    }
 
+    func appendEvent(_ event:[String:Any]){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let count = appDelegate.count.integer(forKey: "count")
+        let dateQuestion = getDate(event["StartTime"] as! String)
+        if count == 0 {
+            appDelegate.events.set(event, forKey: "Event \(count+1)")
+            appDelegate.count.set(count+1, forKey: "count")
+            return
+        }
+        if count == 1 {
+            if let e = appDelegate.events.dictionary(forKey: "Event 1") {
+                let sTime = getDate(e["StartTime"] as! String)
+                if dateQuestion.compare(sTime) == ComparisonResult.orderedDescending {
+                    appDelegate.events.set(event, forKey: "Event \(count+1)")
+                    appDelegate.count.set(count+1, forKey:"count")
+                    return
+                }else{
+                    let temp = e
+                    appDelegate.events.set(event, forKey: "Event \(count)")
+                    appDelegate.events.set(temp, forKey: "Event \(count+1)")
+                    appDelegate.count.set(count+1, forKey: "count")
+                    return
+                }
+            }
+        }
+        if let e = appDelegate.events.dictionary(forKey: "Event \(count)"){
+            let sTime = getDate(e["StartTime"] as! String)
+            if dateQuestion.compare(sTime) == ComparisonResult.orderedDescending {
+                appDelegate.events.set(event, forKey: "Event \(count+1)")
+                appDelegate.count.set(count+1, forKey:"count")
+                return
+            }
+        }
+        for i in 1..<(count+1) {
+            if let e = appDelegate.events.dictionary(forKey: "Event \(i)") {
+                let sTime = getDate(e["StartTime"] as! String)
+                if dateQuestion.compare(sTime) == ComparisonResult.orderedAscending {
+                    var temp: [String:Any]? = e
+                    appDelegate.events.set(event, forKey: "Event \(i)")
+                    var rounds = i
+                    while(rounds < (count)){
+                        rounds += 1
+                        var sit = appDelegate.events.dictionary(forKey: "Event \(rounds)")
+                        appDelegate.events.set(temp, forKey: "Event \(rounds)")
+                        print("Sit: \(sit?.description)")
+                        temp = sit
+                        
+                    }
+                    appDelegate.events.set(temp, forKey: "Event \(count+1)")
+                    appDelegate.count.set(count+1, forKey: "count")
+                    return
+                }
+            }
+        }
+    
+    }
+    func getDate(_ time: String)-> Date {
+        let dateFormatterTwo = DateFormatter()
+        dateFormatterTwo.dateFormat = "MM/dd/yy, HH:mm:ss"
+        return dateFormatterTwo.date(from: time)!
+    }
     
     @IBOutlet var date: UILabel!
     @IBOutlet var startTime: UILabel!
@@ -356,8 +417,9 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         let event = ["DateCreated": dateOfCreation.text!, "StartTime": startDate!, "EndTime": endDate!, "MaxHR": "---", "Type of Seizure": typeOF, "Duration": duration, "Notes": note ?? "", "Month": getMonth(month), "Day": day, "False Alarm": 0] as [String : Any]
         
         let count = appDelegate.count.integer(forKey: "count")
-        appDelegate.events.set(event, forKey: "Event \(count+1)")
-        appDelegate.count.set((count + 1), forKey: "count")
+        appendEvent(event)
+//        appDelegate.events.set(event, forKey: "Event \(count+1)")
+//        appDelegate.count.set((count + 1), forKey: "count")
   // NNTEMP      fixOrderOfEvents()
         while !appDelegate.events.synchronize(){
             print(appDelegate.events.dictionary(forKey: "Event \(count+1)"))
