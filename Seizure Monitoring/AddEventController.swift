@@ -355,6 +355,7 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         let count = appDelegate.count.integer(forKey: "count")
         appDelegate.events.set(event, forKey: "Event \(count+1)")
         appDelegate.count.set((count + 1), forKey: "count")
+        fixOrderOfEvents()
         while !appDelegate.events.synchronize(){
             
         }
@@ -375,6 +376,60 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
 ////            appDelegate.count.set(count, forKey: "count")
 //        }
     }
+    
+    func fixOrderOfEvents(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let count = appDelegate.count.integer(forKey: "count")
+        var dateString  = [String]()
+        
+        for i in 0..<count {
+            let event = appDelegate.events.dictionary(forKey: "Event \(i)")
+            print(event)
+            
+            let startDate = event?["StartTime"] as! String
+            dateString.append(startDate)
+            //            dateString.append((events["Event \(i+1)"]["StartTime"] as! String))
+        }
+        var dateFormatterTwo = DateFormatter()
+        dateFormatterTwo.dateFormat  = "MM/dd/yy, HH:mm:ss"
+        
+        var day = [Date]()
+        for i in dateString {
+            print(i)
+            let d = dateFormatterTwo.date(from: i)!
+            day.append(d)
+        }
+        
+        day = reOrderDate(day)
+        print(day)
+        var order = [Int]()
+        for i in 0..<day.count {
+            order.append(i)
+        }
+        var e = [String: Any]()
+        for i in 0..<count {
+            let event = appDelegate.events.dictionary(forKey: "Event \(i)")
+            let startDate = event?["StartTime"] as! String
+            for j in 0..<day.count {
+                if (dateFormatterTwo.date(from: startDate)?.compare(day[j]) == ComparisonResult.orderedSame){
+                    order[j] = i
+                    e[String(j)] = event
+                }
+            }
+        }
+        print(appDelegate.events.dictionaryRepresentation())
+        
+        for i in 0..<order.count{
+            appDelegate.events.set(e["\(order[i])"], forKey: "Event \(order[i])")
+            
+        }
+        print(appDelegate.events.dictionaryRepresentation())
+        
+    }
+    func reOrderDate(_ dates:[Date])->[Date]{
+        return dates.sorted(by: { $0.compare($1) == ComparisonResult.orderedAscending})
+    }
+
     func getMonth(_ month: String)-> String{
         switch month {
             case "01":
