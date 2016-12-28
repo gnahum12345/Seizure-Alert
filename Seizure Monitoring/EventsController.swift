@@ -35,13 +35,14 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
 //            print(appDelegate.events.dictionaryRepresentation())
 //        }
 
+        
         for i in 0..<count{
             if appDelegate.events.dictionary(forKey: "Event \(i+1)") != nil {
                 events["Event \(i+1)"]  = appDelegate.events.dictionary(forKey: "Event \(i+1)")
             }
         }
         
-        print("\n\nEvents\n")
+               print("\n\nEvents\n")
         print(events)
     
     }

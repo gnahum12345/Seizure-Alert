@@ -533,8 +533,37 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         return false
     }
     func getLastEvent( events: UserDefaults) ->[String:Any] {
-        let e =  events.dictionary(forKey: "Event \(appDelegate.count.integer(forKey: "count"))")!
-        return e
+        let count = events.integer(forKey: "count")
+        
+        var dateString = [String]()
+        for i in 0..<count{
+            let e = events.dictionary(forKey: "Event \(i+1)")
+            if e?["StartTime"] != nil {
+                dateString.append(e?["StartTime"] as! String)
+            }
+        }
+        var day = [Date]()
+        let dateFormatterTwo = DateFormatter()
+        dateFormatterTwo.dateFormat  = "MM/dd/yy, HH:mm:ss"
+        
+        for i in dateString {
+            print(i)
+            let d = dateFormatterTwo.date(from: i)!
+            day.append(d)
+        }
+        
+        day = reOrderDate(day)
+        var index = -1
+        for i in 0..<dateString.count {
+            if (dateFormatterTwo.string(from: day.last!) == dateString[i]){
+                index = i
+            }
+        }
+        if index == -1 {
+            return events.dictionary(forKey: "Event \(count)")!
+        }
+        return events.dictionary(forKey: "Event \(index + 1)")!
+       
     }
     
     @IBOutlet var maxHR: UILabel!
@@ -551,7 +580,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
          //   print("Count \(self.appDelegate.count.integer(forKey: "count"))")
             let count = self.appDelegate.count.integer(forKey: "count")
             self.appDelegate.eventCount = count    //NNTEMP count - 1
-            self.appDelegate.eventSelected = count //NNTEMP count - 1
+            self.appDelegate.eventSelected = getEventSelected() //NNTEMP count - 1
             self.appDelegate.fromViewController = true
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let resultViewController = storyBoard.instantiateViewController(withIdentifier: "EventExtensionViewController") as! EventExtensionViewController
@@ -559,6 +588,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         }
 
     }
+    func getEventSelected()->Int{
+        let last = getLastEvent(events: self.appDelegate.events)
+        let count = self.appDelegate.count.integer(forKey: "count")
+        for i in 0..<count {
+            if let e = self.appDelegate.events.dictionary(forKey: "Event \(i+1)"){
+                if last.description == e.description {
+                    return i+1
+                }
+            }
+        }
+        return count
+    }
+    
     func historyScene(){
 //        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
 //        let rvc = storyBoard.instantiateViewController(withIdentifier: "History") as! History
@@ -846,6 +888,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         }
         return String(max)
     }
+    
+      //TODO: Delete function
     func fixOrderOfEvents(){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let count = appDelegate.count.integer(forKey: "count")

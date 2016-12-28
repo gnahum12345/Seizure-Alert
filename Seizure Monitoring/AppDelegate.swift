@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
     var eventSelected = -1
     var eventCount = -1
     var fromViewController = false
+    
     var window: UIWindow?
     var snooze = false
     var careGiversArray: [CareGiver]?
@@ -25,14 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
     let careGiver = UserDefaults.standard
     var latitude: Double?
     var longitude: Double?
- 
     func getLatitude()-> Double? {
         return latitude
     }
     func getLongitude()-> Double? {
         return longitude
     }
-
+   
     //TODO: create conversasion between appdelegate and watch.
     //TODO: create new file to store events.
     
