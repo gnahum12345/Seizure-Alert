@@ -308,7 +308,7 @@ class EventExtensionViewController: UIViewController, UIPickerViewDelegate, UIPi
     func getEventTitle(_ selected: Int, _ count: Int)-> String {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         //TODO: Change so that even if the user clicked in the table view it would still be last event.
-        if (appDelegate.fromViewController){
+        if (selected == count){
             return "Latest Event"
         }else if (selected == 1) {
             return "1st Event"

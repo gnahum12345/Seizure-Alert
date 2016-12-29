@@ -173,6 +173,32 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
     func getDay(_ event: [String:Any])-> String {
 //        print("\n\n\n Event")
 //        print(event)
+        
+        if let day = event["Day"] as? String {
+            switch day {
+                case "01":
+                    return "1"
+                case "02":
+                    return "2"
+                case "03":
+                    return "3"
+                case "04":
+                    return "4"
+                case "05":
+                    return "5"
+                case "06":
+                    return "6"
+                case "07":
+                    return "7"
+                case "08":
+                    return "8"
+                case "09":
+                    return "9"
+            default:
+                return day
+            }
+        }
+        
         let date = event["StartTime"] as! String
 //        print("\n\n \(date)")
         let arr = date.characters.split{$0 == " "}.map(String.init)
@@ -180,6 +206,9 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
         return cal[1]
     }
     func getMonth(_ event: [String: Any])-> String{
+        if let date = event["Month"] as? String {
+            return event["Month"] as! String
+        }
         let date = event["StartTime"] as! String
 //        print("\n\n \(date)")
         let arr = date.characters.split{$0 == " "}.map(String.init)
