@@ -34,7 +34,7 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
         // print(locationManager.location?.coordinate.latitude)
         // print(locationManager.location?.coordinate.longitude)
 
-        updateLastEvent()
+//        updateLastEvent()
         // Configure interface objects here.
         print("The watch is on")
         let eD = WKExtension.shared().delegate as! ExtensionDelegate

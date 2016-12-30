@@ -214,7 +214,39 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         })
         
     }
+
+    
+    func changeLastEvent(_ isOn: Bool) {
+        self.month.isHidden = isOn
+        self.day.isHidden = isOn
+        self.maxHR.isHidden = isOn
+        self.startTime.isHidden = isOn
+        self.endTime.isHidden = isOn
+        self.dur.isHidden = isOn
+        self.type.isHidden = isOn
+        self.viewOfDay.isHidden = isOn
+        self.viewOfMonth.isHidden = isOn
+        self.arrow.isHidden = isOn
+        self.durationLabel.isHidden = isOn
+        self.unitOfMeasure.isHidden = isOn
+        self.typeLabel.isHidden = isOn
+//        self.heartImage.isHidden = on
         
+        if isOn {
+            self.lastestEventTitle.numberOfLines = 5
+            self.lastestEventTitle.text = "\n\n\t\t    You have had zero seizures!! \n\n\t\t\t\t\tKeep it up!!"
+            self.lastestEventTitle.textColor = UIColor(colorLiteralRed: 30.0/255.0, green: 144.0/255.0, blue: 1, alpha: 1)
+            //            self.lastestEventTitle.textAlignment = NSTextAlignment.center
+    
+            self.heartImage.image = #imageLiteral(resourceName: "thumbsUp")
+        }else{
+            
+            self.lastestEventTitle.numberOfLines = 1
+            self.lastestEventTitle.text = "Latest Event"
+            self.lastestEventTitle.textColor = UIColor.black
+            self.heartImage.image = #imageLiteral(resourceName: "Heart")
+        }
+    }
     let dateFormatter = DateFormatter()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -238,19 +270,28 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         if hasEvent(defaults: self.appDelegate.events.dictionaryRepresentation()) {
         //    fixOrderOfEvents()
             let lastEvent = getLastEvent(events: self.appDelegate.events)
-            self.updateLastEvent(arr: lastEvent as! [String : Any] )
+            self.updateLastEvent(arr: lastEvent)
+            self.changeLastEvent(false)
         }else {
+            self.changeLastEvent(true) //hide everything
+            
         }
         commonInit()
         startUpdatingLocationAllowingBackground(commandedFromPhone: true)
         print("I'm in viewcontroller")
-
-        barChartView.noDataText = "No Seizures!!"
+        var isChartShown = false
+        barChartView.noDataText = ""
 //        let numSeizures = getNumPerDa
         if appDelegate.count.object(forKey: "count") != nil {
-            let dates = getNumDates()
-            let numSeizures = getNumSeizures(dates)
-            setChart(dataPoints: dates, values: numSeizures)
+            if appDelegate.count.integer(forKey: "count") != 0 {
+                let dates = getNumDates()
+                let numSeizures = getNumSeizures(dates)
+                setChart(dataPoints: dates, values: numSeizures)
+                isChartShown = true
+            }
+        }
+        if !isChartShown {
+            //TODO: do something
         }
         
 //        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -260,7 +301,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     func getNumDates() -> [String] {
        let count = appDelegate.count.integer(forKey: "count")
 //        print("Events in NumDates \(count)")
-        let dateFormatterTwo = DateFormatter()
+                let dateFormatterTwo = DateFormatter()
         dateFormatterTwo.dateFormat = "MM/dd/yy, HH:mm:ss"
         
         var dates = [Date?]()
@@ -346,7 +387,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //            let date = dates[0]
 //            print(date)
 //            let dateArr = date.characters.split{$0 == "/"}.map(String.init)
-//            let startDay = "20\(dateArr[2])-\(dateArr[0])-\(dateArr[1])"  //TODO: Update so that in 100 years app still works.
+//            let startDay = "20\(dateArr[2])-\(dateArr[0])-\(dateArr[1])"
 //            let endDay = dateFormatterTwo.string(from: Date())
 //            let startDate:Date = dateFormatterTwo.date(from: startDay)!
 //            let endDate:Date = dateFormatterTwo.date(from: endDay)!
@@ -369,16 +410,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     
     func getNumSeizures(_ events: [String])->[Double]{
 //        print("Events in NumDates \(count)")
-
+       
         var numSeizures = [Double]()
-        for i in 0..<events.count {
+        for _ in 0..<events.count {
             numSeizures.append(0.0)
         }
 //        let dateFormatterTwo = DateFormatter()
 //        dateFormatterTwo.dateFormat = "yyyy-MM-dd"
         let dateFormatterTwo = DateFormatter()
         dateFormatterTwo.dateFormat = "MM/dd/yy, HH:mm:ss"
-        let cal = NSCalendar.current
+        _ = NSCalendar.current
         
 
         var days = [String]()
@@ -573,6 +614,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     @IBOutlet var type: UILabel!
     @IBOutlet var month: UILabel!
     @IBOutlet var day: UILabel!
+    @IBOutlet weak var viewOfDay: UIView!
+    @IBOutlet weak var viewOfMonth: UIView!
+    @IBOutlet weak var lastestEventTitle: UILabel!
+    @IBOutlet weak var arrow: UILabel!
+    @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var unitOfMeasure: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var heartImage: UIImageView!
     
     
     func lastEventScene(){
@@ -833,8 +882,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             break
         default:
             break
-            
         }
+       
+        let date = sTimeArr[0].characters.split{$0 == "/"}.map(String.init)
+        var year = date[2]
+        year.characters.removeLast()
+        month +=  " '\(year)"
         let duration = arr["Duration"] as! String
         let maxhr = arr["MaxHR"] as! String
         self.month.text = month
@@ -888,56 +941,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         return String(max)
     }
     
-      //TODO: Delete function
-    func fixOrderOfEvents(){
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let count = appDelegate.count.integer(forKey: "count")
-        var dateString  = [String]()
-        
-        for i in 0..<count {
-            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
-            print(event)
-            
-            let startDate = event?["StartTime"] as! String
-            dateString.append(startDate)
-            //            dateString.append((events["Event \(i+1)"]["StartTime"] as! String))
-        }
-        var dateFormatterTwo = DateFormatter()
-        dateFormatterTwo.dateFormat  = "MM/dd/yy, HH:mm:ss"
-        
-        var day = [Date]()
-        for i in dateString {
-            print(i)
-            let d = dateFormatterTwo.date(from: i)!
-            day.append(d)
-        }
-        
-        day = reOrderDate(day)
-        print(day)
-        var order = [Int]()
-        for i in 0..<day.count {
-            order.append(i)
-        }
-        var e = [String: Any]()
-        for i in 0..<count {
-            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
-            let startDate = event?["StartTime"] as! String
-            for j in 0..<day.count {
-                if (dateFormatterTwo.date(from: startDate)?.compare(day[j]) == ComparisonResult.orderedSame){
-                    order[j] = i+1
-                    e[String(j)] = event
-                }
-            }
-        }
-        print(appDelegate.events.dictionaryRepresentation())
-        
-        for i in 0..<order.count{
-            appDelegate.events.set(e["\(order[i])"], forKey: "Event \(order[i])")
-            
-        }
-        print(appDelegate.events.dictionaryRepresentation())
-        
-    }
     func reOrderDate(_ dates:[Date])->[Date]{
         return dates.sorted(by: { $0.compare($1) == ComparisonResult.orderedAscending})
     }

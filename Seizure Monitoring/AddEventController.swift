@@ -122,6 +122,7 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         //
         
     }
+    var picker: UIPickerView? = nil
     @IBAction func enterTypeAction(_ sender: Any) {
 //        showPickerInActionSheet(sentBy: "Seizures", title: "Seizure Type", message: "Please select the type of seizure" )
         previousSeizure = typeButton.currentTitle!
@@ -131,25 +132,25 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         //Create a frame (placeholder/wrapper) for the picker and then create the picker
         let pickerFrame: CGRect = CGRect(x: 5 , y: 35, width: 265, height: 275) // CGRectMake(left), top, width, height) - left and top are like margins
-        let picker: UIPickerView = UIPickerView(frame: pickerFrame);
+        picker = UIPickerView(frame: pickerFrame);
                 //set the pickers datasource and delegate
-        picker.delegate = self;
-        picker.dataSource = self;
-        picker.tag = 1
+        picker?.delegate = self;
+        picker?.dataSource = self;
+        picker?.tag = 1
         alert.view.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
         //        alert.view.alignmentRect(forFrame: CGRect(x: 0, y: 10, width: 270, height: 100))
         //Add the picker to the alert controller
-        alert.view.addSubview(picker)
+        alert.view.addSubview(picker!)
         //        alert.view.alignmentRect(forFrame: CGRect(x: 0, y: 10, width: 270, height: 100))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.cancelSelection("Seizure")}))
         alert.addAction(UIAlertAction(title: "Select", style: UIAlertActionStyle.default, handler: {(UIAlertAction)in self.saveSeizures()}))
-
-        self.present(alert, animated: true, completion: nil);
+        self.present(alert, animated: true, completion: {self.typeButton.setTitle("Other", for: UIControlState.normal)});
 
     }
     func saveSeizures(){
         //do nothing
+       
     }
     
     let dateFormatter = DateFormatter()
@@ -259,6 +260,7 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         return 1
     }
+   
 
     // returns number of rows in each component..
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
@@ -284,7 +286,7 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         }
         
     }
-   
+    
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if(pickerView.tag == 1){
@@ -442,59 +444,6 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
 //        }
     }
     
-    func fixOrderOfEvents(){
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let count = appDelegate.count.integer(forKey: "count")
-        var dateString  = [String]()
-        
-        for i in 0..<count {
-            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
-            print(event)
-            
-            let startDate = event?["StartTime"] as! String
-            dateString.append(startDate)
-            //            dateString.append((events["Event \(i+1)"]["StartTime"] as! String))
-        }
-        var dateFormatterTwo = DateFormatter()
-        dateFormatterTwo.dateFormat  = "MM/dd/yy, HH:mm:ss"
-        
-        var day = [Date]()
-        for i in dateString {
-            print(i)
-            let d = dateFormatterTwo.date(from: i)!
-            day.append(d)
-        }
-        
-        day = reOrderDate(day)
-        print(day)
-        var order = [Int]()
-        for i in 0..<day.count {
-            order.append(i)
-        }
-        var e = [String: Any]()
-        for i in 0..<count {
-            let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
-            let startDate = event?["StartTime"] as! String
-            for j in 0..<day.count {
-                if (dateFormatterTwo.date(from: startDate)?.compare(day[j]) == ComparisonResult.orderedSame){
-                    order[j] = i+1
-                    e[String(j)] = event
-                }
-            }
-        }
-        print(appDelegate.events.dictionaryRepresentation())
-        
-        for i in 0..<order.count{
-            appDelegate.events.set(e["\(order[i])"], forKey: "Event \(order[i])")
-            
-        }
-        print(appDelegate.events.dictionaryRepresentation())
-        
-    }
-    func reOrderDate(_ dates:[Date])->[Date]{
-        return dates.sorted(by: { $0.compare($1) == ComparisonResult.orderedAscending})
-    }
-
     func getMonth(_ month: String)-> String{
         switch month {
             case "01":
