@@ -33,6 +33,7 @@
 		C017DA511E074FA100D5451D /* EventsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017DA501E074FA100D5451D /* EventsController.swift */; };
 		C017DA531E07517900D5451D /* EventsCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017DA521E07517900D5451D /* EventsCustomCell.swift */; };
 		C017DA551E089D5A00D5451D /* EventExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017DA541E089D5A00D5451D /* EventExtensionViewController.swift */; };
+		C02BD17E1E1706E000958646 /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02BD17D1E1706E000958646 /* HelpController.swift */; };
 		C0AD18B71E109DE7001E00E2 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0AD18B21E109DCB001E00E2 /* Charts.framework */; };
 		C0AD18B81E109DE7001E00E2 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C0AD18B21E109DCB001E00E2 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C0CDEF851E0B47AC00ACACDE /* AddEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CDEF841E0B47AC00ACACDE /* AddEventController.swift */; };
@@ -172,6 +173,7 @@
 		C017DA501E074FA100D5451D /* EventsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsController.swift; sourceTree = "<group>"; };
 		C017DA521E07517900D5451D /* EventsCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCustomCell.swift; sourceTree = "<group>"; };
 		C017DA541E089D5A00D5451D /* EventExtensionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventExtensionViewController.swift; sourceTree = "<group>"; };
+		C02BD17D1E1706E000958646 /* HelpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
 		C0811C951E0493BA00ADABFB /* Seizure Monitoring.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring.entitlements"; sourceTree = "<group>"; };
 		C0811C961E0493D200ADABFB /* Seizure Monitoring WatchKit App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring WatchKit App.entitlements"; sourceTree = "<group>"; };
 		C0811C971E0493E900ADABFB /* Seizure Monitoring WatchKit Extension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Seizure Monitoring WatchKit Extension.entitlements"; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				C0811C971E0493E900ADABFB /* Seizure Monitoring WatchKit Extension.entitlements */,
+				C02BD17D1E1706E000958646 /* HelpController.swift */,
 				C00CA69E1D56D2FA007673A9 /* SwiftRequest.swift */,
 				0E622D171D2D88170001B8DE /* InterfaceController.swift */,
 				0E622D191D2D88170001B8DE /* ExtensionDelegate.swift */,
@@ -655,6 +658,7 @@
 				0E622D1A1D2D88170001B8DE /* ExtensionDelegate.swift in Sources */,
 				0E622D181D2D88170001B8DE /* InterfaceController.swift in Sources */,
 				C0D708E41D4FC12900C4E7B1 /* SeizureMonitoring.swift in Sources */,
+				C02BD17E1E1706E000958646 /* HelpController.swift in Sources */,
 				C00CA69F1D56D2FA007673A9 /* SwiftRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

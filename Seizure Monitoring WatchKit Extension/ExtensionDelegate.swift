@@ -12,13 +12,16 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     let monitoring = SeizureMonitoring()
     //FIX: Change
     var lastEvent: NSDate? = nil
-    
+    var alarm = false
+    var falseAlarmDidPress = false
     //let events: UserDefaults? = nil
    //    let locationManager = CLLocationManager()
     
     //let delegate = WKExtension.shared().delegate as! ExtensionDelegate
     //TODO: get phone number of CareGiver
-    
+//    func sendMessageToPlay(){
+//    
+//    }
     var latitude = 0.0
     var longitude = 0.0
 

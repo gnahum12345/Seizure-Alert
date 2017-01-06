@@ -10,6 +10,7 @@ import UIKit
 import WatchConnectivity
 import CoreLocation
 import Charts
+import AVFoundation
 
 extension Float {
     func string(fractionDigits:Int) -> String {
@@ -214,8 +215,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         })
         
     }
-
-    
     func changeLastEvent(_ isOn: Bool) {
         self.month.isHidden = isOn
         self.day.isHidden = isOn
@@ -248,6 +247,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         }
     }
     let dateFormatter = DateFormatter()
+    var isChartShown = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -279,29 +279,55 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         commonInit()
         startUpdatingLocationAllowingBackground(commandedFromPhone: true)
         print("I'm in viewcontroller")
-        var isChartShown = false
-        barChartView.noDataText = ""
-//        let numSeizures = getNumPerDa
+        barChartView.noDataText = "Add Event"
         if appDelegate.count.object(forKey: "count") != nil {
             if appDelegate.count.integer(forKey: "count") != 0 {
                 let dates = getNumDates()
                 let numSeizures = getNumSeizures(dates)
-                setChart(dataPoints: dates, values: numSeizures)
-                isChartShown = true
+                isChartShown = setChart(dataPoints: dates, values: numSeizures)
+                
             }
         }
-        if !isChartShown {
-            //TODO: do something
-        }
+        print("isChartShown: \(isChartShown)")
+      
         
 //        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 //        let unitsSold = [20.0, 4.0, 6.0, 3.0, 12.0, 16.0, 4.0, 18.0, 2.0, 4.0, 5.0, 4.0]
 //        setChart(dataPoints: months, values: unitsSold)
     }
+    func hasCareGivers() -> Bool {
+        if self.phone.currentTitle == "Number" {
+            print(false)
+            return false
+        }
+        print(self.phone.currentTitle)
+        
+        return true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+       super.viewDidAppear(animated)
+        if !hasCareGivers(){
+            sendAlert()
+        }
+
+    }
+    
+    //alert the caregiver they do not have any caregivers.
+    func sendAlert(){
+        let alert = UIAlertController(title: "CareGivers", message: "There are no explicit caregivers", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: nil ))
+        alert.addAction(UIAlertAction(title: "Proceed", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in
+            self.careGiverScene()}))
+        self.present(alert, animated: true, completion: nil)
+    }
+  
+
+    
     func getNumDates() -> [String] {
        let count = appDelegate.count.integer(forKey: "count")
 //        print("Events in NumDates \(count)")
-                let dateFormatterTwo = DateFormatter()
+        let dateFormatterTwo = DateFormatter()
         dateFormatterTwo.dateFormat = "MM/dd/yy, HH:mm:ss"
         
         var dates = [Date?]()
@@ -348,9 +374,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     
         var dateQuestion = startDate
         
+        //To go into the array
+        let dateFormatterDate = DateFormatter()
+        dateFormatterDate.dateFormat = "MM/dd/yy"
+
         while dateQuestion <= endDate {
-            print(dateFormatter.string(from: dateQuestion))
-            events.append(dateFormatter.string(from: dateQuestion))
+            print(dateFormatterDate.string(from: dateQuestion))
+            events.append(dateFormatterDate.string(from: dateQuestion))
             dateQuestion = cal.date(byAdding: .day, value: 1, to: dateQuestion)!
         }
         
@@ -419,6 +449,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //        dateFormatterTwo.dateFormat = "yyyy-MM-dd"
         let dateFormatterTwo = DateFormatter()
         dateFormatterTwo.dateFormat = "MM/dd/yy, HH:mm:ss"
+        let dateFormatterDate = DateFormatter()
+        dateFormatterDate.dateFormat = "MM/dd/yy"
         _ = NSCalendar.current
         
 
@@ -429,7 +461,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
             let startTime = event?["StartTime"] as? String
             if startTime == nil {}else{
-                let startTimeDate = dateFormatterTwo.date(from: startTime!)
+                let startTimeDate = dateFormatterDate.date(from: startTime!)
                 dates.append(startTimeDate)
             }
         }
@@ -534,16 +566,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
       
         return numSeizures
     }
-    func setChart(dataPoints: [String], values: [Double]) {
+    func setChart(dataPoints: [String], values: [Double]) -> Bool {
         barChartView.noDataText = "No Seizures!!"
         barChartView.chartDescription?.text = ""
         var dataEntries: [BarChartDataEntry] = []
-        
+        var returnVar = false
         for i in 0..<dataPoints.count {
 //            let dataEntry = BarChartDataEntry(value: values[i], xIndex: i)
-            
-            let dataEntry = BarChartDataEntry(x: Double(i), y: values[i])
+//            let dataEntry = BarChartDataEntry(x: Double(i), yValues: [values[i]], label: dataPoints[i])
+            let dataEntry = BarChartDataEntry(x: Double(i), y: values[i], data: dataPoints as AnyObject?)
+//            let dataEntry = BarChartDataEntry(x: Double(i), y: values[i])
             dataEntries.append(dataEntry)
+            returnVar = true
         }
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Seconds of Seizures")
@@ -554,6 +588,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //        barChartView.xAxis.accessibilityElementsHidden = true
         barChartView.xAxis.labelPosition = .bottom
         barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+        return returnVar
     }
     func hasEvent( defaults: [String:Any] ) -> Bool {
 //*******************DEBUGGING PURPOSE. SEE WHAT IS INSIDE THE FILE **************************************
@@ -627,15 +662,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     func lastEventScene(){
         if (self.appDelegate.count.object(forKey: "count") == nil){}else{
          //   print("Count \(self.appDelegate.count.integer(forKey: "count"))")
-            let count = self.appDelegate.count.integer(forKey: "count")
-            self.appDelegate.eventCount = count    //NNTEMP count - 1
-            self.appDelegate.eventSelected = getEventSelected() //NNTEMP count - 1
-            self.appDelegate.fromViewController = true
-            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            let resultViewController = storyBoard.instantiateViewController(withIdentifier: "EventExtensionViewController") as! EventExtensionViewController
-            self.present(resultViewController, animated:true, completion:nil)
+            if  self.appDelegate.count.integer(forKey: "count") != 0 {
+                let count =  self.appDelegate.count.integer(forKey:"count")
+                self.appDelegate.eventCount = count    //NNTEMP count - 1
+                self.appDelegate.eventSelected = getEventSelected() //NNTEMP count - 1
+                self.appDelegate.fromViewController = true
+                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                let resultViewController = storyBoard.instantiateViewController(withIdentifier: "EventExtensionViewController") as! EventExtensionViewController
+                self.present(resultViewController, animated:true, completion:nil)
+            }
         }
-
     }
     func getEventSelected()->Int{
         let last = getLastEvent(events: self.appDelegate.events)
@@ -656,6 +692,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
 //        self.present(rvc, animated: true, completion: nil)
       //  print("hi")
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        if !isChartShown {
+            appDelegate.fromViewController = true
+            let rvc =  storyBoard.instantiateViewController(withIdentifier: "AddEvent") as! AddEventController
+            self.present(rvc, animated: true, completion: nil)
+        }
+        
         let rvc = storyBoard.instantiateViewController(withIdentifier: "Event") as! EventsController
         self.present(rvc, animated: true, completion: nil)
     }
@@ -753,6 +796,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
                 case "LastEvent":
                     //TODO: Send message to WCSession with lastEvent info.
                     break
+                case "Play":
+                    self.playAlarm()
+                    break
                 default:
                     print("appending event")
                     self.appendEvent(message: message)
@@ -786,6 +832,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     func session(_ session: WCSession,didFinish userInfoTransfer: WCSessionUserInfoTransfer,error: NSError?){
         
     }
+    //MARK: Play file
+    func playAlarm(){
+
+    }
     
     //MARK: Connecting to caregivers
     func sendText(){
@@ -818,7 +868,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             let endTime = self.getTime(time: eTime!)
             let dur = self.getDuration(startTime: startTime, endTime: endTime)
             let maxHR = self.getMaxHr(hr: hr!)
-            let day = self.getDay(date: sTime!)
+            let day = self.getDayFromEvents(date: sTime!)
             let month = self.getMonth(date: sTime!)
             let arr = ["StartTime": sTime!, "EndTime":eTime!, "Duration":dur, "MaxHR":maxHR, "Month":month, "Day": day]
             var con = self.appDelegate.count.integer(forKey: "count")
@@ -841,7 +891,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         let sTime = sTimeArr[1]
         let eTimeArr = (arr["EndTime"] as! String).characters.split{$0 == " "}.map(String.init)
         let eTime = eTimeArr[1]
-        let day = arr["Day"] as! String
+        let day = getDay(arr["Day"] as! String)
         var month = arr["Month"] as! String
         switch month {
         case "1":
@@ -905,8 +955,31 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             }
         }
     }
-    
-    func getDay(date: String)-> String {
+    func getDay(_ day: String)-> String{
+        switch day {
+            case "01":
+                return "1"
+            case "02":
+                return "2"
+            case "03":
+                return "3"
+            case "04":
+                return "4"
+            case "05":
+                return "5"
+            case "06":
+                return "6"
+            case "07":
+                return "7"
+            case "08":
+                return "8"
+            case "09":
+                return "9"
+            default:
+                return day
+        }
+    }
+    func getDayFromEvents(date: String)-> String {
         let arr = date.characters.split{$0 == " "}.map(String.init)
         let cal = arr[0].characters.split{$0 == "/"}.map(String.init)
         return cal[1]

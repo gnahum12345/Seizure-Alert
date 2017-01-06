@@ -113,7 +113,10 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource/*MF
         myTableView.dataSource = self
         myTableView.separatorStyle = .none
         myTableView.rowHeight = 55
+        
+       
     }
+    
 
     func getCareGivers(names: [String]?, numbers: [String]?) -> [CareGiver]{
         var careGiverArray  = [CareGiver]()
@@ -471,6 +474,7 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource/*MF
         //            }
         //        }
     }
+    
     func addCareGiver(){
         let alert = UIAlertController(title: "Add CareGiver", message: "Please add the exact name and number of the caregiver, that you would like to alert", preferredStyle: UIAlertControllerStyle.alert)
         
@@ -498,9 +502,7 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource/*MF
         //        self.popoverPresentationController(classController, animated:true, completion: {
         //            //   print("completion block")
         //        }))
-        self.present(alert, animated: true, completion: {
-            //   print("completion block")
-        })
+        self.present(alert, animated: true, completion:nil)
     }
     var store = CNContactStore()
     func getContacts(){
@@ -515,18 +517,24 @@ class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource/*MF
                 }}
             break
         case .denied:
-            showAlert("Denied")
+            showAlertForContacts("This application does not have access to the contacts.")
         default:
             break
             
         }
     }
-    func showAlert(_ message: String){
+    func showAlertForContacts(_ message: String){
         let alert = UIAlertController(title: "Contacts", message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil ))
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: {(UIAlertAction) in self.requestAccess()}))
         self.present(alert, animated: true, completion: nil)
     }
-    
+    func requestAccess(){
+        store.requestAccess(for: .contacts){succeeded, err in
+            guard err == nil && succeeded else{
+                return
+            }}
+
+    }
     func determineContact(){
         let controller = CNContactPickerViewController()
         

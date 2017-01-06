@@ -299,7 +299,9 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     var sumHeartRate = 0.0
     var repetitions = 0
     var called = false
+    var actualSeizure = false
 
+    var falseAlarmTiming = 30 //change accordingly
     func updateLabelsAcc(accX: Double, accY: Double, accZ: Double){
         //FIX: Add HeartRate to if Seizure Start and Gyro data.
         countTick += 1
@@ -324,6 +326,18 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
             if countElapse >= minTimeForSeizure {
                 //
                 print("The user might be having a seizure \n send notification, if notification = true then seizure start is true.")
+
+                falseAlarmTiming -= 1
+                let eD = WKExtension.shared().delegate as! ExtensionDelegate
+                eD.alarm = true
+                if falseAlarmTiming == 0 {
+                    if eD.falseAlarmDidPress{
+                        actualSeizure = false
+                    }else {
+                        actualSeizure = true
+                    }
+                    actualSeizure = true //TODO: Ask user first.
+                }
                 seizureStart = true
                 if sTime == nil {
                     sTime = dateFormatter.string(for: NSDate())
@@ -333,7 +347,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
             }
         }
         
-        if seizureStart {
+        if seizureStart && actualSeizure {
             print("In seizure Start: Called: \(called)")
             if !called {
                 sendMessageToText()
@@ -388,37 +402,43 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
 
 
     }
+    
+    func sendMessageToPlay(){
+        WCsession!.sendMessage(["Play":"Alarm"], replyHandler: {replyDict in
+            print("reply \(replyDict)")}, errorHandler: nil
+            )
+    }
     // Ask for Authorisation from the User.
     
     //FIX: Delete this function
-    func textCareGiver(){
-        let eD = WKExtension.shared().delegate as! ExtensionDelegate
-        latitude = eD.latitude
-        longitude = eD.longitude
-        //        if let telURL = URL(string: "sms:\(phone)"){
-        //            WKExtension.shared().openSystemURL(telURL)
-        //        }
-        let swiftRequest = SwiftRequest()
-        let data = [
-            "To" : "9498611052",
-            "From" : "19497937646",
-            "Body" : "Possible Seizure!! \( dateFormatter.string(for: NSDate()))\nMy location is: \nhttps://www.google.com/maps/dir//\(latitude),\(longitude)"
-        ]
-        print(latitude)
-        print(longitude)
-        swiftRequest.post(url: "https://api.twilio.com/2010-04-01/Accounts/ACc968690090dfe344514fdcf9f88eed89/Messages",
-                          data: data,
-                          auth: ["username" : "ACc968690090dfe344514fdcf9f88eed89", "password" : "bf63f3f76348a9949b64974a3f422b51"],
-                          callback: {err, response, body in
-                            if err == nil {
-                                print("Success: \(response)")
-                                self.date.setText(NSDate.description())
-                            } else {
-                                print("Error: (err)")
-                            }
-        })
-        
-    }
+//    func textCareGiver(){
+//        let eD = WKExtension.shared().delegate as! ExtensionDelegate
+//        latitude = eD.latitude
+//        longitude = eD.longitude
+//        //        if let telURL = URL(string: "sms:\(phone)"){
+//        //            WKExtension.shared().openSystemURL(telURL)
+//        //        }
+//        let swiftRequest = SwiftRequest()
+//        let data = [
+//            "To" : "9498611052",
+//            "From" : "19497937646",
+//            "Body" : "Possible Seizure!! \( dateFormatter.string(for: NSDate()))\nMy location is: \nhttps://www.google.com/maps/dir//\(latitude),\(longitude)"
+//        ]
+//        print(latitude)
+//        print(longitude)
+//        swiftRequest.post(url: "https://api.twilio.com/2010-04-01/Accounts/ACc968690090dfe344514fdcf9f88eed89/Messages",
+//                          data: data,
+//                          auth: ["username" : "ACc968690090dfe344514fdcf9f88eed89", "password" : "bf63f3f76348a9949b64974a3f422b51"],
+//                          callback: {err, response, body in
+//                            if err == nil {
+//                                print("Success: \(response)")
+//                                self.date.setText(NSDate.description())
+//                            } else {
+//                                print("Error: (err)")
+//                            }
+//        })
+//        
+//    }
 
     // =========================================================================
     // MARK: - HeartRate

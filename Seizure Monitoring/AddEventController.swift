@@ -88,7 +88,9 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         datePicker.tag = 2
         alert.view.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
         alert.view.addSubview(datePicker)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.cancelSelection("Start Time")}))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in
+            
+            self.cancelSelection("Start Time")}))
         alert.addAction(UIAlertAction(title: "Select", style: UIAlertActionStyle.default, handler: {(UIAlertAction)in self.saveTime()}))
         
         if startTimeButton.currentTitle != "Enter start time" {
@@ -97,16 +99,27 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         self.present(alert, animated: true, completion: nil);
     }
    
+    var lastDuration = ""
     @IBAction func durationAction(_ sender: Any) {
+        if (durationButton.currentTitle?.contains("seco"))! {
+            lastDuration = getDuration(durationButton.currentTitle)
+        }
         let alert = UIAlertController(title: "Duration", message: "Please enter the duration (in seconds) of the seizure.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addTextField(configurationHandler: durationHandler)
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: {(UIAlertAction)in self.cancelSelection("Other")}))
         alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: {(UIAlertAction)in self.finishDuration()}))
         self.present(alert, animated: true, completion: nil)
     }
+    func getDuration(_ title: String?) -> String {
+        let timeArr = title?.characters.split{$0 == " "}.map(String.init)
+        if timeArr?[0] != nil {
+            return timeArr![0]
+        }
+        return ""
+    }
     func finishDuration(){
         durationButton.setTitle("\(durationField.text!) seconds", for: UIControlState.normal)
-
+        lastDuration = getDuration(durationButton.currentTitle)
     }
     var endTimeDate:Date?
     var durationField: UITextField!
@@ -180,7 +193,11 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                 }
                 break
             case "Start Time":
-                self.startTimeButton.setTitle("Enter start time", for: UIControlState.normal)
+                if (previousStartTime == "Enter start time"){
+                    self.startTimeButton.setTitle("Enter start time", for: UIControlState.normal)
+                }else{
+                    self.startTimeButton.setTitle(previousStartTime, for: UIControlState.normal)
+                }
                 break
             case "saved":
                 let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
@@ -191,7 +208,7 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         }
         // We dismiss the alert. Here you can add your additional code to execute when cancel is pressed
     }
-//    func showPickerInActionSheet(sentBy: String, title: String, message: String) {
+    //    func showPickerInActionSheet(sentBy: String, title: String, message: String) {
 //        let alert = UIAlertController(title: title, message: "\(message)\n\n\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.actionSheet);
 //        alert.isModalInPopover = true;
 //        
@@ -267,18 +284,18 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         if(pickerView.tag == 1){
             return self.seizureTypes.count;
         } else if(pickerView.tag == 2){
-            return 100
+            return 2
         } else  {
             return 0;
         }
     }
-    
+    let aPm = ["AM", "PM"]
     // Return the title of each row in your picker ... In my case that will be the profile name or the username string
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         if(pickerView.tag == 1){
             return seizureTypes[row]
         } else if(pickerView.tag == 2){
-            return "hello"
+            return aPm[row]
         } else  {
             
             return "";
@@ -365,7 +382,7 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     }
     func getDate(_ time: String)-> Date {
         let dateFormatterTwo = DateFormatter()
-        dateFormatterTwo.dateFormat = "MM/dd/yy, HH:mm:ss"
+        dateFormatterTwo.dateFormat = "MM/dd/yy, hh:mm:ss"
         return dateFormatterTwo.date(from: time)!
     }
     
@@ -389,7 +406,7 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             return
         }else{
             let startTimeDate = dateFormatterTime.date(from: startTimeButton.currentTitle!)
-            let durationInterval = Double(durationField.text!)!
+            let durationInterval = Double(lastDuration)!
             //            endTimeDate =  startTimeDate?.addTimeInterval(durationInterval)
             endTimeDate = startTimeDate?.addingTimeInterval(durationInterval)
             print(endTimeDate)
@@ -426,9 +443,16 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         while !appDelegate.events.synchronize(){
             print(appDelegate.events.dictionary(forKey: "Event \(count+1)"))
         }
-        let savedAlert = UIAlertController(title: "Saved!", message: "Your data has been saved. ", preferredStyle: UIAlertControllerStyle.alert)
-        savedAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.cancelSelection("saved")}))
-        self.present(savedAlert, animated: true)
+        if appDelegate.fromViewController {
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let rvc = storyBoard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+            self.present(rvc, animated: true, completion: nil)
+        }else{
+            cancelSelection("saved")
+        }
+//        let savedAlert = UIAlertController(title: "Saved!", message: "Your data has been saved. ", preferredStyle: UIAlertControllerStyle.alert)
+//        savedAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {(UIAlertAction) in self.cancelSelection("saved")}))
+//        self.present(savedAlert, animated: true)
         
 //        TODO: check if every field has something in it. 
         //TODO: store and synchronize everything. 
@@ -475,9 +499,17 @@ class AddEventController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         }
     }
     @IBAction func back(_ sender: Any) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let rvc = storyBoard.instantiateViewController(withIdentifier: "Event") as! EventsController
-        self.present(rvc, animated: true, completion: nil)
+
+        if appDelegate.fromViewController {
+            let rvc = storyBoard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+            self.present(rvc, animated: true, completion: nil)
+        }else{
+            let rvc = storyBoard.instantiateViewController(withIdentifier: "Event") as! EventsController
+            self.present(rvc, animated: true, completion: nil)
+        }
     }
     
     override func didReceiveMemoryWarning() {

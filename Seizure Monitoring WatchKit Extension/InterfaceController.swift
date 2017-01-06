@@ -17,6 +17,7 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
         let eD = WKExtension.shared().delegate as! ExtensionDelegate
         eD.monitoring.sendMessageToText()
     }
+    @IBOutlet var hr: WKInterfaceLabel!
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
@@ -37,11 +38,15 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
 //        updateLastEvent()
         // Configure interface objects here.
         print("The watch is on")
+
         let eD = WKExtension.shared().delegate as! ExtensionDelegate
         eD.monitoring.setDate(date: date)
 
         eD.monitoring.monitor()
-        
+        print("Im still monitoring")
+        if eD.alarm {
+            presentController(withName: "helpController", context: nil)
+        }
 //
     }
     
@@ -106,6 +111,7 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
         let eD = WKExtension.shared().delegate as! ExtensionDelegate
         eD.monitoring.WCsession!.sendMessage(message, replyHandler: nil, errorHandler: nil)
     }
+    
     func updateLastEvent(){
         let eD = WKExtension.shared().delegate as! ExtensionDelegate
         eD.monitoring.WCsession?.sendMessage(["LastEvent": true as Any], replyHandler: nil, errorHandler: nil)
@@ -116,11 +122,9 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
         }else{
 //            date.setText(lastEvent)
         }
-        
     }
-    @IBAction func moveToMovie(_ sender: AnyObject) {
-        //TODO: move to movie scene.
-    }
+    
+    
     
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user

@@ -398,7 +398,7 @@
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="goI-LF-2zr">
                                 <rect key="frame" x="16" y="282" width="343" height="377"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.98545998334884644" green="0.90168184041976929" blue="0.81882220506668091" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -436,7 +436,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.98545998329999995" green="0.90168184039999999" blue="0.81882220510000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="qcK-Sa-Ow3" firstAttribute="leading" secondItem="64J-t0-jku" secondAttribute="leading" id="7fx-iu-wQB"/>
                             <constraint firstItem="e8P-t5-nUx" firstAttribute="leading" secondItem="xVo-ln-tzu" secondAttribute="leading" id="COh-yN-bwP"/>

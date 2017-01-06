@@ -288,14 +288,23 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
         var cal = arr[0].characters.split{$0 == "/"}.map(String.init)
         var month = ""
         switch cal[0]{
+        case "01": fallthrough
         case "1": month = "Jan"; break
+        case "02": fallthrough
         case "2": month =  "Feb"; break
+        case "03": fallthrough
         case "3": month =  "Mar"; break
+        case "04": fallthrough
         case "4": month =  "Apr"; break
+        case "05": fallthrough
         case "5": month =  "May"; break
+        case "06": fallthrough
         case "6": month =  "June"; break
+        case "07": fallthrough
         case "7": month =  "July"; break
+        case "08": fallthrough
         case "8": month =  "Aug"; break
+        case "09": fallthrough
         case "9": month =  "Sept"; break
         case "10": month =  "Oct"; break
         case "11": month =  "Nov"; break
