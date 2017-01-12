@@ -705,6 +705,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
     func editSnooze(){
 //        print("Hello Im in editSnooze")
     }
+    
     func careGiverScene(){
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         

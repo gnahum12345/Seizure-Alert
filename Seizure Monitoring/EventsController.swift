@@ -61,15 +61,66 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.delete {
-            deleteEvent((events.count-indexPath.row))
-            loadEvents()
-            self.tableView.reloadData()
-        }
-    }
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
+    }
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let exportAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Export", handler: {(UITableViewRowAction, IndexPath) in self.export(indexPath.row)})
+        exportAction.backgroundColor = UIColor.darkGray
+        
+        let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.destructive, title: "Delete", handler: {(UITableViewRowAction, IndexPath) in self.handleDelete(indexPath.row)})
+        deleteAction.backgroundColor = UIColor.red
+    
+        return [exportAction, deleteAction]
+    }
+    
+    func export(_ row: Int){
+        print("Export \(row)")
+        let fileName = "Seizure_Event_\(events.count - row).txt"
+        print(fileName)
+        if let dir : NSString = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first as NSString? {
+            let path = dir.appendingPathComponent(fileName)
+            let content = getContentFromEvent(events.count-row)
+            do {
+                
+                try content.write(toFile: path, atomically: false, encoding: String.Encoding.utf8)
+                do {
+                    let readingText = try NSString(contentsOfFile: path, encoding: String.Encoding.utf8.rawValue)
+                    print(readingText)
+                }
+                catch {
+                    /* error handling here */ 
+                }
+            } catch {
+                /* error handling here */
+                print("Error happened")
+            }
+        }
+        
+    }
+   
+    func getContentFromEvent(_ eventNum: Int)-> String{
+//        print(events["Event \(eventNum)"])
+        let e = events["Event \(eventNum)"] as! [String: Any]
+        var returnVar = ""
+        for i in e {
+            returnVar += ((i.key as! String) + ": ")
+            if (i.value as? String == nil ){
+                returnVar += "\n"
+                continue
+            }else {
+                
+                returnVar += ((i.value as! String) + "\n")
+            }
+        }
+        return returnVar
+    }
+    func handleDelete(_ row: Int){
+        deleteEvent((events.count-row))
+        loadEvents()
+        self.tableView.reloadData()
     }
     func synchronizeDelegate(){
         let app = UIApplication.shared.delegate as! AppDelegate
@@ -78,6 +129,7 @@ class EventsController: UIViewController, UITableViewDelegate, UITableViewDataSo
         }
         return
     }
+    
     func deleteEvent(_ index: Int){
 //        let event = events["Event \(index)"]
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
