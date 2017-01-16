@@ -37,6 +37,11 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
 
 //        updateLastEvent()
         // Configure interface objects here.
+
+        let nc = NotificationCenter.default // Note that default is now a property, not a method call
+        nc.addObserver(forName:Notification.Name(rawValue:"MyNotification"),
+                       object:nil, queue:nil,
+                       using:catchNotification)
         print("The watch is on")
 
         let eD = WKExtension.shared().delegate as! ExtensionDelegate
@@ -44,11 +49,25 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
 
         eD.monitoring.monitor()
         print("Im still monitoring")
-        if eD.alarm {
-            presentController(withName: "helpController", context: nil)
-        }
+       
 //
     }
+    func catchNotification(notification:Notification) -> Void {
+        print("Catch notification")
+        
+        guard let userInfo = notification.userInfo,
+            let message  = userInfo["message"] as? String
+            else {
+                print("No userInfo found in notification")
+                return
+        }
+        if message == "Post Alert" {
+            presentController(withName: "helpController", context: nil)
+        }else{
+            hr.setText(message)
+        }
+    }
+   
     
     // MARK: CLLocationManagerDelegate Methods
     
@@ -107,7 +126,7 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
     @IBOutlet var date: WKInterfaceLabel!
 
     @IBAction func callCareGiver() {
-        let message: [String: AnyObject]  = ["Call":true as AnyObject]
+        let message: [String: AnyObject]  = ["Seizure":true as AnyObject]
         let eD = WKExtension.shared().delegate as! ExtensionDelegate
         eD.monitoring.WCsession!.sendMessage(message, replyHandler: nil, errorHandler: nil)
     }

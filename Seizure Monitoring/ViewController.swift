@@ -461,7 +461,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             let event = appDelegate.events.dictionary(forKey: "Event \(i+1)")
             let startTime = event?["StartTime"] as? String
             if startTime == nil {}else{
-                let startTimeDate = dateFormatterDate.date(from: startTime!)
+                let startTimeDate = dateFormatterTwo.date(from: startTime!)
                 dates.append(startTimeDate)
             }
         }
@@ -871,7 +871,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
             let maxHR = self.getMaxHr(hr: hr!)
             let day = self.getDayFromEvents(date: sTime!)
             let month = self.getMonth(date: sTime!)
-            let arr = ["StartTime": sTime!, "EndTime":eTime!, "Duration":dur, "MaxHR":maxHR, "Month":month, "Day": day]
+            let type = "Other" //FIX: INDEX
+            let arr = ["StartTime": sTime!, "EndTime":eTime!, "Duration":dur, "MaxHR":maxHR, "Month":month, "Day": day, "Type of Seizure": type]
             var con = self.appDelegate.count.integer(forKey: "count")
             con += 1
             self.appDelegate.count.set(con, forKey: "count")
@@ -883,8 +884,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
          //   print(app.events.dictionary(forKey: "Event \(app.count - 1)"))
             
             self.updateLastEvent(arr:arr)
+            self.updateChart()
         }
         
+    }
+    func updateChart(){
+        let dates = getNumDates()
+        let seconds = getNumSeizures(dates)
+        setChart(dataPoints: dates, values: seconds)
     }
     func updateLastEvent(arr: [String: Any]){
         
@@ -895,30 +902,39 @@ class ViewController: UIViewController, CLLocationManagerDelegate, WCSessionDele
         let day = getDay(arr["Day"] as! String)
         var month = arr["Month"] as! String
         switch month {
+        case "01":fallthrough
         case "1":
             month = "Jan"
             break
+        case "02":fallthrough
         case "2":
             month = "Feb"
             break
+        case "03":fallthrough
         case "3":
             month = "Mar"
             break
+        case "04":fallthrough
         case "4":
             month = "Apr"
             break
+        case "05":fallthrough
         case "5":
             month = "May"
             break
+        case "06":fallthrough
         case "6":
             month = "June"
             break
+        case "07":fallthrough
         case "7":
             month = "July"
             break
+        case "08":fallthrough
         case "8":
             month = "Aug"
             break
+        case "09":fallthrough
         case "9":
             month = "Sept"
             break

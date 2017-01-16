@@ -39,6 +39,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     var gyroData: [CMGyroData?] = [CMGyroData]()
     var sTime: String?
     var eTime: String?
+    let UPDATEINTERVAL = 0.1
     var heartRateSamples = [Double]()
     func setDate(date: WKInterfaceLabel!){
         self.date = date
@@ -67,10 +68,10 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
             WCsession!.delegate = self
             WCsession!.activate()
         }
-        dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
-        dateFormatter.dateStyle = DateFormatter.Style.short//Set date style
+//        dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
+//        dateFormatter.dateStyle = DateFormatter.Style.short//Set date style
         dateFormatter.timeZone = TimeZone.ReferenceType.system
-        
+        dateFormatter.dateFormat = "MM/dd/yy, HH:mm:ss"
         
         
 //        locationManager.delegate = self
@@ -215,8 +216,8 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     }
     
     func monitor(){
-        motionManager.gyroUpdateInterval = 0.1
-        motionManager.accelerometerUpdateInterval = 0.1
+        motionManager.gyroUpdateInterval = UPDATEINTERVAL
+        motionManager.accelerometerUpdateInterval = UPDATEINTERVAL
 //        guard HKHealthStore.isHealthDataAvailable() else {
 //            return
 //        }
@@ -301,7 +302,8 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     var called = false
     var actualSeizure = false
 
-    var falseAlarmTiming = 30 //change accordingly
+    var falseAlarmTiming = 10 //change accordingly
+    
     func updateLabelsAcc(accX: Double, accY: Double, accZ: Double){
         //FIX: Add HeartRate to if Seizure Start and Gyro data.
         countTick += 1
@@ -324,31 +326,42 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
                 countElapse = 0
             }
             if countElapse >= minTimeForSeizure {
-                //
+                
                 print("The user might be having a seizure \n send notification, if notification = true then seizure start is true.")
 
                 falseAlarmTiming -= 1
                 let eD = WKExtension.shared().delegate as! ExtensionDelegate
-                eD.alarm = true
+                
+                let nc = NotificationCenter.default
+                print("posting notification")
+                nc.post(name:Notification.Name(rawValue:"MyNotification"),
+                        object: nil,
+                        userInfo: ["message":"Post Alert"])
+                
                 if falseAlarmTiming == 0 {
                     if eD.falseAlarmDidPress{
                         actualSeizure = false
+                        falseAlarmTiming = 10
+                        countElapse = 0
                     }else {
                         actualSeizure = true
                     }
-                    actualSeizure = true //TODO: Ask user first.
+
                 }
-                seizureStart = true
-                if sTime == nil {
-                    sTime = dateFormatter.string(for: NSDate())
-                }
-                print(seizureStart)
+                
+//                seizureStart = true
+            
                 
             }
         }
         
-        if seizureStart && actualSeizure {
+//        if seizureStart && actualSeizure {
+        if actualSeizure {
             print("In seizure Start: Called: \(called)")
+            if sTime == nil {
+                sTime = dateFormatter.string(for: NSDate())
+            }
+            print(seizureStart)
             if !called {
                 sendMessageToText()
                 called = true
@@ -365,7 +378,9 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
                     countCalmElapse = 0
                 }
                 if countCalmElapse >= minCalmElapse {
-                    seizureStart = false
+//                    seizureStart = false
+                    actualSeizure = false
+                    falseAlarmTiming = 10
                     called = false
                     if eTime == nil {
                         eTime = dateFormatter.string(for: NSDate())
@@ -375,7 +390,11 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
                     appendEvent()
                     sTime = nil
                     eTime = nil
-                    
+                    let nc = NotificationCenter.default
+                    nc.post(name:Notification.Name(rawValue:"HelpControllerNotification"),
+                            object: nil,
+                            userInfo: ["message":"Finished"])
+
                     print("sending info to cloud")
                     print("calling careGiver")
                     
@@ -487,6 +506,11 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
         sumHeartRate += quantity.doubleValue(for: heartRateUnit)
         repetitions += 1
         print(quantity.doubleValue(for: heartRateUnit))
+        let nc = NotificationCenter.default
+        print("posting notification")
+        nc.post(name:Notification.Name(rawValue:"MyNotification"),
+                object: nil,
+                userInfo: ["message": "Heart rate: \(lastHeartRateSample!.doubleValue(for: heartRateUnit))"])
     }
     
     // MARK: Sending Commands to Phone

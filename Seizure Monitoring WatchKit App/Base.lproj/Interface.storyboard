@@ -8,10 +8,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="11508"/>
     </dependencies>
     <scenes>
-        <!--Interface Controller-->
+        <!--InterfaceController-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Seizure_Monitoring_WatchKit_App" customModuleProvider="target">
+                <controller identifier="InterfaceController" title="InterfaceController" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Seizure_Monitoring_WatchKit_App" customModuleProvider="target">
                     <items>
                         <label width="136" height="37" alignment="left" text="Heart Rate: " id="nfK-pP-etv"/>
                         <button width="1" height="101" alignment="left" title="Push for help" backgroundImage="CareGiver" id="mGA-QB-eJ8">

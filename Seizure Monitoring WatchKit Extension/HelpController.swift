@@ -16,8 +16,15 @@ class HelpController: WKInterfaceController {
         super.awake(withContext: context)
         timer.setDate(Date(timeInterval: 7, since: Date()))
         timer.start()
-        
+        let nc = NotificationCenter.default // Note that default is now a property, not a method call
+        nc.addObserver(forName:Notification.Name(rawValue:"HelpControllerNotification"),
+                       object:nil, queue:nil,
+                       using:catchNotification)
+
         // Configure interface objects here.
+    }
+    func catchNotification(notification:Notification) -> Void {
+        dismiss()
     }
 
     @IBOutlet var timer: WKInterfaceTimer!
@@ -26,10 +33,12 @@ class HelpController: WKInterfaceController {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
     }
+    
 
     @IBAction func falseAlarm() {
         let eD = WKExtension.shared().delegate as! ExtensionDelegate
         eD.falseAlarmDidPress = true
+        dismiss()
     }
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
