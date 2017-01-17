@@ -329,20 +329,21 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
                 
                 print("The user might be having a seizure \n send notification, if notification = true then seizure start is true.")
 
-                falseAlarmTiming -= 1
                 let eD = WKExtension.shared().delegate as! ExtensionDelegate
-                
-                let nc = NotificationCenter.default
-                print("posting notification")
-                nc.post(name:Notification.Name(rawValue:"MyNotification"),
-                        object: nil,
-                        userInfo: ["message":"Post Alert"])
-                
+                if falseAlarmTiming == 10 {
+                    let nc = NotificationCenter.default
+                    print("posting notification")
+                    nc.post(name:Notification.Name(rawValue:"MyNotification"),
+                            object: nil,
+                            userInfo: ["message":"Post Alert"])
+                }
+                falseAlarmTiming -= 1
                 if falseAlarmTiming == 0 {
                     if eD.falseAlarmDidPress{
                         actualSeizure = false
                         falseAlarmTiming = 10
                         countElapse = 0
+                        countAcc = 0
                     }else {
                         actualSeizure = true
                     }
@@ -379,6 +380,8 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
                 }
                 if countCalmElapse >= minCalmElapse {
 //                    seizureStart = false
+                    let eD = WKExtension.shared().delegate as! ExtensionDelegate
+                    eD.falseAlarmDidPress = false
                     actualSeizure = false
                     falseAlarmTiming = 10
                     called = false
