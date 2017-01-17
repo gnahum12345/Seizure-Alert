@@ -61,6 +61,7 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
                 print("No userInfo found in notification")
                 return
         }
+        
         if message == "Post Alert" {
             presentController(withName: "helpController", context: nil)
         }else{

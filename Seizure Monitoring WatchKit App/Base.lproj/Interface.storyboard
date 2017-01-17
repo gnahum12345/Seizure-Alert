@@ -11,7 +11,7 @@
         <!--InterfaceController-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller identifier="InterfaceController" title="InterfaceController" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Seizure_Monitoring_WatchKit_App" customModuleProvider="target">
+                <controller identifier="InterfaceController" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Seizure_Monitoring_WatchKit_App" customModuleProvider="target">
                     <items>
                         <label width="136" height="37" alignment="left" text="Heart Rate: " id="nfK-pP-etv"/>
                         <button width="1" height="101" alignment="left" title="Push for help" backgroundImage="CareGiver" id="mGA-QB-eJ8">
@@ -31,10 +31,12 @@
         <!--helpController-->
         <scene sceneID="5be-5G-J2k">
             <objects>
-                <controller identifier="helpController" title="helpController" id="LxY-md-6sp" customClass="HelpController" customModule="Seizure_Monitoring_WatchKit_Extension">
+                <controller identifier="helpController" id="LxY-md-6sp" customClass="HelpController" customModule="Seizure_Monitoring_WatchKit_Extension">
                     <items>
                         <label alignment="left" text="Possible Seizure" id="nxQ-c7-6eV"/>
-                        <timer width="63" alignment="left" id="jVC-hi-mIt"/>
+                        <timer width="63" alignment="left" id="jVC-hi-mIt">
+                            <calendarUnit key="units" minute="YES" second="YES"/>
+                        </timer>
                         <button width="1" height="101" alignment="left" title="False Alarm" id="bqT-XO-zLA">
                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

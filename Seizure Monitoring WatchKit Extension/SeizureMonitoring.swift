@@ -15,6 +15,12 @@ import CoreMotion
 import CoreFoundation
 //import CoreLocation
 
+enum SeizureEnum {
+    case idle
+    case aura
+    case actual
+}
+
 class SeizureMonitoring : NSObject, WCSessionDelegate {
     /** Called when the session has completed activation. If session state is WCSessionActivationStateNotActivated there will be an error with more details. */
     @available(watchOS 2.2, *)
@@ -256,7 +262,14 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
             
             let handler:CMAccelerometerHandler  = {(data: CMAccelerometerData?, error: Error?) -> Void in
                 self.updateLabelsAcc(accX: data!.acceleration.x, accY: data!.acceleration.y, accZ: data!.acceleration.z)
-                self.accData.append(data)
+                switch self.seizureState {
+                case .idle: break
+                case .aura: fallthrough
+                case .actual: self.accData.append(data)
+                    break
+                }
+                
+                
             } 
              motionManager.startAccelerometerUpdates(to: OperationQueue.current!, withHandler: handler)
            // print(handler)
@@ -288,9 +301,9 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     var countElapse = 0
     var countAcc = 0
     var countTick = 0
-    let minCalmElapse = 10
+    let minCalmElapse = 5 // change accordingly
     let minPerecentOfCalmness = 70
-    let minRateOfSeizure = 2 // change accordingly
+    let minRateOfSeizure = 4 // change accordingly
     let minAccOfSeizure = 1.0 //SENSITIVITY
     let minTimeForSeizure = 2 // change
     var seizureStart = false
@@ -301,9 +314,15 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     var repetitions = 0
     var called = false
     var actualSeizure = false
-
-    var falseAlarmTiming = 10 //change accordingly
+    var seizureState = SeizureEnum.idle
+    var falseAlarmTiming = 0 //change accordingly
     
+    /// This function is used to detect seizures. There are three states in which this function will handle: IDLE, AURA, ACTUAL. In IDLE the function is detecting the seizure but not recording anything. In AURA, the function is waiting for the user to respond to the notification, starts recording Accelerometer data. In ACTUAL, the user starts recording everything.
+    ///
+    /// - Parameters:
+    ///   - accX: accelerometer in the x direction
+    ///   - accY: accelerometer in the y direction
+    ///   - accZ: accelerometer in the z direction
     func updateLabelsAcc(accX: Double, accY: Double, accZ: Double){
         //FIX: Add HeartRate to if Seizure Start and Gyro data.
         countTick += 1
@@ -312,52 +331,62 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
             countAcc += 1
         }
         
-        if countTick % 10 == 0 {
+//        if countTick % 10 == 0 {
             // delete this afterwards.
          //   self.startUpdatingLocationAllowingBackground()
-            
-            if countAcc >= minRateOfSeizure {
-                //print("Seconds \(countTick/10)")
-               // print("CountAcc: \(countAcc) \nCountElapse: \(countElapse)")
-                countAcc = 0
-                countElapse += 1
-            }else{
-                countAcc = 0
-                countElapse = 0
-            }
-            if countElapse >= minTimeForSeizure {
-                
-                print("The user might be having a seizure \n send notification, if notification = true then seizure start is true.")
+        switch seizureState {
+        case .idle:
+            if countTick % 10 == 0 {
+                if countAcc >= minRateOfSeizure {
+                    //print("Seconds \(countTick/10)")
+                   // print("CountAcc: \(countAcc) \nCountElapse: \(countElapse)")
+                    countAcc = 0
+                    countElapse += 1
+                }else{
+                    countAcc = 0
+                    countElapse = 0
+                    break
+                }
+                if countElapse >= minTimeForSeizure {
+                    
+                    print("The user might be having a seizure \n send notification, if notification = true then seizure start is true.")
 
-                let eD = WKExtension.shared().delegate as! ExtensionDelegate
-                if falseAlarmTiming == 10 {
                     let nc = NotificationCenter.default
                     print("posting notification")
                     nc.post(name:Notification.Name(rawValue:"MyNotification"),
                             object: nil,
                             userInfo: ["message":"Post Alert"])
-                }
-                falseAlarmTiming -= 1
-                if falseAlarmTiming == 0 {
-                    if eD.falseAlarmDidPress{
-                        actualSeizure = false
-                        falseAlarmTiming = 10
-                        countElapse = 0
-                        countAcc = 0
-                    }else {
-                        actualSeizure = true
-                    }
 
+                    seizureState = SeizureEnum.aura
+                    falseAlarmTiming = 0
                 }
-                
-//                seizureStart = true
-            
-                
             }
-        }
-        
-//        if seizureStart && actualSeizure {
-        if actualSeizure {
+            break
+        case .aura:
+            
+            let eD = WKExtension.shared().delegate as! ExtensionDelegate
+            if eD.falseAlarmDidPress {
+                seizureState = SeizureEnum.idle
+                countAcc = 0
+                countElapse = 0
+                break
+            }else {
+                if countTick % 10 == 0 {
+                    falseAlarmTiming += 1
+                    if falseAlarmTiming == 10 {
+                        seizureState = SeizureEnum.actual
+                        falseAlarmTiming = 0
+                        countCalmAcc = 0
+                        countCalmElapse = 0
+                        let nc = NotificationCenter.default
+                        nc.post(name:Notification.Name(rawValue:"HelpControllerNotification"),
+                                object: nil,
+                                userInfo: ["message":"Finished"])
+                    }
+                }
+            }
+            break
+        case .actual:
             print("In seizure Start: Called: \(called)")
             if sTime == nil {
                 sTime = dateFormatter.string(for: NSDate())
@@ -373,36 +402,44 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
             if countTick % 10 == 0 {
                 if countCalmAcc > (minPerecentOfCalmness/10) { // 70% of 1 second the user is calm.
                     countCalmAcc = 0
+                    
                     countCalmElapse += 1
+                    
                  }else{
                     countCalmAcc = 0
                     countCalmElapse = 0
                 }
-                if countCalmElapse >= minCalmElapse {
-//                    seizureStart = false
-                    let eD = WKExtension.shared().delegate as! ExtensionDelegate
-                    eD.falseAlarmDidPress = false
-                    actualSeizure = false
-                    falseAlarmTiming = 10
-                    called = false
-                    if eTime == nil {
-                        eTime = dateFormatter.string(for: NSDate())
-                        
-                    }
-                    print(eTime)
-                    appendEvent()
-                    sTime = nil
-                    eTime = nil
-                    let nc = NotificationCenter.default
-                    nc.post(name:Notification.Name(rawValue:"HelpControllerNotification"),
-                            object: nil,
-                            userInfo: ["message":"Finished"])
-
-                    print("sending info to cloud")
-                    print("calling careGiver")
-                    
-                }
+            }else {
+                break
             }
+            if countCalmElapse >= minCalmElapse {
+//                    seizureStart = false
+                let eD = WKExtension.shared().delegate as! ExtensionDelegate
+                eD.falseAlarmDidPress = false
+                falseAlarmTiming = 0
+                countElapse = 0
+                countAcc = 0
+                called = false
+                if eTime == nil {
+                    eTime = dateFormatter.string(for: NSDate())
+                }
+                print(eTime)
+                appendEvent()
+                sTime = nil
+                eTime = nil
+    
+                let nc = NotificationCenter.default
+                nc.post(name:Notification.Name(rawValue:"HelpControllerNotification"),
+                        object: nil,
+                        userInfo: ["message":"Finished"])
+
+                print("sending info to cloud")
+                print("calling careGiver")
+                seizureState = SeizureEnum.idle
+            }
+            break
+        
+        
         }
         //    let seizure = ["CountAcc": countAcc, "CountElapse":countElapse, "countTick":countTick]
         //print(countTick)
