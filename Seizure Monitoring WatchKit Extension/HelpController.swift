@@ -20,11 +20,11 @@ class HelpController: WKInterfaceController {
         let nc = NotificationCenter.default // Note that default is now a property, not a method call
         nc.addObserver(forName:Notification.Name(rawValue:"HelpControllerNotification"),
                        object:nil, queue:nil,
-                       using:catchNotification)
+                       using:dismissAlert)
         WKInterfaceDevice().play(WKHapticType.init(rawValue: 42)!)
         // Configure interface objects here.
     }
-    func catchNotification(notification:Notification) -> Void {
+    func dismissAlert(notification:Notification) -> Void {
         dismiss()
     }
     
