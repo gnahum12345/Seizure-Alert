@@ -298,6 +298,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     func updateLabelsGyro(gyroX: Double, gyroY: Double, gyroZ: Double){
         print("Gyro:\nX: \(gyroX)\nY: \(gyroY)\nZ: \(gyroZ)")
     }
+    
     var countElapse = 0
     var countAcc = 0
     var countTick = 0
@@ -367,6 +368,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
             let eD = WKExtension.shared().delegate as! ExtensionDelegate
             if eD.falseAlarmDidPress {
                 seizureState = SeizureEnum.idle
+                eD.falseAlarmDidPress = false
                 countAcc = 0
                 countElapse = 0
                 break
@@ -389,7 +391,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
         case .actual:
             print("In seizure Start: Called: \(called)")
             if sTime == nil {
-                sTime = dateFormatter.string(for: NSDate())
+                sTime = dateFormatter.string(for: NSDate(timeInterval: TimeInterval(-20) , since: Date()))
             }
             print(seizureStart)
             if !called {
@@ -438,8 +440,6 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
                 seizureState = SeizureEnum.idle
             }
             break
-        
-        
         }
         //    let seizure = ["CountAcc": countAcc, "CountElapse":countElapse, "countTick":countTick]
         //print(countTick)

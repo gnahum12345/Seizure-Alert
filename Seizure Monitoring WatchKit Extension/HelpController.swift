@@ -21,7 +21,8 @@ class HelpController: WKInterfaceController {
         nc.addObserver(forName:Notification.Name(rawValue:"HelpControllerNotification"),
                        object:nil, queue:nil,
                        using:dismissAlert)
-        WKInterfaceDevice().play(WKHapticType.init(rawValue: 42)!)
+       // WKInterfaceDevice().play(WKHapticType.init(rawValue: 42)!)
+        WKInterfaceDevice.current().play(WKHapticType(rawValue: 42)!)
         // Configure interface objects here.
     }
     func dismissAlert(notification:Notification) -> Void {

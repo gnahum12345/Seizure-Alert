@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring WatchKit Extension/SeizureMonitoring.swift"
-            timestampString = "506312266.458705"
+            timestampString = "506372656.39314"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "543"
-            endingLineNumber = "543"
+            startingLineNumber = "547"
+            endingLineNumber = "547"
             landmarkName = "addSamples(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -442,7 +442,7 @@
                   moduleName = "Seizure Monitoring WatchKit Extension"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Gabriel/XcodeProject/Seizure%20Monitoring/Seizure%20Monitoring%20WatchKit%20Extension/SwiftRequest.swift"
-                  timestampString = "506312267.592605"
+                  timestampString = "506372347.313039"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "95"
@@ -457,7 +457,7 @@
                   moduleName = "Seizure Monitoring WatchKit Extension"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Gabriel/XcodeProject/Seizure%20Monitoring/Seizure%20Monitoring%20WatchKit%20Extension/SwiftRequest.swift"
-                  timestampString = "506312267.596557"
+                  timestampString = "506372347.314872"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "94"
@@ -490,11 +490,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring WatchKit Extension/SeizureMonitoring.swift"
-            timestampString = "506312266.458705"
+            timestampString = "506372656.39314"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "445"
-            endingLineNumber = "445"
+            startingLineNumber = "449"
+            endingLineNumber = "449"
             landmarkName = "SeizureMonitoring"
             landmarkType = "3">
          </BreakpointContent>
@@ -2040,11 +2040,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring WatchKit Extension/SeizureMonitoring.swift"
-            timestampString = "506312266.458705"
+            timestampString = "506372083.975582"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
             landmarkName = "updateLabelsAcc(accX:accY:accZ:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2056,11 +2056,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring WatchKit Extension/HelpController.swift"
-            timestampString = "506312514.418588"
+            timestampString = "506372083.975582"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
             landmarkName = "falseAlarm()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2072,11 +2072,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring WatchKit Extension/SeizureMonitoring.swift"
-            timestampString = "506312266.458705"
+            timestampString = "506372083.975582"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "338"
-            endingLineNumber = "338"
+            startingLineNumber = "339"
+            endingLineNumber = "339"
             landmarkName = "updateLabelsAcc(accX:accY:accZ:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2084,15 +2084,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Seizure Monitoring WatchKit Extension/SeizureMonitoring.swift"
-            timestampString = "506312266.458705"
+            timestampString = "506372083.975582"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
             landmarkName = "updateLabelsAcc(accX:accY:accZ:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2110,6 +2110,22 @@
             startingLineNumber = "18"
             endingLineNumber = "18"
             landmarkName = "awake(withContext:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Seizure Monitoring WatchKit Extension/SeizureMonitoring.swift"
+            timestampString = "506372656.39314"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "391"
+            endingLineNumber = "391"
+            landmarkName = "updateLabelsAcc(accX:accY:accZ:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
