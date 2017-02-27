@@ -287,7 +287,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "28"
             endingLineNumber = "28"
-            landmarkName = "awake(withContext:)"
+            landmarkName = "snooze(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -334,9 +334,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "547"
-            endingLineNumber = "547"
-            landmarkName = "addSamples(_:)"
-            landmarkType = "7">
+            endingLineNumber = "547">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -495,8 +493,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "449"
             endingLineNumber = "449"
-            landmarkName = "SeizureMonitoring"
-            landmarkType = "3">
+            landmarkName = "createStreamingQuery()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -527,7 +525,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "273"
             endingLineNumber = "273"
-            landmarkName = "monitor()"
+            landmarkName = "updateLabelsAcc(accX:accY:accZ:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2036,22 +2034,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Seizure Monitoring WatchKit Extension/SeizureMonitoring.swift"
-            timestampString = "506372083.975582"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
-            landmarkName = "updateLabelsAcc(accX:accY:accZ:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2125,8 +2107,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "391"
             endingLineNumber = "391"
-            landmarkName = "updateLabelsAcc(accX:accY:accZ:)"
-            landmarkType = "7">
+            landmarkName = "SeizureMonitoring"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

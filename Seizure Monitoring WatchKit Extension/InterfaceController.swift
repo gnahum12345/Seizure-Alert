@@ -18,7 +18,16 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
         eD.monitoring.sendMessageToText()
     }
     @IBOutlet var hr: WKInterfaceLabel!
+    @IBOutlet var snoozeOutlet: WKInterfaceSlider!
     
+    @IBAction func snooze(_ value: Float) {
+       let nc = NotificationCenter.default
+        nc.post(name: NSNotification.Name(rawValue: "SeizureMonitoringCenter"), object: nil, userInfo: ["message":Int(value)])
+        
+//        snoozeLabel.setText("Snooze is on.")
+        hr.setText("Snooze is on.")
+    }
+    @IBOutlet var snoozeLabel: WKInterfaceLabel!
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         //        request to use location
@@ -49,7 +58,6 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
 
         eD.monitoring.monitor()
         print("Im still monitoring")
-       
 //
     }
     func catchNotification(notification:Notification) -> Void {
@@ -64,6 +72,8 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
         
         if message == "Post Alert" {
             presentController(withName: "helpController", context: nil)
+        }else if message == "idle" {
+            snoozeOutlet.setValue(0.0)
         }else{
             hr.setText(message)
         }
@@ -127,9 +137,8 @@ class InterfaceController: WKInterfaceController/*, CLLocationManagerDelegate*/ 
     @IBOutlet var date: WKInterfaceLabel!
 
     @IBAction func callCareGiver() {
-        let message: [String: AnyObject]  = ["Seizure":true as AnyObject]
         let eD = WKExtension.shared().delegate as! ExtensionDelegate
-        eD.monitoring.WCsession!.sendMessage(message, replyHandler: nil, errorHandler: nil)
+        eD.monitoring.sendMessageToText()
     }
     
     func updateLastEvent(){

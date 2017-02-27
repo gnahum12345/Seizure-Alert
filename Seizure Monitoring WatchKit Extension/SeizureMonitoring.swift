@@ -19,6 +19,7 @@ enum SeizureEnum {
     case idle
     case aura
     case actual
+    case snooze
 }
 
 class SeizureMonitoring : NSObject, WCSessionDelegate {
@@ -29,7 +30,6 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     }
 
   
-    //FIX: location manager
     let motionManager = CMMotionManager()
     let dateFormatter = DateFormatter()
     let healthStore = HKHealthStore()
@@ -50,7 +50,6 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     func setDate(date: WKInterfaceLabel!){
         self.date = date
     }
-  //  let locationManager = CLLocationManager()
    
     var WCsession: WCSession?
 
@@ -74,126 +73,27 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
             WCsession!.delegate = self
             WCsession!.activate()
         }
-//        dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
-//        dateFormatter.dateStyle = DateFormatter.Style.short//Set date style
         dateFormatter.timeZone = TimeZone.ReferenceType.system
         dateFormatter.dateFormat = "MM/dd/yy, HH:mm:ss"
+        let nc = NotificationCenter.default // Note that default is now a property, not a method call
+        nc.addObserver(forName:Notification.Name(rawValue:"SeizureMonitoringCenter"),
+                       object:nil, queue:nil,
+                       using:viewNotification)
         
-        
-//        locationManager.delegate = self
-//        let authorizationStatus = CLLocationManager.authorizationStatus()
-//        
-//        switch authorizationStatus {
-//        case .notDetermined:
-//            locationManager.requestAlwaysAuthorization()
-//            break
-//        case .authorizedAlways:
-//           locationManager.requestLocation()
-//           break
-//        default: break
-//           
-//        }
-
-    }
-//    
-//    // MARK: CLLocationManagerDelegate Methods
-//    
-//    /**
-//     When the location manager receives new locations, display the latitude and
-//     longitude of the latest location and restart the timers.
-//     */
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        guard !locations.isEmpty else { return }
-//        
-//        DispatchQueue.main.async {
-//            let lastLocationCoordinate = locations.last!.coordinate
-//            print(lastLocationCoordinate)
-//            self.latitude = lastLocationCoordinate.latitude
-//            self.longitude = lastLocationCoordinate.longitude
-//        }
-//    }
-//    
-//    /**
-//     When the location manager receives an error, display the error and restart the timers.
-//     */
-//    func locationManager(_ manager: CLLocationManager, didFailWithError error: NSError) {
-//        DispatchQueue.main.async {
-//            print(error)
-//        }
-//    }
-//    
-//    /**
-//     Only request location if the authorization status changed to an authorization
-//     level that permits requesting location.
-//     */
-//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-//        DispatchQueue.main.async {
-//            
-//            switch status {
-//            case .authorizedAlways:
-//                manager.requestLocation()
-//                
-//            case .denied:
-//                fallthrough
-//            default:
-//                break
-//            }
-//        }
-//    }
-//
-//    
-      //  startUpdatingLocationAllowingBackground()
-        // Ask for Authorisation from the User.
-//        self.locationManager.requestAlwaysAuthorization()
-
-        
-//        if  CLLocationManager.locationServicesEnabled(){
-//        //    print("Im in if")
-//       //     locationManager.delegate = self
-//            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//         //   locationManager.startUpdatingLocation()
-//            print(locationManager.location?.coordinate.latitude)
-//        }
-
-        
-//    }
-//    func startUpdatingLocationAllowingBackground() {
-//        // When commanding from the phone, request authorization and inform the watch app of the state change.
-//        locationManager.requestAlwaysAuthorization()
-//        
-//        
-//        
-//        locationManager.startUpdatingLocation()
-//        print("Im updating")
-//        locationManager.requestLocation()
-//        latitude = (locationManager.location?.coordinate.latitude)
-//        longitude = (locationManager.location?.coordinate.longitude)
-//        print(longitude)
-//        print(latitude)
-//        locationManager.stopUpdatingLocation()
-//    }
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        print("Im in location manager")
-//        for i in locations {
-//            latitude = i.coordinate.latitude
-//            longitude = i.coordinate.longitude
-//        }
-//        
-//    }
-//    
-//    /// Log any errors to the console.
-//    func locationManager(_ manager: CLLocationManager, didFailWithError error: NSError) {
-//        print("Error occured: \(error.localizedDescription).")
-//    }
+       }
     
-
-//    private func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-//        let userLocation:CLLocation = locations[0] as! CLLocation
-//        longitude = userLocation.coordinate.longitude;
-//        latitude = userLocation.coordinate.latitude;
-//        print("Latitude: \(latitude) \nLongitude: \(longitude)")
-//        //Do What ever you want with it
-//    }
+    func viewNotification(notification:Notification)-> Void {
+        guard let userInfo = notification.userInfo,
+            let message  = userInfo["message"] as? Float
+            else {
+                print("No userInfo found in notification")
+                return
+        }
+        seizureState = SeizureEnum.snooze
+        snoozeDuration = Int(message)
+        stopHeartRate()
+    }
+//
     
     func getisWorkoutOn()->(Bool,String){
         if session?.state == HKWorkoutSessionState.running {
@@ -264,6 +164,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
                 self.updateLabelsAcc(accX: data!.acceleration.x, accY: data!.acceleration.y, accZ: data!.acceleration.z)
                 switch self.seizureState {
                 case .idle: break
+                case .snooze: break
                 case .aura: fallthrough
                 case .actual: self.accData.append(data)
                     break
@@ -317,8 +218,8 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     var actualSeizure = false
     var seizureState = SeizureEnum.idle
     var falseAlarmTiming = 0 //change accordingly
-    
-    /// This function is used to detect seizures. There are three states in which this function will handle: IDLE, AURA, ACTUAL. In IDLE the function is detecting the seizure but not recording anything. In AURA, the function is waiting for the user to respond to the notification, starts recording Accelerometer data. In ACTUAL, the user starts recording everything.
+    var snoozeDuration = 0
+    /// This function is used to detect seizures. There are three states in which this function will handle: IDLE, AURA, ACTUAL. In IDLE the function is detecting the seizure but not recording anything. In AURA, the function is waiting for the user to respond to the notification, starts recording Accelerometer data. In ACTUAL, the user starts recording everything. In snooze, the app is now counting down until it will begin to count.
     ///
     /// - Parameters:
     ///   - accX: accelerometer in the x direction
@@ -327,15 +228,30 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
     func updateLabelsAcc(accX: Double, accY: Double, accZ: Double){
         //FIX: Add HeartRate to if Seizure Start and Gyro data.
         countTick += 1
-        if((abs(accX) > minAccOfSeizure) || (abs(accY) > minAccOfSeizure) || (abs(accZ) > minAccOfSeizure)){
-            // print("Acc:\nX: \(accX)\nY: \(accY)\nZ: \(accZ)")
-            countAcc += 1
+        if seizureState != SeizureEnum.snooze {
+            if((abs(accX) > minAccOfSeizure) || (abs(accY) > minAccOfSeizure) || (abs(accZ) > minAccOfSeizure)){
+                // print("Acc:\nX: \(accX)\nY: \(accY)\nZ: \(accZ)")
+                countAcc += 1
+            }
         }
         
 //        if countTick % 10 == 0 {
             // delete this afterwards.
          //   self.startUpdatingLocationAllowingBackground()
         switch seizureState {
+        case .snooze:
+            if countTick % 10 == 0 {
+                if snoozeDuration != 0 {
+                    snoozeDuration -= 1
+                }else{
+                    seizureState = SeizureEnum.idle
+                    setisWorkoutOn(state: true)
+                    let nc = NotificationCenter.default
+                    nc.post(name: NSNotification.Name(rawValue:"MyNotification"), object: nil, userInfo: ["message":"idle"])
+//                    createStreamingQuery()  TODO: poosibly uncomment to get the heartrate back online.
+                }
+            }
+            break
         case .idle:
             if countTick % 10 == 0 {
                 if countAcc >= minRateOfSeizure {
@@ -383,7 +299,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
                         let nc = NotificationCenter.default
                         nc.post(name:Notification.Name(rawValue:"HelpControllerNotification"),
                                 object: nil,
-                                userInfo: ["message":"Finished"])
+                                userInfo: ["message":"Actual"])
                     }
                 }
             }
@@ -443,8 +359,6 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
         }
         //    let seizure = ["CountAcc": countAcc, "CountElapse":countElapse, "countTick":countTick]
         //print(countTick)
-        
-        
     }
     
     func appendEvent(){
@@ -462,11 +376,11 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
 
     }
     
-    func sendMessageToPlay(){
-        WCsession!.sendMessage(["Play":"Alarm"], replyHandler: {replyDict in
-            print("reply \(replyDict)")}, errorHandler: nil
-            )
-    }
+//    func sendMessageToPlay(){
+//        WCsession!.sendMessage(["Play":"Alarm"], replyHandler: {replyDict in
+//            print("reply \(replyDict)")}, errorHandler: nil
+//            )
+//    }
     // Ask for Authorisation from the User.
     
     //FIX: Delete this function
@@ -515,8 +429,11 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
         //            heartRateQuery = nil
         //        }
     }
-    
-    
+    //Stoping heartRate
+    private func stopHeartRate(){
+        setisWorkoutOn(state: false)
+        
+    }
     
     private func createStreamingQuery() -> HKQuery {
         let predicate = HKQuery.predicateForSamples(withStart: Date(), end: nil, options: HKQueryOptions())
@@ -525,14 +442,17 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
             self.addSamples(samples)
             
         }
+        
         query.updateHandler = { (query, samples, deletedObjects, anchor, error) -> Void in
             self.addSamples(samples)
-            
+            self.checkSamples()
         }
         
         return query
     }
-    
+    private func checkSamples(){
+        
+    }
     var lastHeartRateSample: HKQuantity?
     private func addSamples(_ samples: [HKSample]?) {
         guard let samples = samples as? [HKQuantitySample] else { return }
@@ -593,7 +513,7 @@ class SeizureMonitoring : NSObject, WCSessionDelegate {
      On receipt of a startUpdate message, update the controller's state to reflect
      the location updating state.
      */
-    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
+    @nonobjc func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
         let eD = WKExtension.shared().delegate as! ExtensionDelegate
         
         for i in applicationContext.keys {

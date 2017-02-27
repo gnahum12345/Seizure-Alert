@@ -20,13 +20,22 @@
                                 <action selector="callCareGiver" destination="AgC-eL-Hgc" id="Qkb-tb-c2X"/>
                             </connections>
                         </button>
+                        <separator alignment="left" id="DYQ-jY-pta"/>
+                        <label width="136" alignment="left" text="Snooze:" id="QYI-Bd-HGl"/>
+                        <slider width="1" alignment="left" value="1" maximum="3" steps="3" id="oaZ-R5-tzz">
+                            <connections>
+                                <action selector="snooze:" destination="AgC-eL-Hgc" id="hMG-id-hVU"/>
+                            </connections>
+                        </slider>
                     </items>
                     <connections>
                         <outlet property="hr" destination="nfK-pP-etv" id="buB-fO-ugQ"/>
+                        <outlet property="snoozeLabel" destination="QYI-Bd-HGl" id="7nz-tz-ejy"/>
+                        <outlet property="snoozeOutlet" destination="oaZ-R5-tzz" id="Q7n-mU-3y4"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="220" y="347"/>
+            <point key="canvasLocation" x="220" y="346.5"/>
         </scene>
         <!--helpController-->
         <scene sceneID="5be-5G-J2k">
